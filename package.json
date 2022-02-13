@@ -1,0 +1,30 @@
+{
+  "name": "rml-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "www.github.com/reino7/rml-web-competitions"
+  },
+  "keywords": [
+    "tabletennis",
+    "website",
+    "Rapla",
+    "County"
+  ],
+  "author": "Reino Ristissaar",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "moment-timezone": "^0.5.34",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.13"
+  }
+}

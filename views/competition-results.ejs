@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="h-100 wxauktc idc0_332" lang="et">
+  <head>
+    <%- include('./partials/head'); %>
+    <!-- <script src="/js/competition-register-script.js" defer></script> -->
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header>
+      <%- include('./partials/header'); %> <%- include('./partials/second-nav');
+      %>
+    </header>
+
+    <main role="main" class="flex-shrink-0">
+      <div class="container py-4">
+        <div>
+          <h5 class="text-uppercase fw-bold text-center mb-3">Tulemused</h5>
+        </div>
+
+        <table class="table table-hover table-bordered me-3" id="table">
+          <thead class="table-secondary">
+            <tr>
+              <th scope="col">Nr</th>
+              <th scope="col">ELTLID</th>
+              <th scope="col">Nimi</th>
+              <th scope="col">Sünniaeg</th>
+              <th scope="col">Sugu</th>
+            </tr>
+          </thead>
+          <tbody id="reitingsTable"></tbody>
+        </table>
+      </div>
+    </main>
+    <footer class="footer mt-auto py-3 bg-light border-top">
+      <%- include('./partials/footer'); %>
+    </footer>
+  </body>
+</html>

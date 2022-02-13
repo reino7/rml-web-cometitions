@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html class="h-100 wxauktc idc0_332" lang="et">
+  <head>
+    <%- include('./partials/head'); %>
+    <script src="/js/competition-register-script.js" defer></script>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header><%- include('./partials/header'); %></header>
+
+    <main role="main" class="flex-shrink-0">
+      <div class="container">
+        <div>
+          <h5 class="text-uppercase fw-bold text-center mb-3">
+            Võistlejate registreerimine
+          </h5>
+        </div>
+        <div class="row align-items-start">
+          <div class="col-6">
+            <h4 class="text-center">Lisa mängija</h4>
+            <p class="text-center">
+              Kokku nimekirjas:
+              <span id="reitingsTableCount">0</span>
+              inimest
+              <span>30.01.2022 19:13 seisuga</span>
+            </p>
+            <h3>
+              <input
+                type="search"
+                placeholder="Otsi tabelist ees- ja/või perekonnanime järgi"
+                class="form-control search-input text-center"
+                id="searchInput"
+                onkeyup="searchTableData()"
+              />
+            </h3>
+            <table class="table table-hover table-bordered me-3" id="table">
+              <thead class="table-secondary">
+                <tr>
+                  <th scope="col">Nr</th>
+                  <th scope="col">Koht reitingus</th>
+                  <th scope="col">ELTLID</th>
+                  <th scope="col">Nimi</th>
+                  <th scope="col">Sünniaeg</th>
+                  <th scope="col">Sugu</th>
+                </tr>
+              </thead>
+              <tbody id="reitingsTable"></tbody>
+            </table>
+          </div>
+
+          <div class="col-6">
+            <h4 class="text-center">Registreeritud mängijad</h4>
+            <div class="text-center">
+              <p class="inlineWithButton">Kokku nimekirjas: 17 mängijat</p>
+              <p class="text-center inlineWithButton"></p>
+            </div>
+            <table class="table table-hover table-bordered">
+              <thead class="table-secondary">
+                <tr>
+                  <th scope="col">Jrk</th>
+                  <th scope="col">personid</th>
+                  <th scope="col">rateorder</th>
+                  <th scope="col">firstname</th>
+                  <th scope="col">famname:</th>
+                  <th scope="col">button</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="my-4 text-center">
+            <a class="btn btn-secondary" href="/voistlus/mangud">
+              Sisesta registreeritud võistlejad tabelisse
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer mt-auto py-3 bg-light border-top">
+      <%- include('./partials/footer'); %>
+    </footer>
+  </body>
+</html>

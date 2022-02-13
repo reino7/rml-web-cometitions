@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html class="h-100 wxauktc idc0_332" lang="et">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header><%- include('./partials/header'); %></header>
+
+    <main role="main" class="flex-shrink-0">
+      <div class="container">
+        <div>
+          <h5 class="text-uppercase fw-bold text-center mb-3">
+            Võistluse lisamine
+          </h5>
+        </div>
+
+        <form action="" method="POST" class="w-50 mx-auto">
+          <div class="row mb-3">
+            <div class="col">
+              <label class="fw-bold" for="compBeginningDate">Kuupäev</label>
+              <input type="date" class="form-control" id="compBeginningDateForm" />
+            </div>
+            <div class="col">
+              <label class="fw-bold" for="compBeginningTime">Kellaaeg</label>
+              <input type="time" class="form-control" id="compBeginningTimeForm" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold" for="compNameForm">
+              Võistluse nimi
+            </label>
+            <input type="text" class="form-control" id="compNameForm" autofocus />
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold" for="locationForm">Võistluskoht</label>
+            <input type="text" class="form-control" id="compLocationForm" />
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label class="fw-bold" for="compOrganizerForm">
+                Korraldaja
+              </label>
+              <input type="text" class="form-control" id="compOrganizerForm" />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="fw-bold" for="compOrganizerContactForm">
+                Kontakttelefon
+              </label>
+              <input
+                type="tel"
+                class="form-control"
+                id="compOrganizerContactForm"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label class="fw-bold" for="compUmpireForm">Kohtunik</label>
+              <input type="text" class="form-control" id="compUmpireForm" />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="fw-bold for="compUmpireContactForm">
+                Kontakttelefon
+              </label>
+              <input
+                type="tel"
+                class="form-control"
+                id="compUmpireContactForm"
+              />
+            </div>
+          </div>
+
+
+          <!-- <div class="my-4 text-center">
+            <button type="submit" class="btn btn-secondary my-4 text-center">
+              Sisesta võistluse andmed
+            </button>
+          </div> -->
+          <div class="my-4 text-center">
+            <a class="btn btn-secondary my-4" href="/voistlus/registreeri/">
+              Sisesta võistluse andmed
+            </a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light border-top">
+      <%- include('./partials/footer'); %>
+    </footer>
+  </body>
+</html>

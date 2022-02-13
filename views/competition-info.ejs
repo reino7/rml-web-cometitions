@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="h-100 wxauktc idc0_332" lang="et">
+  <head>
+    <%- include('./partials/head'); %>
+    <script src="/js/competition-games-script.js" defer></script>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header>
+      <%- include('./partials/header'); %> <%- include('./partials/second-nav');
+      %>
+    </header>
+
+    <main role="main" class="flex-shrink-0">
+      <div class="container py-4">
+        <div>
+          <h5 class="text-uppercase fw-bold text-center mb-4">
+            Võistluse info
+          </h5>
+          <div class="container w-50">
+            <h5 class="text-nowrap mb-3">
+              <span id="compName">
+                Raplamaa seeriavõistluse 1. etapp - Kaiu auhindadele
+              </span>
+            </h5>
+            <p class="my-1">
+              <span class="fw-bold">Võistluse kuupäev:</span>
+              <span id="compBeginningDate">23.10.2021</span>
+            </p>
+            <p class="my-1">
+              <span class="fw-bold">Võistluse algusaeg:</span>
+              <span id="compBeginningTime">10:00</span>
+            </p>
+            <p class="my-1">
+              <span class="fw-bold">Võistluskoht:</span>
+              <a
+                class="text-reset text-underline-hover"
+                href="#"
+                target="_blank"
+              >
+                <span id="compLocation">Alu Spordihoone</span>
+              </a>
+            </p>
+            <p class="my-1">
+              <span class="fw-bold">Korraldaja:</span>
+              <span id="compOrganizer">Madis Pärn 501 2346</span>
+            </p>
+            <p class="my-1">
+              <span class="fw-bold">Kohtunik:</span>
+              <span id="compUmpire">Kalju Kalda 501 2345</span>
+            </p>
+            <p class="my-1"><span class="fw-bold">Osavõtutasu:</span></p>
+            <ul>
+              <li>Täiskasvanud - 8 EUR</li>
+              <li>Lapsed - 5 EUR</li>
+              <li>Alla 10 aastased - TASUTA</li>
+            </ul>
+            <p class="my-1">
+              <span class="fw-bold">Võistlusjuhend:</span>
+              <a
+                class="text-reset text-underline-hover text-nowrap"
+                href="/voistlusjuhend/"
+                target="_blank"
+              >
+                Raplamaa lauatennise seeriavõistluse juhend 2021-2022
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light border-top">
+      <%- include('./partials/footer'); %>
+    </footer>
+  </body>
+</html>
