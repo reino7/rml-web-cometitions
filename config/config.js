@@ -7,12 +7,13 @@ const config = {
     port: parseInt(process.env.PORT), // port number to listen
   },
   db: {
-    host: '', // database host
-    port: '3306', // default MySQL port
-    username: '', // database username
-    password: '', // database password
-    name: '', // database name
+    host: process.env.DB_HOST, // database host
+    port: parseInt(process.env.DB_PORT), // default MySQL port
+    user: process.env.DB_USER, // database username
+    password: process.env.DB_PASSWORD, // database password
+    database: process.env.DB_NAME, // database name
   },
+  listPerPage: 100,
 };
 
 module.exports = config;

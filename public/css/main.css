@@ -13,9 +13,7 @@ main > .container {
   min-width: 150px;
   width: auto;
 } */
-hr.line {
-  border-bottom: 1px solid red;
-}
+
 .nav-underline-anim::after {
   content: '';
   display: block;
@@ -25,7 +23,7 @@ hr.line {
   opacity: 0;
   transform: translate3d(0, 0.2em, 0);
   transform: scale(0);
-  transition: opacity 500ms, transform 500ms;
+  transition: opacity 300ms, transform 300ms;
   /* transition: 0.3s; */
 }
 .nav-underline-anim:hover::after {
@@ -50,4 +48,14 @@ hr.line {
 
 .navbar {
   transition: top 700ms; /* Transition effect when sliding down (and up) */
+}
+
+.zoom {
+  transition: transform 0.2s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(
+    1.01
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }

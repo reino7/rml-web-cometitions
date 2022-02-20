@@ -11,10 +11,13 @@ const moment = require('moment-timezone');
 const app = express();
 
 /** API Route Paths */
-const competitionsSchedule = require('./api/competitions-schedule');
+const competitionsSchedule = require('./api/competitions-schedule-db');
+// const competitionsScheduleDb = require('./api/competitions-schedule-db');
 const competitionsGames = require('./api/competitions-games');
+// const programmingLanguagesRouter = require('./api/programmingLanguages');
 
 /** Route Paths */
+const index = require('./routes/index');
 const schedule = require('./routes/schedule');
 const competitionInstructions = require('./routes/competition-instructions');
 const competitionAdd = require('./routes/competition-add');
@@ -30,6 +33,9 @@ const trainings = require('./routes/trainings');
 
 /** Static Files */
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 /**  Timezone information with Moment to Morgan */
 morgan.token('date', (req, res, tz) => {
@@ -61,9 +67,12 @@ app.set('view engine', 'ejs');
 
 /** API routes */
 app.use('/api/competitions-schedule', competitionsSchedule);
+// app.use('/api/competitions-schedule-db', competitionsScheduleDb);
 app.use('/api/competitions-games', competitionsGames);
+// app.use('/api/programming-languages', programmingLanguagesRouter);
 
 /** Define routes */
+app.use('/', index);
 app.use('/ajakava', schedule);
 app.use('/voistlusjuhend', competitionInstructions);
 app.use('/voistlus/lisa', competitionAdd);
@@ -77,9 +86,9 @@ app.use('/voistlus/auhinnad', competitionAwards);
 app.use('/tulemused', results);
 app.use('/treeningud', trainings);
 
-app.get('/', (req, res) => {
-  res.redirect('/ajakava');
-});
+// app.get('/', (req, res) => {
+//   res.redirect('/ajakava');
+// });
 
 /** Server listening @ PORT */
 app.listen(config.app.port, () => {

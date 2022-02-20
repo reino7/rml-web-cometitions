@@ -1,7 +1,21 @@
 'use strict';
 
-// GET competitions list from API
-fetch('http://localhost:3000/api/competitions-schedule')
+/* local Dev or Test srv URL */
+let getGurrentUrlHost = window.location.hostname;
+let getGurrentUrlPort = window.location.port;
+let getGurrentUrlProtocol = window.location.protocol;
+let apiUrlHost = 'lt-test.ristissaar.ee';
+let apiUrlPath = '/api/competitions-schedule';
+let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
+
+if (getGurrentUrlHost == 'localhost') {
+  apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}`;
+}
+
+/* GET competitions list from API */
+// fetch('http://localhost:3000/api/competitions-schedule')
+// fetch('https://lt-test.ristissaar.ee/api/competitions-schedule')
+fetch(apiUrl)
   .then(function (response) {
     return response.json();
   })
@@ -19,11 +33,11 @@ function appendData2CompetitionsTable(data) {
 
   for (let i = 0; i < data.length; i++) {
     competitionsTableContainer.innerHTML += `<tr>
-      <td class="text-center">${data[i].compDate}</td>
+      <td class="text-center">${data[i].comp_date}</td>
       <td>
-      ${data[i].compName}
+      ${data[i].comp_name}
       </td>
-      <td>${data[i].compLocation}</td>
+      <td>${data[i].comp_location}</td>
     </tr>`;
   }
 }

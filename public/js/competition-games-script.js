@@ -1,7 +1,19 @@
 'use strict';
 
+/* local Dev or Test srv URL */
+let getGurrentUrlHost = window.location.hostname;
+let getGurrentUrlPort = window.location.port;
+let getGurrentUrlProtocol = window.location.protocol;
+let apiUrlHost = 'lt-test.ristissaar.ee';
+let apiUrlPath = '/api/competitions-games';
+let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
+
+if (getGurrentUrlHost == 'localhost') {
+  apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}`;
+}
 // GET competitions list from API
-fetch('http://localhost:3000/api/competitions-games')
+// fetch('http://localhost:3000/api/competitions-games')
+fetch(apiUrl)
   .then(function (response) {
     return response.json();
   })

@@ -56,7 +56,7 @@ const competitions = [
   },
   {
     id: 10,
-    compDate: '05.03.2022',
+    compDate: '12.03.2022',
     compName: 'Raplamaa seeriavõistluse 6. etapp - Järvakandi auhindadele',
     compLocation: 'Järvakandi Kool',
   },
