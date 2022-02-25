@@ -6,7 +6,7 @@ router.use(function (req, res, next) {
 });
 
 router.route('/').get((req, res) => {
-  res.render('competition-info');
+  res.render('users-dashboard');
 });
 
 module.exports = router;

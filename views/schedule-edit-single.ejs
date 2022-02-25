@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html class="h-100 wxauktc idc0_332" lang="et">
+  <head>
+    <%- include('./partials/head'); %>
+    <script src="/js/axios-v0.26.0.min.js" defer></script>
+    <script src="/js/moment-v2.29.1.js" defer></script>
+    <script src="/js/schedule-edit-single-script.js" defer></script>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header><%- include('./partials/header'); %></header>
+
+    <main class="flex-shrink-0">
+      <div class="container">
+        <div>
+          <h5 class="text-uppercase fw-bold text-center mb-3">
+            Muuda võistlust ajakavas
+          </h5>
+        </div>
+        <form
+          action=""
+          method=""
+          class="w-50 mx-auto"
+          id="scheduleForm"
+          onsubmit="return false"
+        >
+          <div class="row mb-3">
+            <div class="col">
+              <label class="fw-bold" for="competitionDate">Kuupäev</label>
+              <input type="date" class="form-control" id="competitionDate" />
+            </div>
+            <div class="col">
+              <label class="fw-bold" for="competitionTime">Kellaaeg</label>
+              <input type="time" class="form-control" id="competitionTime" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold" for="competitionName">Võistluse nimi</label>
+            <input
+              type="text"
+              class="form-control"
+              id="competitionName"
+              autofocus
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold" for="competitionLocation">
+              Võistluskoht
+            </label>
+            <input type="text" class="form-control" id="competitionLocation" />
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label class="fw-bold" for="competitionUmpire">Kohtunik</label>
+              <input type="text" class="form-control" id="competitionUmpire" />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="fw-bold" for="competitionUmpireContact">
+                Kontakttelefon
+              </label>
+              <input
+                type="tel"
+                class="form-control"
+                id="competitionUmpireContact"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label class="fw-bold" for="competitionOrganizer">
+                Korraldaja
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="competitionOrganizer"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="fw-bold" for="competitionOrganizerContact">
+                Kontakttelefon
+              </label>
+              <input
+                type="tel"
+                class="form-control"
+                id="competitionOrganizerContact"
+              />
+            </div>
+          </div>
+
+          <div class="my-4 text-center">
+            <span id="message" class="my-0"></span>
+            <a class="btn btn-secondary my-4 me-3" href="/ajakava/muuda">
+              Tagasi ajakava muutmisse
+            </a>
+            <button
+              class="btn btn-secondary my-3 text-center"
+              onclick="scheduleSendFormData()"
+            >
+              Sisesta võistluse andmed
+            </button>
+          </div>
+
+          <!-- <div class="my-4 text-center">
+            <a class="btn btn-secondary my-4" href="/voistlus/registreeri/">
+              Sisesta võistluse andmed
+            </a>
+          </div> -->
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light border-top">
+      <%- include('./partials/footer'); %>
+    </footer>
+  </body>
+</html>

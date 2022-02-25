@@ -2,8 +2,8 @@
 <html class="h-100 wxauktc idc0_332" lang="et">
   <head>
     <%- include('./partials/head'); %>
+    <script src="/js/schedule-edit-script.js" defer></script>
     <script src="/js/moment-v2.29.1.js" defer></script>
-    <script src="/js/schedule-script.js" defer></script>
   </head>
 
   <body class="d-flex flex-column h-100">
@@ -12,19 +12,8 @@
     <main class="flex-shrink-0">
       <div class="container">
         <div>
-          <h5 class="text-uppercase fw-bold text-center mb-3">Ajakava</h5>
+          <h5 class="text-uppercase fw-bold text-center mb-3">Muuda ajakava</h5>
         </div>
-
-        <h3>
-          <input
-            type="search"
-            placeholder="Otsi tabelist võistlusi nimetuse või asukoha järgi"
-            class="form-control search-input text-center"
-            data-table="customers-list"
-            id="searchInput"
-            onkeyup="searchTableData()"
-          />
-        </h3>
 
         <table
           class="table table-responsive table-striped table-bordered me-4"
@@ -35,11 +24,18 @@
               <th class="text-center">Kuupäev</th>
               <th>Võistluse nimetus</th>
               <th>Võistluse asukoht</th>
+              <th class="text-center">Toimingud</th>
             </tr>
           </thead>
 
-          <tbody id="competitionsTable"></tbody>
+          <tbody id="competitionsTableEdit"></tbody>
         </table>
+        <div class="my-4 text-center">
+          <span id="message" class="my-0"></span>
+          <a class="btn btn-secondary my-4 me-3" href="/kasutajad/toolaud">
+            Tagasi töölauale
+          </a>
+        </div>
       </div>
     </main>
 

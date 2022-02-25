@@ -28,8 +28,9 @@ fetch(apiUrl)
 
 // Display data from API to HTML Tables
 function appendData2CompetitionsTable(data) {
-  const competitionsTableContainer =
-    document.getElementById('competitionsTable');
+  const competitionsTableContainer = document.getElementById(
+    'competitionsTableEdit'
+  );
 
   for (let i = 0; i < data.length; i++) {
     competitionsTableContainer.innerHTML += `<tr>
@@ -38,30 +39,17 @@ function appendData2CompetitionsTable(data) {
       ${data[i].comp_name}
       </td>
       <td>${data[i].comp_location}</td>
+      <td class="text-center">
+        <ul class="m-0 p-0">
+          <li class="list-inline-item">
+            <a class="btn btn-secondary btn-sm rounded-0" href="/ajakava/muuda/${
+              data[i].id
+            }" data-toggle="tooltip"
+              data-placement="top" title="Muuda"><i class="fa fa-edit"></i></a>
+          </li>
+        </ul>
+      </td>
     </tr>`;
-  }
-}
-
-function searchTableData() {
-  let input, filter, table, tr, td, cell, i, j;
-  input = document.getElementById('searchInput');
-  filter = input.value.toUpperCase();
-  table = document.getElementById('table');
-  tr = table.getElementsByTagName('tr');
-  for (i = 1; i < tr.length; i++) {
-    // Hide the row initially.
-    tr[i].style.display = 'none';
-
-    td = tr[i].getElementsByTagName('td');
-    for (let j = 0; j < td.length; j++) {
-      cell = tr[i].getElementsByTagName('td')[j];
-      if (cell) {
-        if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = '';
-          break;
-        }
-      }
-    }
   }
 }
 

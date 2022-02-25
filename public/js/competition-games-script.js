@@ -73,7 +73,7 @@ function appendData2CompetitionGameTable(data) {
             </li>
             <li class="list-inline-item">
               <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-                data-placement="top" title="Salvesta"><i class="fas fa-save"></i></i></button>
+                data-placement="top" title="Salvesta"><i class="fas fa-save"></i></button>
             </li>
           </ul>
         </td>

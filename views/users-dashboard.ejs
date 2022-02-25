@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="h-100 wxauktc idc0_332" lang="et">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header><%- include('./partials/header'); %></header>
+
+    <main class="flex-shrink-0">
+      <div class="container">
+        <div>
+          <h5 class="text-uppercase fw-bold text-center mb-4">Töölaud</h5>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="card text-center">
+              <div class="card-header">
+                <h5 class="card-title">Võistluse toimingud</h5>
+              </div>
+              <div class="card-body">
+                <div class="my-3 d-grid gap-3 col-6 mx-auto">
+                  <a class="btn btn-secondary btn-lg" href="/voistlus/lisa">
+                    Alusta võistlusega
+                  </a>
+                  <a class="btn btn-secondary btn-lg disabled" href="#">
+                    Muuda võistlust
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card text-center">
+              <div class="card-header">
+                <h5 class="card-title">Ajakava toimingud</h5>
+              </div>
+              <div class="card-body">
+                <div class="my-3 d-grid gap-3 col-6 mx-auto">
+                  <a class="btn btn-secondary btn-lg" href="/ajakava/lisa">
+                    Lisa võistlus ajakavasse
+                  </a>
+                  <a class="btn btn-secondary btn-lg" href="/ajakava/muuda">
+                    Muuda ajakava
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light border-top">
+      <%- include('./partials/footer'); %>
+    </footer>
+  </body>
+</html>
