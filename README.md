@@ -4,7 +4,7 @@ Käivitamiseks:
 <ol>
   <li>npm install</li>
   <li>create folder named logs</li>
-  <li>create file named .env/li>
+  <li>create file named .env</li>
   <li>inside .env file add:</li>
     <ol>
       <li>PORT=3001</li>
