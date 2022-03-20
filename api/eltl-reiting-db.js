@@ -1,12 +1,12 @@
 const express = require('express');
 
 const router = express.Router();
-const competitionsScheduleDb = require('../services/competitions-schedule-db');
+const eltlReitingDb = require('../services/eltl-reiting-db');
 
 /* GET */
 router.get('/', async function (req, res, next) {
   try {
-    res.json(await competitionsScheduleDb.getMultiple(req.query.page));
+    res.json(await eltlReitingDb.getMultiple(req.query.page));
   } catch (err) {
     console.error(`Error while getting competitions`, err.message);
     next(err);
@@ -14,21 +14,19 @@ router.get('/', async function (req, res, next) {
 });
 
 /* GET by ID */
-router.get('/:competitionId', async function (req, res, next) {
+router.get('/:personId', async function (req, res, next) {
   try {
-    const id = Number(req.params.competitionId);
-    const competitionsScheduleData = await competitionsScheduleDb.getMultiple(
-      req.query.page
+    const id = Number(req.params.personId);
+    const eltlReitingData = await eltlReitingDb.getMultiple(req.query.page);
+    const eltlReiting = eltlReitingData.find(
+      eltlReiting => eltlReiting.person_id === id
     );
-    const competition = competitionsScheduleData.find(
-      competition => competition.id === id
-    );
-    if (!competition) {
-      return res.status(404).send('Competition not found');
+    if (!eltlReiting) {
+      return res.status(404).send('Reiting not found');
     }
-    res.json(competition);
+    res.json(eltlReiting);
   } catch (err) {
-    console.error(`Error while getting competition by Id`, err.message);
+    console.error(`Error while getting reiting by personId`, err.message);
     next(err);
   }
 });
@@ -36,7 +34,7 @@ router.get('/:competitionId', async function (req, res, next) {
 /* POST */
 router.post('/', async function (req, res, next) {
   try {
-    res.json(await competitionsScheduleDb.create(req.body));
+    res.json(await eltlReitingDb.create(req.body));
   } catch (err) {
     console.error(`Error while creating competition`, err.message);
     next(err);
@@ -46,7 +44,7 @@ router.post('/', async function (req, res, next) {
 /* PUT */
 router.put('/:id', async function (req, res, next) {
   try {
-    res.json(await competitionsScheduleDb.update(req.params.id, req.body));
+    res.json(await eltlReitingDb.update(req.params.id, req.body));
   } catch (err) {
     console.error(`Error while updating competition`, err.message);
     next(err);
@@ -56,7 +54,7 @@ router.put('/:id', async function (req, res, next) {
 /* DELETE */
 router.delete('/:id', async function (req, res, next) {
   try {
-    res.json(await competitionsScheduleDb.remove(req.params.id));
+    res.json(await eltlReitingDb.remove(req.params.id));
   } catch (err) {
     console.error(`Error while deleting competitione`, err.message);
     next(err);

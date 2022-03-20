@@ -1,3 +1,5 @@
+'use strict';
+
 /* Enable Bootstrap5 Tooltips */
 let tooltipTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="tooltip"]')

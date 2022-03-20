@@ -5,7 +5,7 @@ let getGurrentUrlHost = window.location.hostname;
 let getGurrentUrlPort = window.location.port;
 let getGurrentUrlProtocol = window.location.protocol;
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/competitions-schedule';
+let apiUrlPath = '/api/schedule';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
 
 if (getGurrentUrlHost == 'localhost') {
@@ -34,16 +34,16 @@ function appendData2CompetitionsTable(data) {
 
   for (let i = 0; i < data.length; i++) {
     competitionsTableContainer.innerHTML += `<tr>
-      <td class="text-center">${parseDate(data[i].comp_date)}</td>
+      <td class="text-center">${parseDate(data[i].sche_date)}</td>
       <td>
-      ${data[i].comp_name}
+      ${data[i].sche_name}
       </td>
-      <td>${data[i].comp_location}</td>
+      <td>${data[i].sche_location}</td>
       <td class="text-center">
         <ul class="m-0 p-0">
           <li class="list-inline-item">
             <a class="btn btn-secondary btn-sm rounded-0" href="/ajakava/muuda/${
-              data[i].id
+              data[i].sche_id
             }" data-toggle="tooltip"
               data-placement="top" title="Muuda"><i class="fa fa-edit"></i></a>
           </li>

@@ -1,92 +1,146 @@
 <!DOCTYPE html>
 <html class="h-100 wxauktc idc0_332" lang="et">
-  <head>
-    <%- include('./partials/head'); %>
-    <script src="/js/competition-register-script.js" defer></script>
-  </head>
 
-  <body class="d-flex flex-column h-100">
-    <header><%- include('./partials/header'); %></header>
+<head>
+  <%- include('./partials/head'); %>
+  <script src="/js/axios-v0.26.0.min.js" defer></script>
+  <script src="/js/competition-register-script.js" defer></script>
+</head>
 
-    <main role="main" class="flex-shrink-0">
-      <div class="container">
-        <div>
-          <h5 class="text-uppercase fw-bold text-center mb-3">
-            Võistlejate registreerimine
-          </h5>
+<body class="d-flex flex-column h-100">
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+
+  <main role="main" class="flex-shrink-0">
+    <div class="container-xxl mx-auto mt-5">
+      <div class="my-3">
+        <h5 class="text-uppercase fw-bold text-center">
+          Võistlejate registreerimine
+        </h5>
+        <h5 class="text-uppercase fw-bold text-center"><span id="competitionName"></span></h5>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h4 class="text-center">Lisa mängija ELTL reitingust</h4>
+          <p class="text-center">
+            Nimekirjas kokku
+            <span id="reitingPlayerCount">0</span>
+            inimest
+            <span>seisuga</span>
+            <span id="reitingUpdated">01.01.2020 00:00</span>
+          </p>
+          <h3>
+            <input type="search" placeholder="Otsi tabelist ees- ja/või perekonnanime järgi"
+              class="form-control search-input text-center" id="searchInput" onkeyup="searchTableData()" />
+          </h3>
+          <table class="table table-hover table-bordered me-3" id="reitingsTableFull">
+            <thead class="table-secondary">
+              <tr>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Nr = koht reitingus">
+                  Nr
+                </th>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="RP = reitingupunktid">
+                  RP
+                </th>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Eesti Lauatennise Liidu võistleja ID">
+                  ELTLID
+                </th>
+                <th scope="col">Nimi</th>
+                <th class="text-center" scope="col">Sünniaeg</th>
+                <th class="text-center" scope="col">Sugu</th>
+              </tr>
+            </thead>
+            <tbody id="reitingsTableBody">
+              <% eltlReiting.forEach((item)=>{%>
+              <tr id="<%= item.PERSONID %>">
+                <td class="text-center">
+                  <%= item.RATEORDER %>
+                </td>
+                <td class="text-center">
+                  <%= item.RATEPOINTS %>
+                </td>
+                <td class="text-center">
+                  <%= item.PERSONID %>
+                </td>
+                <td>
+                  <%= item.FIRSTNAME %>
+                  <%= item.FAMNAME %>
+                </td>
+                <td class="text-center">
+                  <%= item.BIRTHDATE %>
+                </td>
+                <td class="text-center">
+                  <%= item.SEX %>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
         </div>
-        <div class="row align-items-start">
-          <div class="col-6">
-            <h4 class="text-center">Lisa mängija</h4>
-            <p class="text-center">
-              Kokku nimekirjas:
-              <span id="reitingsTableCount">0</span>
-              inimest
-              <span>30.01.2022 19:13 seisuga</span>
-            </p>
-            <h3>
-              <input
-                type="search"
-                placeholder="Otsi tabelist ees- ja/või perekonnanime järgi"
-                class="form-control search-input text-center"
-                id="searchInput"
-                onkeyup="searchTableData()"
-              />
-            </h3>
-            <table class="table table-hover table-bordered me-3" id="table">
-              <thead class="table-secondary">
-                <tr>
-                  <th scope="col">Nr</th>
-                  <th scope="col">Koht reitingus</th>
-                  <th scope="col">ELTLID</th>
-                  <th scope="col">Nimi</th>
-                  <th scope="col">Sünniaeg</th>
-                  <th scope="col">Sugu</th>
-                </tr>
-              </thead>
-              <tbody id="reitingsTable"></tbody>
-            </table>
-          </div>
 
-          <div class="col-6">
-            <h4 class="text-center">Registreeritud mängijad</h4>
-            <div class="text-center">
-              <p class="inlineWithButton">Kokku nimekirjas: 17 mängijat</p>
-              <p class="text-center inlineWithButton"></p>
-            </div>
-            <table class="table table-hover table-bordered">
-              <thead class="table-secondary">
-                <tr>
-                  <th scope="col">Jrk</th>
-                  <th scope="col">personid</th>
-                  <th scope="col">rateorder</th>
-                  <th scope="col">firstname</th>
-                  <th scope="col">famname:</th>
-                  <th scope="col">button</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="col">
+          <h4 class="text-center">Registreeritud mängijad</h4>
+          <div class="text-center">
+            <p>
+              Nimekirjas kokku on
+              <span id="registeredPlayerCount">0</span>
+              mängijat
+            </p>
+            <h3 class="text-center">
+              <a class="btn btn-outline-secondary" href="#">
+                <i class="fas fa-plus"></i>
+                &nbsp;Lisa reitinguta mängija
+              </a>
+            </h3>
           </div>
+          <table class="table table-hover table-bordered me-3" id="registerTableFull">
+            <thead class="table-secondary">
+              <tr>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Järjekorra number">
+                  Jrk
+                </th>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Nr = koht reitingus">
+                  Nr
+                </th>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="RP = reitingupunktid">
+                  RP
+                </th>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Eesti Lauatennise Liidu võistleja ID">
+                  ELTLID
+                </th>
+                <th scope="col">Nimi</th>
+                <th class="text-center" scope="col">Sünniaeg</th>
+                <th class="text-center" scope="col">Sugu</th>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Toimingud">
+                  #
+                </th>
+              </tr>
+            </thead>
+            <tbody id="registerTableBody"></tbody>
+          </table>
           <div class="my-4 text-center">
             <a class="btn btn-secondary" href="/voistlus/mangud">
-              Sisesta registreeritud võistlejad tabelisse
+              Sisesta registreeritud mängijad võistlustabelisse
             </a>
           </div>
         </div>
       </div>
-    </main>
-    <footer class="footer mt-auto py-3 bg-light border-top">
-      <%- include('./partials/footer'); %>
-    </footer>
-  </body>
+    </div>
+  </main>
+  <footer class="footer mt-auto py-3 bg-light border-top">
+    <%- include('./partials/footer'); %>
+  </footer>
+</body>
+<script>
+  const eltlReitingObj = <%- JSON.stringify(eltlReiting) %>;
+</script>
+
 </html>

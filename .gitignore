@@ -9,6 +9,7 @@ lerna-debug.log*
 # Configuration files
 config
 config.js
+.eslintrc.json
 
 # PDF files
 *.pdf

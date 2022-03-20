@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <body class="container text-center my-5">
+    <header><%- include('./partials/header'); %></header>
+
+    <main class="my-5">
+      <div class="jumbotron">
+        <h1>This is great</h1>
+        <p>Welcome to templating using EJS</p>
+
+        <table class="table table-hover table-bordered me-3">
+          <thead class="table-secondary">
+            <tr>
+              <th
+                class="text-center"
+                scope="col"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Nr = koht reitingus"
+              >
+                Nr
+              </th>
+              <th
+                class="text-center"
+                scope="col"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="RP = reitingupunktid"
+              >
+                RP
+              </th>
+              <th
+                class="text-center"
+                scope="col"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Eesti Lauatennise Liidu võistleja ID"
+              >
+                ELTLID
+              </th>
+              <th scope="col">Nimi</th>
+              <th class="text-center" scope="col">Sünniaeg</th>
+              <th class="text-center" scope="col">Sugu</th>
+            </tr>
+          </thead>
+          <% eltlReiting.forEach((item)=>{%>
+
+          <tbody id="reitingsTable">
+            <tr>
+              <td><%= item.RATEORDER %></td>
+              <td><%= item.RATEPOINTS %></td>
+              <td><%= item.PERSONID %></td>
+              <td><%= item.FIRSTNAME %> <%= item.FAMNAME %></td>
+              <td><%= item.BIRTHDATE %></td>
+              <td><%= item.SEX %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer><%- include('./partials/footer'); %></footer>
+  </body>
+</html>

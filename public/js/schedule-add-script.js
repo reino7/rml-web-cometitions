@@ -5,7 +5,7 @@ let getGurrentUrlHost = window.location.hostname;
 let getGurrentUrlPort = window.location.port;
 let getGurrentUrlProtocol = window.location.protocol;
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/competitions-schedule';
+let apiUrlPath = '/api/schedule';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
 
 if (getGurrentUrlHost == 'localhost') {
@@ -13,48 +13,48 @@ if (getGurrentUrlHost == 'localhost') {
 }
 
 /* Get forms input Elements by ID*/
-const competitionDateFormInput = document.getElementById('competitionDate');
-const competitionTimeFormInput = document.getElementById('competitionTime');
-const competitionNameFormInput = document.getElementById('competitionName');
-const competitionLocationFormInput = document.getElementById(
-  'competitionLocation'
+const scheduleDateFormInput = document.getElementById('scheduleDate');
+const scheduleTimeFormInput = document.getElementById('scheduleTime');
+const scheduleNameFormInput = document.getElementById('scheduleName');
+const scheduleLocationFormInput = document.getElementById(
+  'scheduleLocation'
 );
-const competitionUmpireFormInput = document.getElementById('competitionUmpire');
-const competitionUmpireContactFormInput = document.getElementById(
-  'competitionUmpireContact'
+const scheduleUmpireFormInput = document.getElementById('scheduleUmpire');
+const scheduleUmpireContactFormInput = document.getElementById(
+  'scheduleUmpireContact'
 );
-const competitionOrganizerFormInput = document.getElementById(
-  'competitionOrganizer'
+const scheduleOrganizerFormInput = document.getElementById(
+  'scheduleOrganizer'
 );
-const competitionOrganizerContactFormInput = document.getElementById(
-  'competitionOrganizerContact'
+const scheduleOrganizerContactFormInput = document.getElementById(
+  'scheduleOrganizerContact'
 );
 
 let messageElement = document.getElementById('message');
 messageElement.style.display = 'none';
 
 function scheduleSendFormData() {
-  console.log('Kuupäev: ' + competitionDateFormInput.value);
-  console.log('Kellaaeg: ' + competitionTimeFormInput.value);
-  console.log('Võistluse nimi: ' + competitionNameFormInput.value);
-  console.log('Võistluskoht: ' + competitionLocationFormInput.value);
-  console.log('Kohtunik: ' + competitionUmpireFormInput.value);
-  console.log('Kontakttelefon: ' + competitionUmpireContactFormInput.value);
-  console.log('Korraldaja: ' + competitionOrganizerFormInput.value);
-  console.log('Kontakttelefon: ' + competitionOrganizerContactFormInput.value);
+  console.log('Kuupäev: ' + scheduleDateFormInput.value);
+  console.log('Kellaaeg: ' + scheduleTimeFormInput.value);
+  console.log('Võistluse nimi: ' + scheduleNameFormInput.value);
+  console.log('Võistluskoht: ' + scheduleLocationFormInput.value);
+  console.log('Kohtunik: ' + scheduleUmpireFormInput.value);
+  console.log('Kontakttelefon: ' + scheduleUmpireContactFormInput.value);
+  console.log('Korraldaja: ' + scheduleOrganizerFormInput.value);
+  console.log('Kontakttelefon: ' + scheduleOrganizerContactFormInput.value);
 
   axios({
     method: 'post',
     url: apiUrl,
     data: {
-      competitionDate: competitionDateFormInput.value,
-      competitionTime: competitionTimeFormInput.value,
-      competitionName: competitionNameFormInput.value,
-      competitionLocation: competitionLocationFormInput.value,
-      competitionUmpire: competitionUmpireFormInput.value,
-      competitionUmpireContact: competitionUmpireContactFormInput.value,
-      competitionOranizer: competitionOrganizerFormInput.value,
-      competitionOranizerContact: competitionOrganizerContactFormInput.value,
+      scheduleDate: scheduleDateFormInput.value,
+      scheduleTime: scheduleTimeFormInput.value,
+      scheduleName: scheduleNameFormInput.value,
+      scheduleLocation: scheduleLocationFormInput.value,
+      scheduleUmpire: scheduleUmpireFormInput.value,
+      scheduleUmpireContact: scheduleUmpireContactFormInput.value,
+      scheduleOranizer: scheduleOrganizerFormInput.value,
+      scheduleOranizerContact: scheduleOrganizerContactFormInput.value,
     },
   })
     .then(function (response) {
@@ -64,7 +64,7 @@ function scheduleSendFormData() {
       // console.log(response.headers);
       // console.log(response.config);
 
-      if (response.statusText === 'OK') {
+      if (response.status === 200) {
         if (messageElement.style.display === 'none') {
           messageElement.style.display = 'block';
           messageElement.innerHTML =
@@ -101,7 +101,7 @@ function scheduleSendFormData() {
 }
 
 // function parseHtmlDateToIso(data) {
-//   // console.log('Kuupäev HTML Input: ' + competitionDateFormInput.value);
+//   // console.log('Kuupäev HTML Input: ' + scheduleDateFormInput.value);
 //   let datePieces = data.split('-');
 
 //   let year = datePieces[0];
