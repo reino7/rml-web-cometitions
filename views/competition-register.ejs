@@ -3,18 +3,18 @@
 
 <head>
   <%- include('./partials/head'); %>
-  <script src="/js/axios-v0.26.0.min.js" defer></script>
-  <script src="/js/competition-register-script.js" defer></script>
+    <script src="/js/axios-v0.26.0.min.js" defer></script>
+    <script src="/js/competition-register-script.js" defer></script>
+
 </head>
 
 <body class="d-flex flex-column h-100">
   <header>
     <%- include('./partials/header'); %>
   </header>
-
-  <main role="main" class="flex-shrink-0">
-    <div class="container-xxl mx-auto mt-5">
-      <div class="my-3">
+  <main id="main" role="main" class="flex-shrink-0 mt-3">
+    <div class="container-fluid">
+      <div class="mb-3 mt-5">
         <h5 class="text-uppercase fw-bold text-center">
           Võistlejate registreerimine
         </h5>
@@ -56,28 +56,28 @@
             </thead>
             <tbody id="reitingsTableBody">
               <% eltlReiting.forEach((item)=>{%>
-              <tr id="<%= item.PERSONID %>">
-                <td class="text-center">
-                  <%= item.RATEORDER %>
-                </td>
-                <td class="text-center">
-                  <%= item.RATEPOINTS %>
-                </td>
-                <td class="text-center">
-                  <%= item.PERSONID %>
-                </td>
-                <td>
-                  <%= item.FIRSTNAME %>
-                  <%= item.FAMNAME %>
-                </td>
-                <td class="text-center">
-                  <%= item.BIRTHDATE %>
-                </td>
-                <td class="text-center">
-                  <%= item.SEX %>
-                </td>
-              </tr>
-              <% }); %>
+                <tr id="<%= item.PERSONID %>">
+                  <td class="text-center">
+                    <%= item.RATEORDER %>
+                  </td>
+                  <td class="text-center">
+                    <%= item.RATEPOINTS %>
+                  </td>
+                  <td class="text-center">
+                    <%= item.PERSONID %>
+                  </td>
+                  <td>
+                    <%= item.FIRSTNAME %>
+                      <%= item.FAMNAME %>
+                  </td>
+                  <td class="text-center">
+                    <%= item.BIRTHDATE %>
+                  </td>
+                  <td class="text-center">
+                    <%= item.SEX %>
+                  </td>
+                </tr>
+                <% }); %>
             </tbody>
           </table>
         </div>
@@ -91,12 +91,60 @@
               mängijat
             </p>
             <h3 class="text-center">
-              <a class="btn btn-outline-secondary" href="#">
+              <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addPlayerWithoutReiting">
                 <i class="fas fa-plus"></i>
                 &nbsp;Lisa reitinguta mängija
-              </a>
+              </button>
             </h3>
           </div>
+
+          <!-- addPlayerWithoutReiting Modal -->
+          <div class="modal" id="addPlayerWithoutReiting" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addPlayerWithoutReiting" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h5 class="modal-title w-100" id="addPlayerWithoutReiting">Lisa reitinguta mängija</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Loobu"></button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="row my-3 mx-3">
+                    <div class="col">
+                      <label class="fw-bold" for="pwrFirstName">Eesnimi</label>
+                      <input type="text" class="form-control" id="pwrFirstName">
+                    </div>
+                    <div class="col">
+                      <label class="fw-bold" for="pwrLastName">Perekonnanimi</label>
+                      <input type="text" class="form-control" id="pwrLastName">
+                    </div>
+                  </div>
+
+                  <div class="row mt-3 mb-5 mx-3">
+                    <div class="col">
+                      <label class="fw-bold" for="pwrBirthdate">Sünniaeg</label>
+                      <input type="date" class="form-control" id="pwrBirthdate">
+                    </div>
+                    <div class="col">
+                      <label class="fw-bold" for="pwrSex">Sugu</label>
+                      <select class="form-select" id="pwrSex">
+                        <option selected>Vali sugu</option>
+                        <option value="M">Mees</option>
+                        <option value="N">Naine</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="modal-footer text-center">
+                  <div class="w-100">
+                    <!-- <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">Loobu</button> -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="addPlayerWithoutReiting2Table()">Salvesta</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <table class="table table-hover table-bordered me-3" id="registerTableFull">
             <thead class="table-secondary">
               <tr>
@@ -119,9 +167,7 @@
                 <th scope="col">Nimi</th>
                 <th class="text-center" scope="col">Sünniaeg</th>
                 <th class="text-center" scope="col">Sugu</th>
-                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Toimingud">
-                  #
-                </th>
+                <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Toimingud">Toimingud</th>
               </tr>
             </thead>
             <tbody id="registerTableBody"></tbody>

@@ -31,23 +31,72 @@ if (getGurrentUrlHost == 'localhost') {
   apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}${getGurrentUrlPathLastItem}`;
 }
 
+function addPlayerWithoutReiting2Table() {
+  /* Get forms input Elements from addPlayerWithoutReiting Modal*/
+  let pwrFirstNameFormInput = document.getElementById('pwrFirstName');
+  let pwrLastNameFormInput = document.getElementById('pwrLastName');
+  let pwrBirthdateFormInput = document.getElementById('pwrBirthdate');
+  let pwrSexFormInput = document.getElementById('pwrSex');
+
+  console.log('----- Player Without Reiting -----');
+  console.log('Eesnimi: ' + pwrFirstNameFormInput.value);
+  console.log('Perekonnanimi: ' + pwrLastNameFormInput.value);
+  console.log('Sünniaeg: ' + pwrBirthdateFormInput.value);
+  console.log('Sugu: ' + pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value);
+  console.log('----- End -----');
+
+  /* TODO -> push to new obj array */
+  registerTableData.push({
+    rateOrder: 0,
+    ratePoints: 0,
+    personId: 0,
+    firstLastName: pwrFirstNameFormInput.value + ' ' + pwrLastNameFormInput.value,
+    birthdate: pwrBirthdateFormInput.value,
+    sex: pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value,
+  });
+
+  registerTableData.sort( (a, b) => b.ratePoints - a.ratePoints );
+
+  registerTableBody.innerHTML = '';
+
+  for (let i = 0; i < registerTableData.length; i++) {
+    registerTableBody.innerHTML += `
+      <tr id="reg${registerTableData[i].personId}">
+        <td class="text-center">${i + 1}</td>
+        <td class="text-center">${registerTableData[i].rateOrder}</td>
+        <td class="text-center">${registerTableData[i].ratePoints}</td>
+        <td class="text-center">${registerTableData[i].personId}</td>
+        <td>${registerTableData[i].firstLastName}</td>
+        <td class="text-center">${registerTableData[i].birthdate}</td>
+        <td class="text-center">${registerTableData[i].sex}</td>
+        <td class="text-center">
+          <a class="text-danger" onclick="deleteRow()" disabled>
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </td>
+      </tr>
+    `;
+  }
+
+}
+
+/* get  competitionName element from html and display compName from LocalStorage*/
 const competitionName = document.getElementById('competitionName');
 competitionName.innerText = localStorage.getItem('compName')
+
+/* get reiting and reigster table html elements */ 
 const reitingsTableFull = document.getElementById('reitingsTableFull');
 const registerTableBody = document.getElementById('registerTableBody');
+
+/* display the reitings players count */
 const reitingsPlayerCount = document.getElementById('reitingPlayerCount');
 reitingsPlayerCount.innerHTML = reitingsTableFull.rows.length - 1;
 
+let registerTableData = []
 // add EventListener to every row to reitingsTableFull
 // i = 1 skip table header
 for (let i = 1; i < reitingsTableFull.rows.length; i++) {
   reitingsTableFull.rows[i].addEventListener('click', function () {
-    let msg = 'Reit->Reg: ';
-
-    for (let j = 0; j < this.cells.length; j++) {
-      msg += this.cells[j].innerText + ' / ';
-    }
-    let registerTableData = [];
 
     registerTableData.push({
       rateOrder: this.cells[0].innerText,
@@ -57,49 +106,43 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
       birthdate: this.cells[4].innerText,
       sex: this.cells[5].innerText,
     });
-    registerTableData.reverse((a, b) => {
-      return a.ratePoints - b.ratePoints;
-    });
-    console.log(msg);
 
-    console.log(registerTableData);
-    addRow2RegisterTable(registerTableData, registerTableBody.rows.length);
+    
+    registerTableData.sort( (a, b) => b.ratePoints - a.ratePoints );
+    console.table(registerTableData);
+
+    // registered player count
+    const registeredPlayerCount = document.getElementById(
+      'registeredPlayerCount'
+    );
+    registeredPlayerCount.innerHTML = registerTableData.length;
+    registerTableBody.innerHTML = '';
+
+    for (let i = 0; i < registerTableData.length; i++) {
+      registerTableBody.innerHTML += `
+        <tr id="reg${registerTableData[i].personId}">
+          <td class="text-center">${i + 1}</td>
+          <td class="text-center">${registerTableData[i].rateOrder}</td>
+          <td class="text-center">${registerTableData[i].ratePoints}</td>
+          <td class="text-center">${registerTableData[i].personId}</td>
+          <td>${registerTableData[i].firstLastName}</td>
+          <td class="text-center">${registerTableData[i].birthdate}</td>
+          <td class="text-center">${registerTableData[i].sex}</td>
+          <td class="text-center">
+            <a class="text-danger" onclick="deleteRow()" disabled>
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+      `;
+    }
+
   });
 }
 
-function addRow2RegisterTable(data, rowLength) {
-  const table = document.getElementById('registerTableBody');
-  const registeredPlayerCount = document.getElementById(
-    'registeredPlayerCount'
-  );
-  registeredPlayerCount.innerHTML = rowLength + 1;
-
-  // let cell = '';
-
-  // add new row/rida as the last one
-  let row = table.insertRow(rowLength);
-  console.log('Data length ' + data.length);
-  for (let i = 0; i < data.length; i++) {
-    row.innerHTML = `
-      <td class="text-center">${rowLength + 1}</td>
-      <td class="text-center">${data[i].rateOrder}</td>
-      <td class="text-center">${data[i].ratePoints}</td>
-      <td class="text-center">${data[i].personId}</td>
-      <td>${data[i].firstLastName}</td>
-      <td class="text-center">${data[i].birthdate}</td>
-      <td class="text-center">${data[i].sex}</td>
-      <td class="text-center">
-        <a class="text-danger" onclick="deleteRow(${rowLength})">
-          <i class="fas fa-trash-alt"></i>
-        </a>
-      </td>
-    `;
-  }
-}
-
-function deleteRow(rowNo) {
-  console.log('Delete row: ' + rowNo);
-  registerTableBody.deleteRow(rowNo);
+function deleteRow(id, no) {
+  let row = document.getElementById(id)
+  row.deleteRow(no);
 }
 
 function searchTableData() {
@@ -124,136 +167,3 @@ function searchTableData() {
     }
   }
 }
-
-// async function getPlayers() {
-//   try {
-//     const response = await axios.get(apiUrl);
-//     // console.log(response.data.length);
-//     // console.log(response.data[0]);
-//     document.getElementById('playerCount').innerText = response.data.length;
-//     document.getElementById('reitingUpdated').innerText =
-//       response.data[0].value_created;
-//     appendData2reitingsTable(response.data);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-// Display data from API to HTML Tables
-// function appendData2reitingsTable(data) {
-//   const reitingsTableContainer = document.getElementById('reitingsTable');
-
-//   for (let i = 0; i < data.length; i++) {
-//     reitingsTableContainer.innerHTML += `<tr>
-//       <td class="text-center">${data[i].rate_order}</td>
-//       <td class="text-center">${data[i].rate_points}</td>
-//       <td class="text-center">${data[i].person_id}</td>
-//       <td>${data[i].first_name} ${data[i].fam_name}</td>
-//       <td class="text-center">${data[i].birthdate}</td>
-//       <td class="text-center">${data[i].sex}</td>
-
-//     </tr>`;
-//   }
-// }
-
-// getPlayers();
-
-/** EI SAA KASUTADA CHROME Error code: Out of Memory
- * GET Reiting XML file from Eesti Lauatenniseliit
- * https://www.lauatennis.ee/app_partner/app_eltlid_reitinguga_xml.php -> 8393 mängijat
- * https://ristissaar.ee/raplamaalt/app_eltlid_reitinguga_xml.xml -> 10 mängijat testimiseks
- * */
-// fetch('https://www.lauatennis.ee/app_partner/app_eltlid_reitinguga_xml.php')
-//   .then(response => response.text())
-//   .then(data => {
-//     const parser = new DOMParser();
-//     const xml = parser.parseFromString(data, 'text/xml');
-//     return xml;
-//   })
-//   .then(xml => {
-//     const rateOrder = xml.getElementsByTagName('RATEORDER');
-//     const personId = xml.getElementsByTagName('PERSONID');
-//     const firstName = xml.getElementsByTagName('FIRSTNAME');
-//     const famName = xml.getElementsByTagName('FAMNAME');
-//     const birthDate = xml.getElementsByTagName('BIRTHDATE');
-//     const sex = xml.getElementsByTagName('SEX');
-
-//     const reitingsTableContainer = document.getElementById('reitingsTable');
-//     const reitingsTableCount = document.getElementById('reitingsTableCount');
-//     reitingsTableCount.innerHTML = personId.length;
-
-//     for (let i = 0; i < personId.length; i++) {
-//       if (
-//         rateOrder[i].firstChild &&
-//         personId[i].firstChild &&
-//         firstName[i].firstChild &&
-//         famName[i].firstChild &&
-//         birthDate[i].firstChild &&
-//         sex[i].firstChild
-//       ) {
-//         reitingsTableContainer.innerHTML += `
-//           <tr>
-//             <th>${i + 1}</th>
-//             <th>${rateOrder[i].firstChild.nodeValue}</th>            <td>${
-//           personId[i].firstChild.nodeValue
-//         }</td>
-//             <td>${firstName[i].firstChild.nodeValue} ${
-//           famName[i].firstChild.nodeValue
-//         }</td>
-//             <td>${birthDate[i].firstChild.nodeValue}</td>
-//             <td>${sex[i].firstChild.nodeValue}</td>
-//           </tr>`;
-//       } else {
-//         reitingsTableContainer.innerHTML += `
-//         <tr>
-//           <th>${i + 1}</th>
-//           <th>0</th>
-//           <td>${personId[i].firstChild.nodeValue}</td>
-//           <td>${firstName[i].firstChild.nodeValue} ${
-//           famName[i].firstChild.nodeValue
-//         }</td>
-//           <td>${birthDate[i].firstChild.nodeValue}</td>
-//           <td>${sex[i].firstChild.nodeValue}</td>
-//         </tr>`;
-//       }
-//     }
-//   })
-//   .catch(function (err) {
-//     console.log('Viga: ' + err);
-//   });
-
-/** GET Reiting XML file from Eesti Lauatenniseliit
- * https://www.lauatennis.ee/app_partner/app_reiting_xml.php -> 571 mängijat
- * https://ristissaar.ee/raplamaalt/app_eltlid_reitinguga_xml.xml -> 10 mängijat testimiseks
- * */
-// fetch('https://www.lauatennis.ee/app_partner/app_reiting_xml.php')
-//   .then(response => response.text())
-//   .then(data => {
-//     const parser = new DOMParser();
-//     const xml = parser.parseFromString(data, 'text/xml');
-
-//     const rateOrder = xml.getElementsByTagName('rateorder');
-//     const personId = xml.getElementsByTagName('personid');
-//     const firstName = xml.getElementsByTagName('firstname');
-//     const famName = xml.getElementsByTagName('famname');
-//     const birthDate = xml.getElementsByTagName('birthdate');
-//     const sex = xml.getElementsByTagName('sex');
-
-//     console.log(rateOrder[0].firstChild.nodeValue);
-//     const reitingsTableContainer = document.getElementById('reitingsTable');
-//     const reitingsTableCount = document.getElementById('reitingsTableCount');
-
-//     for (let i = 0; i < personId.length; i++) {
-//       reitingsTableCount.innerHTML = i;
-//       reitingsTableContainer.innerHTML += `
-//       <tr>
-//         <th>${rateOrder[i].firstChild.nodeValue}</th>
-//         <td>${personId[i].firstChild.nodeValue}</td>
-//         <td>${firstName[i].firstChild.nodeValue}</td>
-//         <td>${famName[i].firstChild.nodeValue}</td>
-//         <td>${birthDate[i].firstChild.nodeValue}</td>
-//         <td>${sex[i].firstChild.nodeValue}</td>
-//       </tr>`;
-//     }
-//   })
-//   .catch(console.error);
