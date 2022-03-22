@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 const apiSchedule = require('./api/schedule-db');
 const eltlReiting = require('./api/eltl-reiting-db');
 const apiCompetition = require('./api/competition');
+const apiRegistration = require('./api/registration');
 const competitionsGames = require('./api/competitions-games');
 
 /** Route Paths */
@@ -64,6 +65,7 @@ app.set('view engine', 'ejs');
 app.use('/api/schedule', apiSchedule);
 app.use('/api/eltl-reiting', eltlReiting);
 app.use('/api/competition', apiCompetition);
+app.use('/api/registration', apiRegistration);
 app.use('/api/competitions-games', competitionsGames);
 
 /** Define routes */

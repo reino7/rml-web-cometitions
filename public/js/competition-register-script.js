@@ -1,19 +1,8 @@
 'use strict';
-// eltlReitingObj
-
-// Search for post with title == "Guava"
-var __FOUND = -1;
-for (var i = 0; i < eltlReitingObj.length; i++) {
-  if (eltlReitingObj[i].PERSONID == 3000) {
-    // __FOUND is set to the index of the element
-    __FOUND = i;
-    break;
-  }
-}
-
-// On success __FOUND will contain the index of the element
-// On failure it will contain -1
-console.log(__FOUND); // 2
+console.log('----- -----');
+console.log('Võistluse Nimi: ' + localStorage.getItem('compName'))
+console.log('Võistluse ID: ' + localStorage.getItem('compId'))
+console.log('----- -----');
 
 /* local Dev or Test srv URL */
 let getGurrentUrlHost = window.location.hostname;
@@ -45,7 +34,6 @@ function addPlayerWithoutReiting2Table() {
   console.log('Sugu: ' + pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value);
   console.log('----- End -----');
 
-  /* TODO -> push to new obj array */
   registerTableData.push({
     rateOrder: 0,
     ratePoints: 0,
@@ -93,24 +81,39 @@ const reitingsPlayerCount = document.getElementById('reitingPlayerCount');
 reitingsPlayerCount.innerHTML = reitingsTableFull.rows.length - 1;
 
 let registerTableData = []
+let registerTablePersonId = []
+
+
+function find(n){
+  let found = "";
+  found = eltlReitingObj.find(element => parseInt(n));
+  console.log(found);
+  return found;
+}
+
 // add EventListener to every row to reitingsTableFull
 // i = 1 skip table header
 for (let i = 1; i < reitingsTableFull.rows.length; i++) {
   reitingsTableFull.rows[i].addEventListener('click', function () {
 
+    // console.log(this)
     registerTableData.push({
       rateOrder: this.cells[0].innerText,
       ratePoints: this.cells[1].innerText,
-      personId: this.cells[2].innerText,
+      personId: parseInt(this.cells[2].innerText),
       firstLastName: this.cells[3].innerText,
       birthdate: this.cells[4].innerText,
       sex: this.cells[5].innerText,
     });
+    registerTablePersonId.push({
+      personId: parseInt(this.cells[2].innerText)
+    })
 
     
     registerTableData.sort( (a, b) => b.ratePoints - a.ratePoints );
+    console.table(registerTablePersonId);
     console.table(registerTableData);
-
+    
     // registered player count
     const registeredPlayerCount = document.getElementById(
       'registeredPlayerCount'
@@ -120,7 +123,7 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
 
     for (let i = 0; i < registerTableData.length; i++) {
       registerTableBody.innerHTML += `
-        <tr id="reg${registerTableData[i].personId}">
+        <tr id="reg${registerTableData[i].personId}" class="">
           <td class="text-center">${i + 1}</td>
           <td class="text-center">${registerTableData[i].rateOrder}</td>
           <td class="text-center">${registerTableData[i].ratePoints}</td>
@@ -129,7 +132,7 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
           <td class="text-center">${registerTableData[i].birthdate}</td>
           <td class="text-center">${registerTableData[i].sex}</td>
           <td class="text-center">
-            <a class="text-danger" onclick="deleteRow()" disabled>
+            <a class="text-danger" onclick="deleteRow(this)">
               <i class="fas fa-trash-alt"></i>
             </a>
           </td>
@@ -140,10 +143,22 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
   });
 }
 
-function deleteRow(id, no) {
-  let row = document.getElementById(id)
-  row.deleteRow(no);
+
+
+function deleteRow(btn) {
+  let id = btn.parentNode.parentNode.id;
+  console.log(id);
+  let row = btn.parentNode.parentNode;
+  console.log(row);
+  // row.parentNode.removeChild(row);
+
 }
+
+// function deleteRow(id) {
+//   console.log(id)
+//   // let row = document.getElementById(id.toString());
+//   // row.classList.add("visually-hidden");
+// }
 
 function searchTableData() {
   let input, filter, table, tr, td, cell, i, j;
