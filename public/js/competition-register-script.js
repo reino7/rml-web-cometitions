@@ -13,60 +13,14 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
   getGurrentUrlPath.lastIndexOf('/') + 1
 );
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/eltl-reiting/';
+let apiUrlPath = '/api/registration/';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}${getGurrentUrlPathLastItem}`;
 
 if (getGurrentUrlHost == 'localhost') {
   apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}${getGurrentUrlPathLastItem}`;
 }
 
-function addPlayerWithoutReiting2Table() {
-  /* Get forms input Elements from addPlayerWithoutReiting Modal*/
-  let pwrFirstNameFormInput = document.getElementById('pwrFirstName');
-  let pwrLastNameFormInput = document.getElementById('pwrLastName');
-  let pwrBirthdateFormInput = document.getElementById('pwrBirthdate');
-  let pwrSexFormInput = document.getElementById('pwrSex');
 
-  console.log('----- Player Without Reiting -----');
-  console.log('Eesnimi: ' + pwrFirstNameFormInput.value);
-  console.log('Perekonnanimi: ' + pwrLastNameFormInput.value);
-  console.log('Sünniaeg: ' + pwrBirthdateFormInput.value);
-  console.log('Sugu: ' + pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value);
-  console.log('----- End -----');
-
-  registerTableData.push({
-    rateOrder: 0,
-    ratePoints: 0,
-    personId: 0,
-    firstLastName: pwrFirstNameFormInput.value + ' ' + pwrLastNameFormInput.value,
-    birthdate: pwrBirthdateFormInput.value,
-    sex: pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value,
-  });
-
-  registerTableData.sort( (a, b) => b.ratePoints - a.ratePoints );
-
-  registerTableBody.innerHTML = '';
-
-  for (let i = 0; i < registerTableData.length; i++) {
-    registerTableBody.innerHTML += `
-      <tr id="reg${registerTableData[i].personId}">
-        <td class="text-center">${i + 1}</td>
-        <td class="text-center">${registerTableData[i].rateOrder}</td>
-        <td class="text-center">${registerTableData[i].ratePoints}</td>
-        <td class="text-center">${registerTableData[i].personId}</td>
-        <td>${registerTableData[i].firstLastName}</td>
-        <td class="text-center">${registerTableData[i].birthdate}</td>
-        <td class="text-center">${registerTableData[i].sex}</td>
-        <td class="text-center">
-          <a class="text-danger" onclick="deleteRow()" disabled>
-            <i class="fas fa-trash-alt"></i>
-          </a>
-        </td>
-      </tr>
-    `;
-  }
-
-}
 
 /* get  competitionName element from html and display compName from LocalStorage*/
 const competitionName = document.getElementById('competitionName');
@@ -81,16 +35,58 @@ const registerTableBody = document.getElementById('registerTableBody');
 const reitingsPlayerCount = document.getElementById('reitingPlayerCount');
 reitingsPlayerCount.innerHTML = reitingsTableFull.rows.length - 1;
 
+let messageElement = document.getElementById('message');
+messageElement.style.display = 'none';
 
 let registerTableData = []
-let registerTablePersonId = []
 let rowIndexValue;
 
-function find(n){
-  let found = "";
-  found = eltlReitingObj.find(element => parseInt(n));
-  console.log(found);
-  return found;
+function idForPlayerWithoutReiting() {
+  if (localStorage.getItem('lastPlayerWithoutId')) {
+    const lastPlayerWithoutId = parseInt(localStorage.getItem('lastPlayerWithoutId')) +1;
+    localStorage.setItem('lastPlayerWithoutId', lastPlayerWithoutId)
+    return lastPlayerWithoutId;
+  } else {
+    const lastPlayerWithoutId = 100000;
+    localStorage.setItem('lastPlayerWithoutId', lastPlayerWithoutId)
+    return lastPlayerWithoutId;
+  }
+}
+
+function addPlayerWithoutReiting2Table() {
+  /* Get forms input Elements from addPlayerWithoutReiting Modal*/
+  let pwrFirstNameFormInput = document.getElementById('pwrFirstName');
+  let pwrLastNameFormInput = document.getElementById('pwrLastName');
+  let pwrBirthdateFormInput = document.getElementById('pwrBirthdate');
+  let pwrSexFormInput = document.getElementById('pwrSex');
+  let playerWithoutReitingPersonId = idForPlayerWithoutReiting();
+
+  console.log('----- Player Without Reiting -----');
+  console.log('playerWithoutReitingPersonId: ' + playerWithoutReitingPersonId);
+  console.log('Eesnimi: ' + (pwrFirstNameFormInput.value).toUpperCase());
+  console.log('Perekonnanimi: ' + (pwrLastNameFormInput.value).toUpperCase());
+  console.log('Sünniaeg: ' + pwrBirthdateFormInput.value);
+  console.log('Sugu: ' + pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value);
+  console.log('----- End -----');
+
+  /* array to show in the registerTableBody */
+  registerTableData.push({
+    rateOrder: 0,
+    ratePoints: 0,
+    personId: playerWithoutReitingPersonId,
+    firstName: (pwrFirstNameFormInput.value).toUpperCase(),
+    famName: (pwrLastNameFormInput.value).toUpperCase(),
+    birthdate: pwrBirthdateFormInput.value,
+    sex: pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value,
+    compId: localStorage.getItem('compId')
+  });
+
+  registerTableData.sort( (a, b) => b.ratePoints - a.ratePoints );
+
+  reloadRows()
+  
+  console.table(registerTableData);
+
 }
 
 function countRegisteredPlayers(){
@@ -126,7 +122,8 @@ function reloadRows() {
         <td class="text-center">${registerTableData[i].rateOrder}</td>
         <td class="text-center">${registerTableData[i].ratePoints}</td>
         <td class="text-center">${registerTableData[i].personId}</td>
-        <td>${registerTableData[i].firstLastName}</td>
+        <td>${registerTableData[i].firstName}</td>
+        <td>${registerTableData[i].famName}</td>
         <td class="text-center">${registerTableData[i].birthdate}</td>
         <td class="text-center">${registerTableData[i].sex}</td>
         <td class="text-center">
@@ -147,27 +144,89 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
     /* display registered player count */
     countRegisteredPlayers();
 
-    // console.log(this)
+    /* needs furder testing before use
+    console.log(this.cells[2].innerText);
+    let findPersonId = Object.values(eltlReitingObj).find(obj => {
+      return obj.PERSONID == parseInt(this.cells[2].innerText);
+    });
+    console.log(findPersonId);
+    registerTableData.push(findPersonId)
+    */
+    if (this.cells[0].innerText == '' && this.cells[1].innerText == '') {
+      this.cells[0].innerText = 0;
+      this.cells[1].innerText = 0;
+    }
+    /* array to show in the registerTableBody */
     registerTableData.push({
       rateOrder: this.cells[0].innerText,
       ratePoints: this.cells[1].innerText,
       personId: parseInt(this.cells[2].innerText),
-      firstLastName: this.cells[3].innerText,
-      birthdate: this.cells[4].innerText,
-      sex: this.cells[5].innerText,
+      firstName: this.cells[3].innerText,
+      famName: this.cells[4].innerText,
+      birthdate: this.cells[5].innerText,
+      sex: this.cells[6].innerText,
+      compId: localStorage.getItem('compId')
     });
-    // registerTablePersonId.push({
-    //   personId: parseInt(this.cells[2].innerText),
-    // });
 
     registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
-    // console.table(registerTablePersonId);
     console.table(registerTableData);
 
     reloadRows()
-    // deleteRow()
 
   });
+}
+
+function registerPlayers() {
+  console.log('Data 2 Axios');
+  console.table(registerTableData);
+  
+  axios({
+    method: 'post',
+    url: apiUrl,
+    data: registerTableData,
+  })
+    .then(function (response) {
+      // console.log(response.data);
+      console.log(response.status);
+      console.log(response.statusText);
+      // console.log(response.headers);
+      // console.log(response.config);
+
+      if (response.status === 200) {
+        if (messageElement.style.display === 'none') {
+          messageElement.style.display = 'block';
+          messageElement.innerHTML =
+            '<div class="alert alert-success text-center">Registreeritud mängijad salvestatud</div>';
+          console.log('Registreeritud mängijad salvestatud');
+          // setTimeout(() => {  window.location.href = "/voistlus/mangud/"; }, 2000); // redirect after 2 seconds
+        } else {
+          if (messageElement.style.display === 'none') {
+            messageElement.style.display = 'block';
+            messageElement.innerHTML =
+              '<div class="alert alert-danger text-center">Registreeritud mängijaid ei salvestatud</div>';
+            console.log('Registreeritud mängijaid ei salvestatud');
+          }
+        }
+      }
+    })
+    .catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        // console.log('Error', error.message);
+      }
+      // console.log(error.config);
+    });
 }
 
 

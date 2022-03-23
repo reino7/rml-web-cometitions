@@ -49,7 +49,8 @@
                   title="Eesti Lauatennise Liidu võistleja ID">
                   ELTLID
                 </th>
-                <th scope="col">Nimi</th>
+                <th scope="col">Eesnimi</th>
+                <th scope="col">Perekonnanimi</th>
                 <th class="text-center" scope="col">Sünniaeg</th>
                 <th class="text-center" scope="col">Sugu</th>
               </tr>
@@ -68,7 +69,9 @@
                   </td>
                   <td>
                     <%= item.FIRSTNAME %>
-                      <%= item.FAMNAME %>
+                  </td>
+                  <td>
+                    <%= item.FAMNAME %>
                   </td>
                   <td class="text-center">
                     <%= item.BIRTHDATE %>
@@ -164,7 +167,8 @@
                   title="Eesti Lauatennise Liidu võistleja ID">
                   ELTLID
                 </th>
-                <th scope="col">Nimi</th>
+                <th scope="col">Eesnimi</th>
+                <th scope="col">Perekonnanimi</th>
                 <th class="text-center" scope="col">Sünniaeg</th>
                 <th class="text-center" scope="col">Sugu</th>
                 <th class="text-center" scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Toimingud">#</th>
@@ -173,9 +177,10 @@
             <tbody id="registerTableBody"></tbody>
           </table>
           <div class="my-4 text-center">
-            <a class="btn btn-secondary" href="/voistlus/mangud">
+            <span id="message" class="my-0"></span>
+            <button class="btn btn-secondary" onclick="registerPlayers()">
               Sisesta registreeritud mängijad võistlustabelisse
-            </a>
+            </button>
           </div>
         </div>
       </div>

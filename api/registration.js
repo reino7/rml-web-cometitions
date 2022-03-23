@@ -13,4 +13,15 @@ router.get('/', async function (req, res, next) {
   }
 });
 
+/* POST */
+router.post('/', async function (req, res, next) {
+  try {
+    res.json(await registrationDb.create(req.body));
+  } catch (err) {
+    console.error(`Error while adding competition registration info`, err.message);
+    next(err);
+  }
+});
+
+
 module.exports = router;
