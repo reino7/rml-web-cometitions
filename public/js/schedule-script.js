@@ -53,7 +53,7 @@ function searchTableData() {
     tr[i].style.display = 'none';
 
     td = tr[i].getElementsByTagName('td');
-    for (let j = 0; j < td.length; j++) {
+    for (j = 0; j < td.length; j++) {
       cell = tr[i].getElementsByTagName('td')[j];
       if (cell) {
         if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {

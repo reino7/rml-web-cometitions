@@ -12,6 +12,27 @@ router.get('/', async function (req, res, next) {
   }
 });
 
+/* GET by ID */
+router.get('/:competitionId', async function (req, res, next) {
+  try {
+    const id = req.params.competitionId;
+    const competitionsData = await competitionDb.getMultiple(
+      req.query.page
+    );
+
+    const competition = competitionsData.find(
+      competition => competition.comp_id === id
+    );
+    if (!competition) {
+      return res.status(404).send('Competition not found');
+    }
+    res.json(competition);
+  } catch (err) {
+    console.error(`Error while getting competition by Id`, err.message);
+    next(err);
+  }
+});
+
 /* POST */
 router.post('/', async function (req, res, next) {
   try {

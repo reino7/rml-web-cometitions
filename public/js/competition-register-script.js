@@ -156,23 +156,40 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
       this.cells[0].innerText = 0;
       this.cells[1].innerText = 0;
     }
-    /* array to show in the registerTableBody */
-    registerTableData.push({
-      rateOrder: this.cells[0].innerText,
-      ratePoints: this.cells[1].innerText,
-      personId: parseInt(this.cells[2].innerText),
-      firstName: this.cells[3].innerText,
-      famName: this.cells[4].innerText,
-      birthdate: this.cells[5].innerText,
-      sex: this.cells[6].innerText,
-      compId: localStorage.getItem('compId')
-    });
 
-    registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
-    console.table(registerTableData);
+    // registerTableData.find(function(elem) { 
+    //   if(elem.personID === parseInt(this.cells[2].innerText)) {
+    //     alert(parseInt(this.cells[2].innerText))
+    //   }
+    // })
+    /* find personId from registerTableData array */
+    let personIdInnerText = parseInt(this.cells[2].innerText);
+    let personIdFound = registerTableData.find(function(elem) {
+      if (elem.personId === personIdInnerText) {
+        return true;
+      }
+    })
 
-    reloadRows()
+    /* if clicked personId is not in registerTableData array then push it */
+    if (personIdFound === undefined) {
+      /* array to show in the registerTableBody */
+      registerTableData.push({
+        rateOrder: this.cells[0].innerText,
+        ratePoints: this.cells[1].innerText,
+        personId: parseInt(this.cells[2].innerText),
+        firstName: this.cells[3].innerText,
+        famName: this.cells[4].innerText,
+        birthdate: this.cells[5].innerText,
+        sex: this.cells[6].innerText,
+        compId: localStorage.getItem('compId'),
+      });
 
+      registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
+      console.table(registerTableData);
+  
+      reloadRows()
+  
+    }
   });
 }
 
@@ -254,7 +271,11 @@ function searchTableData() {
   for (i = 1; i < tr.length; i++) {
     // Hide the row initially.
     tr[i].style.display = 'none';
-
+    
+    // very slow, with 8k+ rows
+    // if(tr[i].innerText.toUpperCase().replaceAll("\n", "").replaceAll(" ", "").indexOf(filter.replaceAll(" ", "")) > -1) {
+    //   tr[i].style.display = '';
+    // }
     td = tr[i].getElementsByTagName('td');
     for (j = 0; j < td.length; j++) {
       cell = tr[i].getElementsByTagName('td')[j];
