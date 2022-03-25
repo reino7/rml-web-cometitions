@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="h-100 wxauktc idc0_332" lang="et">
+  <head>
+    <%- include('./partials/head'); %>
+    <script src="/js/moment-v2.29.1.js" defer></script>
+    <script src="/js/competition-script.js" defer></script>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header><%- include('./partials/header'); %></header>
+
+    <main class="flex-shrink-0">
+      <div class="container">
+        <div>
+          <h5 class="text-uppercase fw-bold text-center mb-3">Võistlused</h5>
+        </div>
+
+        <table
+          class="table table-responsive table-striped table-bordered me-4"
+          id="table"
+        >
+          <thead class="table-secondary">
+            <tr>
+              <th class="text-center">Kuupäev</th>
+              <th>Võistluse nimetus</th>
+              <th>Tulemused</th>
+            </tr>
+          </thead>
+
+          <tbody id="competitionsTable"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light border-top">
+      <%- include('./partials/footer'); %>
+    </footer>
+  </body>
+</html>

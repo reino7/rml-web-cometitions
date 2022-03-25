@@ -6,11 +6,16 @@ router.use(function (req, res, next) {
   next();
 });
 
+router.route('/').get((req, res) => {
+  res.render('competition');
+});
+
 router.route('/lisa').get((req, res) => {
   res.render('competition-add');
 });
 
-router.route('/registreeri').get((req, res) => {
+router.route('/registreeri/:id').get((req, res) => {
+  // res.send(req.params.id);
   /**  Competitions Reiting Data Json file for API */
   let reiting = './public/app_eltlid_reitinguga.json';
   let reitingJson = JSON.parse(fs.readFileSync(reiting, 'utf-8'));
@@ -21,27 +26,27 @@ router.route('/registreeri').get((req, res) => {
   // res.render('competition-register');
 });
 
-router.route('/info').get((req, res) => {
+router.route('/info/:id').get((req, res) => {
   res.render('competition-info');
 });
 
-router.route('/paigutus').get((req, res) => {
+router.route('/paigutus/:id').get((req, res) => {
   res.render('competition-placement');
 });
 
-router.route('/tabel').get((req, res) => {
+router.route('/tabel/:id').get((req, res) => {
   res.render('competition-table');
 });
 
-router.route('/mangud').get((req, res) => {
+router.route('/mangud/:id').get((req, res) => {
   res.render('competition-games');
 });
 
-router.route('/tulemused').get((req, res) => {
+router.route('/tulemused/:id').get((req, res) => {
   res.render('competition-results');
 });
 
-router.route('/auhinnad').get((req, res) => {
+router.route('/auhinnad/:id').get((req, res) => {
   res.render('competition-awards');
 });
 

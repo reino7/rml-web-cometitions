@@ -14,10 +14,10 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
 );
 let apiUrlHost = 'lt-test.ristissaar.ee';
 let apiUrlPath = '/api/registration/';
-let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}${getGurrentUrlPathLastItem}`;
+let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
 
 if (getGurrentUrlHost == 'localhost') {
-  apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}${getGurrentUrlPathLastItem}`;
+  apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}`;
 }
 
 
@@ -215,7 +215,7 @@ function registerPlayers() {
           messageElement.innerHTML =
             '<div class="alert alert-success text-center">Registreeritud mängijad salvestatud</div>';
           console.log('Registreeritud mängijad salvestatud');
-          // setTimeout(() => {  window.location.href = "/voistlus/mangud/"; }, 2000); // redirect after 2 seconds
+          setTimeout(() => {  window.location.href = "/voistlus/mangud/"+localStorage.getItem('compId'); }, 2000); // redirect after 2 seconds
         } else {
           if (messageElement.style.display === 'none') {
             messageElement.style.display = 'block';

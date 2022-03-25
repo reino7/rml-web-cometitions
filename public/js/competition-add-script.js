@@ -81,7 +81,7 @@ function compAddSendFormData() {
           messageElement.innerHTML =
             '<div class="alert alert-success text-center">Võistlus salvestatud</div>';
           console.log('Võistlus salvestatud');
-          setTimeout(() => {  window.location.href = "/voistlus/registreeri/"; }, 2000); // redirect after 2 seconds
+          setTimeout(() => {  window.location.href = "/voistlus/registreeri/" + generateCompetitionId(compAddNameFormInput.value); }, 2000); // redirect after 2 seconds
           
         } else {
           if (messageElement.style.display === 'none') {

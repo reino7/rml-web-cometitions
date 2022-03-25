@@ -4,13 +4,43 @@
 let getGurrentUrlHost = window.location.hostname;
 let getGurrentUrlPort = window.location.port;
 let getGurrentUrlProtocol = window.location.protocol;
+let getGurrentUrlPath = window.location.pathname;
+const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
+  getGurrentUrlPath.lastIndexOf('/') + 1
+);
 let apiUrlHost = 'lt-test.ristissaar.ee';
 let apiUrlPath = '/api/competitions-games';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
-
 if (getGurrentUrlHost == 'localhost') {
   apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}`;
 }
+
+console.log('----- -----');
+console.log('Võistluse Nimi: ' + localStorage.getItem('compName'))
+console.log('Võistluse ID: ' + localStorage.getItem('compId'))
+console.log('Võistluse ID from URL: ' + getGurrentUrlPathLastItem)
+console.log('----- -----');
+
+/* get  competitionName element from html and display compName from LocalStorage*/
+const competitionName = document.getElementById('competitionName');
+competitionName.innerText = localStorage.getItem('compName')
+
+ /* GET data from API */
+let registeredPlayerData = () => {
+  // GET request for remote image in node.js
+  axios({
+    method: 'get',
+    url: `http://localhost:3001/api/registration/1648127928219-raplamaa-seeriavoistluse-1-etapp-kaiu-auhindadele`,
+    responseType: 'json',
+  }).then(function (response) {
+    // console.log(response.statusText);
+    // console.log(response.status);
+    // console.table(response.data);
+    return response.data
+  });
+};
+registeredPlayerData()
+
 // GET competitions list from API
 // fetch('http://localhost:3000/api/competitions-games')
 fetch(apiUrl)
@@ -36,7 +66,7 @@ function appendData2CompetitionGameTable(data) {
         <td>${data[i].player1}</td>
         <td>${data[i].player2}</td>
         <td class="text-center">
-          <select id="compTables" disabled>
+          <select id="compTables">
             <option value="0">&nbsp;</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -51,16 +81,16 @@ function appendData2CompetitionGameTable(data) {
           </select>
         </td>
         <td>
-          <select name="compWinner" id="compWinner" class="w-100" disabled>
-            <option value="0">&nbsp;</option>
-            <option value="1" selected>${data[i].winner}</option>
-            <option value="2">${data[i].player2}</option>
+          <select name="compWinner" id="compWinner" class="w-100">
+            <option value="0" selected>&nbsp;</option>
+            <option value="1"></option>
+            <option value="2"></option>
           </select>
         </td>
         <td class="text-center">
-          <select name="compWinnerScore" id="compWinnerScore" disabled>
-            <option value="0">&nbsp;</option>
-            <option value="1" selected>3:0</option>
+          <select name="compWinnerScore" id="compWinnerScore">
+            <option value="0" selected>&nbsp;</option>
+            <option value="1">3:0</option>
             <option value="2">3:1</option>
             <option value="3">3:2</option>
           </select>
