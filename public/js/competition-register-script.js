@@ -1,7 +1,7 @@
 'use strict';
 console.log('----- -----');
-console.log('Võistluse Nimi: ' + localStorage.getItem('compName'))
-console.log('Võistluse ID: ' + localStorage.getItem('compId'))
+console.log('Võistluse Nimi: ' + localStorage.getItem('compName'));
+console.log('Võistluse ID: ' + localStorage.getItem('compId'));
 console.log('----- -----');
 
 /* local Dev or Test srv URL */
@@ -20,13 +20,11 @@ if (getGurrentUrlHost == 'localhost') {
   apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}`;
 }
 
-
-
 /* get  competitionName element from html and display compName from LocalStorage*/
 const competitionName = document.getElementById('competitionName');
-competitionName.innerText = localStorage.getItem('compName')
+competitionName.innerText = localStorage.getItem('compName');
 
-/* get reiting and reigster table html elements */ 
+/* get reiting and reigster table html elements */
 const reitingsTableFull = document.getElementById('reitingsTableFull');
 const registerTableFull = document.getElementById('registerTableFull');
 const registerTableBody = document.getElementById('registerTableBody');
@@ -38,17 +36,18 @@ reitingsPlayerCount.innerHTML = reitingsTableFull.rows.length - 1;
 let messageElement = document.getElementById('message');
 messageElement.style.display = 'none';
 
-let registerTableData = []
+let registerTableData = [];
 let rowIndexValue;
 
 function idForPlayerWithoutReiting() {
   if (localStorage.getItem('lastPlayerWithoutId')) {
-    const lastPlayerWithoutId = parseInt(localStorage.getItem('lastPlayerWithoutId')) +1;
-    localStorage.setItem('lastPlayerWithoutId', lastPlayerWithoutId)
+    const lastPlayerWithoutId =
+      parseInt(localStorage.getItem('lastPlayerWithoutId')) + 1;
+    localStorage.setItem('lastPlayerWithoutId', lastPlayerWithoutId);
     return lastPlayerWithoutId;
   } else {
     const lastPlayerWithoutId = 100000;
-    localStorage.setItem('lastPlayerWithoutId', lastPlayerWithoutId)
+    localStorage.setItem('lastPlayerWithoutId', lastPlayerWithoutId);
     return lastPlayerWithoutId;
   }
 }
@@ -63,10 +62,12 @@ function addPlayerWithoutReiting2Table() {
 
   console.log('----- Player Without Reiting -----');
   console.log('playerWithoutReitingPersonId: ' + playerWithoutReitingPersonId);
-  console.log('Eesnimi: ' + (pwrFirstNameFormInput.value).toUpperCase());
-  console.log('Perekonnanimi: ' + (pwrLastNameFormInput.value).toUpperCase());
+  console.log('Eesnimi: ' + pwrFirstNameFormInput.value.toUpperCase());
+  console.log('Perekonnanimi: ' + pwrLastNameFormInput.value.toUpperCase());
   console.log('Sünniaeg: ' + pwrBirthdateFormInput.value);
-  console.log('Sugu: ' + pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value);
+  console.log(
+    'Sugu: ' + pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value
+  );
   console.log('----- End -----');
 
   /* array to show in the registerTableBody */
@@ -74,40 +75,38 @@ function addPlayerWithoutReiting2Table() {
     rateOrder: 0,
     ratePoints: 0,
     personId: playerWithoutReitingPersonId,
-    firstName: (pwrFirstNameFormInput.value).toUpperCase(),
-    famName: (pwrLastNameFormInput.value).toUpperCase(),
+    firstName: pwrFirstNameFormInput.value.toUpperCase(),
+    famName: pwrLastNameFormInput.value.toUpperCase(),
     birthdate: pwrBirthdateFormInput.value,
     sex: pwrSexFormInput.options[pwrSexFormInput.selectedIndex].value,
-    compId: localStorage.getItem('compId')
+    compId: localStorage.getItem('compId'),
   });
 
-  registerTableData.sort( (a, b) => b.ratePoints - a.ratePoints );
+  registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
 
-  reloadRows()
-  
+  reloadRows();
+
   console.table(registerTableData);
-
 }
 
-function countRegisteredPlayers(){
+function countRegisteredPlayers() {
   const registeredPlayerCount = document.getElementById(
     'registeredPlayerCount'
   );
   for (let i = 0; i < registerTableFull.rows.length; i++) {
-    return registeredPlayerCount.innerHTML = registerTableFull.rows.length;
+    return (registeredPlayerCount.innerHTML = registerTableFull.rows.length);
   }
 }
 
 function deleteRow() {
   for (let i = 0; i < registerTableFull.rows.length; i++) {
-    registerTableFull.rows[i].addEventListener('click', function() {
+    registerTableFull.rows[i].addEventListener('click', function () {
       rowIndexValue = registerTableFull.rows[i].rowIndex;
-      console.log(rowIndexValue)
-      registerTableFull.deleteRow(rowIndexValue)
-      registerTableData.splice(rowIndexValue-1, 1)
+      console.log(rowIndexValue);
+      registerTableFull.deleteRow(rowIndexValue);
+      registerTableData.splice(rowIndexValue - 1, 1);
       reloadRows();
       console.table(registerTableData);
-
     });
   }
 }
@@ -134,7 +133,6 @@ function reloadRows() {
       </tr>
     `;
   }
-
 }
 
 // add EventListener to every row to reitingsTableFull
@@ -157,18 +155,18 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
       this.cells[1].innerText = 0;
     }
 
-    // registerTableData.find(function(elem) { 
+    // registerTableData.find(function(elem) {
     //   if(elem.personID === parseInt(this.cells[2].innerText)) {
     //     alert(parseInt(this.cells[2].innerText))
     //   }
     // })
     /* find personId from registerTableData array */
     let personIdInnerText = parseInt(this.cells[2].innerText);
-    let personIdFound = registerTableData.find(function(elem) {
+    let personIdFound = registerTableData.find(function (elem) {
       if (elem.personId === personIdInnerText) {
         return true;
       }
-    })
+    });
 
     /* if clicked personId is not in registerTableData array then push it */
     if (personIdFound === undefined) {
@@ -186,9 +184,8 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
 
       registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
       console.table(registerTableData);
-  
-      reloadRows()
-  
+
+      reloadRows();
     }
   });
 }
@@ -196,7 +193,7 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
 function registerPlayers() {
   console.log('Data 2 Axios');
   console.table(registerTableData);
-  
+
   axios({
     method: 'post',
     url: apiUrl,
@@ -215,7 +212,10 @@ function registerPlayers() {
           messageElement.innerHTML =
             '<div class="alert alert-success text-center">Registreeritud mängijad salvestatud</div>';
           console.log('Registreeritud mängijad salvestatud');
-          setTimeout(() => {  window.location.href = "/voistlus/mangud/"+localStorage.getItem('compId'); }, 2000); // redirect after 2 seconds
+          setTimeout(() => {
+            window.location.href =
+              '/voistlus/mangud/' + localStorage.getItem('compId');
+          }, 2000); // redirect after 2 seconds
         } else {
           if (messageElement.style.display === 'none') {
             messageElement.style.display = 'block';
@@ -246,7 +246,6 @@ function registerPlayers() {
     });
 }
 
-
 // function deleteRow(btn) {
 //   let id = btn.parentNode.parentNode.id;
 //   console.log(id);
@@ -271,7 +270,7 @@ function searchTableData() {
   for (i = 1; i < tr.length; i++) {
     // Hide the row initially.
     tr[i].style.display = 'none';
-    
+
     // very slow, with 8k+ rows
     // if(tr[i].innerText.toUpperCase().replaceAll("\n", "").replaceAll(" ", "").indexOf(filter.replaceAll(" ", "")) > -1) {
     //   tr[i].style.display = '';
