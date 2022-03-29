@@ -9,7 +9,7 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
   getGurrentUrlPath.lastIndexOf('/') + 1
 );
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/schedule/';
+let apiUrlPath = '/api/v1/schedule/';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}${getGurrentUrlPathLastItem}`;
 
 if (getGurrentUrlHost == 'localhost') {
@@ -20,16 +20,12 @@ if (getGurrentUrlHost == 'localhost') {
 const scheduleDateFormInput = document.getElementById('scheduleDate');
 const scheduleTimeFormInput = document.getElementById('scheduleTime');
 const scheduleNameFormInput = document.getElementById('scheduleName');
-const scheduleLocationFormInput = document.getElementById(
-  'scheduleLocation'
-);
+const scheduleLocationFormInput = document.getElementById('scheduleLocation');
 const scheduleUmpireFormInput = document.getElementById('scheduleUmpire');
 const scheduleUmpireContactFormInput = document.getElementById(
   'scheduleUmpireContact'
 );
-const scheduleOrganizerFormInput = document.getElementById(
-  'scheduleOrganizer'
-);
+const scheduleOrganizerFormInput = document.getElementById('scheduleOrganizer');
 const scheduleOrganizerContactFormInput = document.getElementById(
   'scheduleOrganizerContact'
 );

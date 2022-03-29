@@ -12,6 +12,7 @@ const config = {
     user: process.env.DB_USER, // database username
     password: process.env.DB_PASSWORD, // database password
     database: process.env.DB_NAME, // database name
+    multipleStatements: true,
   },
   listPerPage: 100,
 };

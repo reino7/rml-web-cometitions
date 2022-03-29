@@ -1,5 +1,4 @@
 /** Imports */
-// require('dotenv').config();
 const config = require('./config/config');
 
 const express = require('express');
@@ -7,10 +6,9 @@ const path = require('path');
 const fs = require('fs');
 const morgan = require('morgan');
 const moment = require('moment-timezone');
-// const bodyParser = require('body-parser');
-// const download = require('download');
 
 const app = express();
+
 /** Static Files */
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -22,8 +20,7 @@ const apiSchedule = require('./api/schedule-db');
 const eltlReiting = require('./api/eltl-reiting-db');
 const apiCompetition = require('./api/competition');
 const apiRegistration = require('./api/registration');
-const competitionsGames = require('./api/competitions-games');
-
+const apiMatch = require('./api/match');
 /** Route Paths */
 const index = require('./routes/index');
 const schedule = require('./routes/schedule');
@@ -61,11 +58,11 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
 /** API routes */
-app.use('/api/schedule', apiSchedule);
-app.use('/api/eltl-reiting', eltlReiting);
-app.use('/api/competition', apiCompetition);
-app.use('/api/registration', apiRegistration);
-app.use('/api/competitions-games', competitionsGames);
+app.use('/api/v1/schedule', apiSchedule);
+app.use('/api/v1/eltl-reiting', eltlReiting);
+app.use('/api/v1/competition', apiCompetition);
+app.use('/api/v1/registration', apiRegistration);
+app.use('/api/v1/match', apiMatch);
 
 /** Define routes */
 app.use('/', index);
@@ -74,13 +71,6 @@ app.use('/voistlus', competition);
 app.use('/kasutajad/toolaud', usersDashboard);
 app.use('/treeningud', trainings);
 app.use('/reitingu-uuendamine', updateReiting);
-
-app.get('/test', (req, res) => {
-  /**  Competitions Schedule Data Json file for API */
-  let reiting = './public/app_eltlid_reitinguga.json';
-  let reitingJson = JSON.parse(fs.readFileSync(reiting, 'utf-8'));
-  res.render('test', { eltlReiting: reitingJson.PERSONS.PERSON });
-});
 
 /** Server listening @ PORT */
 app.listen(config.app.port, () => {

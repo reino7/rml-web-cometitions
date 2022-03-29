@@ -5,7 +5,7 @@ let getGurrentUrlHost = window.location.hostname;
 let getGurrentUrlPort = window.location.port;
 let getGurrentUrlProtocol = window.location.protocol;
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/competition';
+let apiUrlPath = '/api/v1/competition';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
 
 if (getGurrentUrlHost == 'localhost') {
@@ -21,7 +21,9 @@ const compAddUmpireFormInput = document.getElementById('compAddUmpireForm');
 const compAddUmpireContactFormInput = document.getElementById(
   'compAddUmpireContactForm'
 );
-const compAddOrganizerFormInput = document.getElementById('compAddOrganizerForm');
+const compAddOrganizerFormInput = document.getElementById(
+  'compAddOrganizerForm'
+);
 const compAddOrganizerContactFormInput = document.getElementById(
   'compAddOrganizerContactForm'
 );
@@ -30,14 +32,14 @@ let messageElement = document.getElementById('message');
 messageElement.style.display = 'none';
 
 function generateCompetitionId(compName) {
-  compName = compName.toLowerCase() // to lowercase
-  compName = compName.normalize("NFD").replace(/\p{Diacritic}/gu, "") // Unicode property escapes
-  compName = compName.replace("-", "") // remove dash
-  compName = compName.replace(",", "") // remove dot
-  compName = compName.replace(/\./g, "") // remove dot
-  compName = compName.replace(/\s+/g, "-") // remove spaces and replace with dash
-  compName = Date.now() + '-' + compName // add timestamp @ the end of name
-  return compName
+  compName = compName.toLowerCase(); // to lowercase
+  compName = compName.normalize('NFD').replace(/\p{Diacritic}/gu, ''); // Unicode property escapes
+  compName = compName.replace('-', ''); // remove dash
+  compName = compName.replace(',', ''); // remove dot
+  compName = compName.replace(/\./g, ''); // remove dot
+  compName = compName.replace(/\s+/g, '-'); // remove spaces and replace with dash
+  compName = Date.now() + '-' + compName; // add timestamp @ the end of name
+  return compName;
 }
 
 function compAddSendFormData() {
@@ -50,7 +52,10 @@ function compAddSendFormData() {
   console.log('Kontakttelefon: ' + compAddUmpireContactFormInput.value);
   console.log('Korraldaja: ' + compAddOrganizerFormInput.value);
   console.log('Kontakttelefon: ' + compAddOrganizerContactFormInput.value);
-  localStorage.setItem('compId', generateCompetitionId(compAddNameFormInput.value));
+  localStorage.setItem(
+    'compId',
+    generateCompetitionId(compAddNameFormInput.value)
+  );
   localStorage.setItem('compName', compAddNameFormInput.value);
 
   axios({
@@ -81,8 +86,11 @@ function compAddSendFormData() {
           messageElement.innerHTML =
             '<div class="alert alert-success text-center">Võistlus salvestatud</div>';
           console.log('Võistlus salvestatud');
-          setTimeout(() => {  window.location.href = "/voistlus/registreeri/" + generateCompetitionId(compAddNameFormInput.value); }, 2000); // redirect after 2 seconds
-          
+          setTimeout(() => {
+            window.location.href =
+              '/voistlus/registreeri/' +
+              generateCompetitionId(compAddNameFormInput.value);
+          }, 2000); // redirect after 2 seconds
         } else {
           if (messageElement.style.display === 'none') {
             messageElement.style.display = 'block';

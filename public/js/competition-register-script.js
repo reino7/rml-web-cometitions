@@ -13,7 +13,7 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
   getGurrentUrlPath.lastIndexOf('/') + 1
 );
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/registration/';
+let apiUrlPath = '/api/v1/registration/';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
 
 if (getGurrentUrlHost == 'localhost') {

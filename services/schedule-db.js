@@ -1,5 +1,4 @@
 const db = require('./db');
-const helper = require('../helper');
 const config = require('../config/config');
 const moment = require('moment-timezone');
 
@@ -56,9 +55,7 @@ async function update(id, schedule) {
 }
 
 async function remove(id) {
-  const result = await db.query(
-    `DELETE FROM schedule WHERE id=${id}`
-  );
+  const result = await db.query(`DELETE FROM schedule WHERE id=${id}`);
 
   let message = 'Error in deleting competition';
 

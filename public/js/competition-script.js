@@ -5,7 +5,7 @@ let getGurrentUrlHost = window.location.hostname;
 let getGurrentUrlPort = window.location.port;
 let getGurrentUrlProtocol = window.location.protocol;
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/competition';
+let apiUrlPath = '/api/v1/competition';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
 
 if (getGurrentUrlHost == 'localhost') {
@@ -35,11 +35,12 @@ function appendData2CompetitionsTable(data) {
     competitionsTableContainer.innerHTML += `<tr>
       <td class="text-center">${parseDate(data[i].comp_date)}</td>
       <td>${data[i].comp_name}</td>
-      <td><a class="text-underline-hover text-reset text-underline-hover" href="/voistlus/mangud/${data[i].comp_id}">Tulemused</a></td>
+      <td><a class="text-underline-hover text-reset text-underline-hover" href="/voistlus/mangud/${
+        data[i].comp_id
+      }">Tulemused</a></td>
     </tr>`;
   }
 }
-
 
 function parseDate(dateString) {
   /* axios uses JSON.stringify for serialisation and it causes 

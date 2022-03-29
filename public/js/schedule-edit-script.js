@@ -5,7 +5,7 @@ let getGurrentUrlHost = window.location.hostname;
 let getGurrentUrlPort = window.location.port;
 let getGurrentUrlProtocol = window.location.protocol;
 let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/schedule';
+let apiUrlPath = '/api/v1/schedule';
 let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}`;
 
 if (getGurrentUrlHost == 'localhost') {
@@ -35,6 +35,7 @@ function appendData2CompetitionsTable(data) {
   for (let i = 0; i < data.length; i++) {
     competitionsTableContainer.innerHTML += `<tr>
       <td class="text-center">${parseDate(data[i].sche_date)}</td>
+      <td class="text-center">${data[i].sche_time}</td>
       <td>
       ${data[i].sche_name}
       </td>
