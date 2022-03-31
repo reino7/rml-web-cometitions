@@ -34,26 +34,7 @@ router.get('/:competitionId', async function (req, res, next) {
 
 /* GET by competition ID and game ID*/
 router.get('/:competitionId/:matchId', async function (req, res, next) {
-  try {
-    const competitionId = req.params.competitionId;
-    const matchId = req.params.matchId;
-    const competitionsData = await matchDb.getMultiple(req.query.page);
-
-    const competition = competitionsData.filter(
-      competition => competition.comp_id === competitionId
-    );
-
-    const match = competition.find(match => (match.match_id = matchId));
-
-    if (!match) {
-      return res.status(404).send('Match not found');
-    }
-
-    res.json(match);
-  } catch (err) {
-    console.error(`Error while getting competition by Id`, err.message);
-    next(err);
-  }
+  res.json('not working yet');
 });
 
 module.exports = router;

@@ -190,6 +190,12 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
   });
 }
 
+function sleep(duration) {
+  return new Promise(resolve => {
+    setTimeout(resolve, duration);
+  });
+}
+
 function registerPlayers() {
   console.log('Data 2 Axios');
   console.table(registerTableData);
@@ -212,10 +218,11 @@ function registerPlayers() {
           messageElement.innerHTML =
             '<div class="alert alert-success text-center">Registreeritud mängijad salvestatud</div>';
           console.log('Registreeritud mängijad salvestatud');
-          setTimeout(() => {
-            window.location.href =
-              '/voistlus/mangud/' + localStorage.getItem('compId');
-          }, 2000); // redirect after 2 seconds
+          // redirect after 2 seconds
+          // sleep(2000).then(() => {
+          //   window.location.href =
+          //     '/voistlus/mangud/' + localStorage.getItem('compId');
+          // });
         } else {
           if (messageElement.style.display === 'none') {
             messageElement.style.display = 'block';

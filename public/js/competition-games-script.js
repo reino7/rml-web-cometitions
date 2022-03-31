@@ -10,254 +10,356 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
   getGurrentUrlPath.lastIndexOf('/') + 1
 );
 
-let apiUrlHost = 'lt-test.ristissaar.ee';
-let apiUrlPath = '/api/v1/match/';
-let apiUrl = `${getGurrentUrlProtocol}//${apiUrlHost}${apiUrlPath}${getGurrentUrlPathLastItem}`;
+let apiBaseUrl = `${getGurrentUrlProtocol}//lt-test.ristissaar.ee`;
+const apiUrlPathForRegistration = '/api/v1/registration/';
+const apiUrlPathForMatch = '/api/v1/match/';
+
 if (getGurrentUrlHost == 'localhost') {
-  apiUrl = `${getGurrentUrlProtocol}//localhost:${getGurrentUrlPort}${apiUrlPath}${getGurrentUrlPathLastItem}`;
+  apiBaseUrl = `${getGurrentUrlProtocol}//${getGurrentUrlHost}:${getGurrentUrlPort}`;
 }
+
+let apiUrlForRegistration = `${apiBaseUrl}${apiUrlPathForRegistration}${getGurrentUrlPathLastItem}`;
+let apiUrlForMatch = `${apiBaseUrl}${apiUrlPathForMatch}${getGurrentUrlPathLastItem}`;
 
 console.log('----- -----');
 console.log('Võistluse Nimi: ' + localStorage.getItem('compName'));
 console.log('Võistluse ID: ' + localStorage.getItem('compId'));
 console.log('Võistluse ID from URL: ' + getGurrentUrlPathLastItem);
-console.log('API URL: ' + apiUrl);
+console.log('Reg API URL: ' + apiUrlForRegistration);
+console.log('Match API URL: ' + apiUrlForMatch);
 console.log('----- -----');
 
 /* get  competitionName element from html and display compName from LocalStorage*/
 const competitionName = document.getElementById('competitionName');
 competitionName.innerText = localStorage.getItem('compName');
 
-/* GET data from API */
-axios({
-  method: 'get',
-  url: apiUrl,
-  responseType: 'json',
-})
-  .then(function (response) {
-    console.log(response.statusText);
-    console.log(response.status);
-    console.table(response.data);
-    return response;
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .then(function (response) {
-    // always executed
-    const compGameTableBody = document.getElementById('compGameTableBody');
-    compGameTableBody.innerHTML = '';
-    for (let i = 0; i < response.data.length; i++) {
-      compGameTableBody.innerHTML += `
-        <tr id="${response.data[i].match_id}">
-          <td class="text-center">${response.data[i].match_id}</td>
-          <td id="" data-bs-toggle="tooltip" data-bs-placement="top" title="ID">${response.data[i].player1}</td>
-          <td id="" data-bs-toggle="tooltip" data-bs-placement="top" title="ID ">${response.data[i].player2}</td>
-          <td class="text-center">
-            <select id="gameTables">
-              <option value="0">&nbsp;</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </td>
-          <td>
-            <select id="${response.data[i].match_id}gameWinner" class="w-100">
-              <option value="0" selected>&nbsp;</option>
-              <option value="${response.data[i].player1}" label="${response.data[i].player1}">${response.data[i].player1}</option>
-              <option value="${response.data[i].player2}" label="${response.data[i].player2}">${response.data[i].player2}</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <select id="${response.data[i].match_id}gameWinnerScore">
-              <option value="0" selected>&nbsp;</option>
-              <option value="3:0">3:0</option>
-              <option value="3:1">3:1</option>
-              <option value="3:2">3:2</option>
-              <option value="w:o">w:o</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <ul class="m-0 p-0">
-              <!-- <li class="list-inline-item">
-                <button class="btn btn-outline-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-                  data-placement="top" title="Muuda"><i class="fa fa-edit"></i></button>
-              </li> -->
-              <li class="list-inline-item">
-                <a class="btn btn-outline-secondary btn-sm rounded-0" data-toggle="tooltip"
-                  data-placement="top" title="Salvesta"><i class="fas fa-save" onclick="saveGameResults(${response.data[i].match_id})"></i></a>
-              </li>
-            </ul>
-          </td>
-        </tr>
-      `;
+/* GET data from API-s */
+function getData() {
+  axios
+    .all([axios.get(apiUrlForRegistration), axios.get(apiUrlForMatch)])
+    .then(response => {
+      console.table(response[0].data);
+      console.table(response[1].data);
+      /* Registration API Data*/
+      const registrationData = response[0].data;
+      /* Match API Data*/
+      const matchData = response[1].data;
+
+      insertTable(registrationData, matchData);
+    })
+    .catch(error => console.log(error));
+}
+getData();
+
+function insertTable(registrationData, matchData) {
+  const compGameTableBody = document.getElementById('compGameTableBody');
+  compGameTableBody.innerHTML = '';
+  for (let i = 0; i < matchData.length; i++) {
+    if (matchData[i].player1 === null) {
+      matchData[i].player1 = '';
     }
+    if (matchData[i].player2 === null) {
+      matchData[i].player2 = '';
+    }
+    if (matchData[i].match_id === null) {
+      matchData[i].match_id = '';
+    }
+
+    compGameTableBody.innerHTML += `
+    <tr id="${matchData[i].match_id}">
+      <td class="text-center">${matchData[i].match_id}</td>
+      <td id="${
+        matchData[i].match_id + 'player1'
+      }" data-bs-toggle="tooltip" data-bs-placement="top" title="ID"></td>
+      <td id="${
+        matchData[i].match_id + 'player2'
+      }" data-bs-toggle="tooltip" data-bs-placement="top" title="ID "></td>
+      <td class="text-center">
+        <select id="gameTables">
+          <option value="0">&nbsp;</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </td>
+      <td>
+        <select id="${matchData[i].match_id}matchWinner" class="w-100">
+          <option value="0" selected>&nbsp;</option>
+          <option value="" label=""></option>
+          <option value="" label=""></option>
+        </select>
+      </td>
+      <td class="text-center">
+        <select id="${matchData[i].match_id}matchWinnerScore">
+          <option value="0" selected>&nbsp;</option>
+          <option value="1">3:0</option>
+          <option value="2">3:1</option>
+          <option value="3">3:2</option>
+          <option value="4">w:o</option>
+        </select>
+      </td>
+      <td class="text-center">
+        <ul class="m-0 p-0">
+          <!-- <li class="list-inline-item">
+            <button class="btn btn-outline-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
+              data-placement="top" title="Muuda"><i class="fa fa-edit"></i></button>
+          </li> -->
+          <li class="list-inline-item">
+            <a id="saveMatch${
+              matchData[i].match_id
+            }" class="btn btn-outline-secondary btn-sm rounded-0" data-toggle="tooltip"
+              data-placement="top" title="Salvesta"><i class="fas fa-save"></i></a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  `;
+  }
+
+  /* Game 101 -> 1 vs 16 */
+  const g101player1Element = document.getElementById('101player1');
+  const g101player2Element = document.getElementById('101player2');
+  const g101matchWinnerElement = document.getElementById('101matchWinner');
+  const g101Player1Id = registrationData[0].person_id;
+  const g101Player2Id = registrationData[15].person_id;
+  const g101Player1Name =
+    registrationData[0].first_name + ' ' + registrationData[0].fam_name;
+  const g101Player2Name =
+    registrationData[15].first_name + ' ' + registrationData[15].fam_name;
+
+  // set title as player id
+  g101player1Element.title = g101Player1Id;
+  g101player2Element.title = g101Player2Id;
+  // set cell value to player first- and lastname
+  g101player1Element.innerText = g101Player1Name;
+  g101player2Element.innerText = g101Player2Name;
+  // set dropdown options to player first- and lastname, add player id as value
+  g101matchWinnerElement.options[1] = new Option(
+    g101Player1Name,
+    g101Player1Id,
+    false,
+    false
+  );
+  g101matchWinnerElement.options[2] = new Option(
+    g101Player2Name,
+    g101Player2Id,
+    false,
+    false
+  );
+
+  /* Game 102 -> 9 vs 8 */
+  // set title as player id
+  document.getElementById('102player1').title = registrationData[8].person_id;
+  document.getElementById('102player2').title = registrationData[7].person_id;
+  // set cell value to player first- and lastname
+  document.getElementById('102player1').innerText =
+    registrationData[8].first_name + ' ' + registrationData[8].fam_name;
+  document.getElementById('102player2').innerText =
+    registrationData[7].first_name + ' ' + registrationData[7].fam_name;
+  // set dropdown options to player first- and lastname, add player id as value
+  document.getElementById('102matchWinner').options[1] = new Option(
+    registrationData[8].first_name + ' ' + registrationData[8].fam_name,
+    registrationData[8].person_id,
+    false,
+    false
+  );
+  document.getElementById('102matchWinner').options[2] = new Option(
+    registrationData[7].first_name + ' ' + registrationData[7].fam_name,
+    registrationData[7].person_id,
+    false,
+    false
+  );
+
+  /* Game 103 -> 5 vs 12 */
+  // set title as player id
+  document.getElementById('103player1').title = registrationData[4].person_id;
+  document.getElementById('103player2').title = registrationData[11].person_id;
+  // set cell value to player first- and lastname
+  document.getElementById('103player1').innerText =
+    registrationData[4].first_name + ' ' + registrationData[4].fam_name;
+  document.getElementById('103player2').innerText =
+    registrationData[11].first_name + ' ' + registrationData[11].fam_name;
+  // set dropdown options to player first- and lastname, add player id as value
+  document.getElementById('103matchWinner').options[1] = new Option(
+    registrationData[4].first_name + ' ' + registrationData[4].fam_name,
+    registrationData[4].person_id,
+    false,
+    false
+  );
+  document.getElementById('103matchWinner').options[2] = new Option(
+    registrationData[11].first_name + ' ' + registrationData[11].fam_name,
+    registrationData[11].person_id,
+    false,
+    false
+  );
+
+  /* Game 104 -> 13 vs 4 */
+  // set title as player id
+  document.getElementById('104player1').title = registrationData[12].person_id;
+  document.getElementById('104player2').title = registrationData[3].person_id;
+  // set cell value to player first- and lastname
+  document.getElementById('104player1').innerText =
+    registrationData[12].first_name + ' ' + registrationData[12].fam_name;
+  document.getElementById('104player2').innerText =
+    registrationData[3].first_name + ' ' + registrationData[3].fam_name;
+  // set dropdown options to player first- and lastname, add player id as value
+  document.getElementById('104matchWinner').options[1] = new Option(
+    registrationData[12].first_name + ' ' + registrationData[12].fam_name,
+    registrationData[12].person_id,
+    false,
+    false
+  );
+  document.getElementById('104matchWinner').options[2] = new Option(
+    registrationData[3].first_name + ' ' + registrationData[3].fam_name,
+    registrationData[3].person_id,
+    false,
+    false
+  );
+
+  /* Game 105 -> 3 vs 14 */
+  // set title as player id
+  document.getElementById('105player1').title = registrationData[2].person_id;
+  document.getElementById('105player2').title = registrationData[13].person_id;
+  // set cell value to player first- and lastname
+  document.getElementById('105player1').innerText =
+    registrationData[2].first_name + ' ' + registrationData[2].fam_name;
+  document.getElementById('105player2').innerText =
+    registrationData[13].first_name + ' ' + registrationData[13].fam_name;
+  // set dropdown options to player first- and lastname, add player id as value
+  document.getElementById('105matchWinner').options[1] = new Option(
+    registrationData[2].first_name + ' ' + registrationData[2].fam_name,
+    registrationData[2].person_id,
+    false,
+    false
+  );
+  document.getElementById('105matchWinner').options[2] = new Option(
+    registrationData[13].first_name + ' ' + registrationData[13].fam_name,
+    registrationData[13].person_id,
+    false,
+    false
+  );
+
+  /* Game 106 -> 11 vs 6 */
+  // set title as player id
+  document.getElementById('106player1').title = registrationData[10].person_id;
+  document.getElementById('106player2').title = registrationData[5].person_id;
+  // set cell value to player first- and lastname
+  document.getElementById('106player1').innerText =
+    registrationData[10].first_name + ' ' + registrationData[10].fam_name;
+  document.getElementById('106player2').innerText =
+    registrationData[5].first_name + ' ' + registrationData[5].fam_name;
+  // set dropdown options to player first- and lastname, add player id as value
+  document.getElementById('106matchWinner').options[1] = new Option(
+    registrationData[10].first_name + ' ' + registrationData[10].fam_name,
+    registrationData[10].person_id,
+    false,
+    false
+  );
+  document.getElementById('106matchWinner').options[2] = new Option(
+    registrationData[5].first_name + ' ' + registrationData[5].fam_name,
+    registrationData[5].person_id,
+    false,
+    false
+  );
+
+  /* Game 107 -> 7 vs 10 */
+  // set title as player id
+  document.getElementById('107player1').title = registrationData[6].person_id;
+  document.getElementById('107player2').title = registrationData[9].person_id;
+  // set cell value to player first- and lastname
+  document.getElementById('107player1').innerText =
+    registrationData[6].first_name + ' ' + registrationData[6].fam_name;
+  document.getElementById('107player2').innerText =
+    registrationData[9].first_name + ' ' + registrationData[9].fam_name;
+  // set dropdown options to player first- and lastname, add player id as value
+  document.getElementById('107matchWinner').options[1] = new Option(
+    registrationData[6].first_name + ' ' + registrationData[6].fam_name,
+    registrationData[6].person_id,
+    false,
+    false
+  );
+  document.getElementById('107matchWinner').options[2] = new Option(
+    registrationData[9].first_name + ' ' + registrationData[9].fam_name,
+    registrationData[9].person_id,
+    false,
+    false
+  );
+
+  /* Game 108 -> 15 vs 2 */
+  // set title as player id
+  document.getElementById('108player1').title = registrationData[14].person_id;
+  document.getElementById('108player2').title = registrationData[1].person_id;
+  // set cell value to player first- and lastname
+  document.getElementById('108player1').innerText =
+    registrationData[14].first_name + ' ' + registrationData[14].fam_name;
+  document.getElementById('108player2').innerText =
+    registrationData[1].first_name + ' ' + registrationData[1].fam_name;
+  // set dropdown options to player first- and lastname, add player id as value
+  document.getElementById('108matchWinner').options[1] = new Option(
+    registrationData[14].first_name + ' ' + registrationData[14].fam_name,
+    registrationData[14].person_id,
+    false,
+    false
+  );
+  document.getElementById('108matchWinner').options[2] = new Option(
+    registrationData[1].first_name + ' ' + registrationData[1].fam_name,
+    registrationData[1].person_id,
+    false,
+    false
+  );
+
+  /* add addEventListener to save button */
+  document.getElementById('saveMatch101').addEventListener('click', () => {
+    let g101matchId = document.getElementById('101').cells[0].innerText;
+    let g101matchWinnerFullName =
+      g101matchWinnerElement.options[g101matchWinnerElement.selectedIndex]
+        .label;
+    let g101matchWinnerId = parseInt(
+      g101matchWinnerElement.options[g101matchWinnerElement.selectedIndex].value
+    );
+    let g101gameLoserFullName = '';
+    let g101gameLoserId = null;
+    // let g101matchWinnerName = g101matchWinnerValue.split(' ');
+    console.log(
+      `GameID ${g101matchId} winner is ${g101matchWinnerFullName} ID ${g101matchWinnerId}`
+    );
+
+    /* Check Game 101 loser */
+    if (
+      g101matchWinnerId !== parseInt(g101matchWinnerElement.options[2].value)
+    ) {
+      g101gameLoserFullName = g101matchWinnerElement.options[2].label;
+      g101gameLoserId = parseInt(g101matchWinnerElement.options[2].value);
+      console.log(
+        `GameID ${g101matchId} loser is ${g101gameLoserFullName} ID ${g101gameLoserId}`
+      );
+    }
+    if (
+      g101matchWinnerId !== parseInt(g101matchWinnerElement.options[1].value)
+    ) {
+      g101gameLoserFullName = g101matchWinnerElement.options[1].label;
+      g101gameLoserId = parseInt(g101matchWinnerElement.options[1].value);
+      console.log(
+        `GameID ${g101matchId} loser is ${g101gameLoserFullName} ID ${g101gameLoserId}`
+      );
+    }
+
+    /* Save */
+    // match_id 104 save data
+    matchData[0].player1 = g101Player1Id;
+    matchData[0].player2 = g101Player2Id;
+    matchData[0].winner = g101matchWinnerId;
+    matchData[0].loser = g101gameLoserId;
+    console.table(matchData);
   });
-
-// /* Creating Array of Object for Games*/
-// let gamesData = [];
-// let matchId = 100;
-// let matchCount = 38;
-
-// for (let i = 0; i < matchCount; i++) {
-//   matchId = ++matchId;
-//   gamesData[i] = {
-//     matchId: matchId,
-//     player1Id: null,
-//     player1FistName: '',
-//     player1FamName: '',
-//     player2Id: null,
-//     player2FistName: '',
-//     player2FamName: '',
-//     winner: null,
-//     loser: null,
-//     scoreId: null,
-//     compId: '',
-//     matchCreated: '',
-//     matchUpdated: '',
-//   };
-// }
-
-/* GET data from API */
-// GET request for remote image in node.js
-// axios({
-//   method: 'get',
-//   url: `http://localhost:3001/api/v1/registration/1648376664367-raplamaa-seeriavoistluse-1-etapp-kaiu-auhindadele`,
-//   responseType: 'json',
-// }).then(function (response) {
-//   // console.log(response.statusText);
-//   // console.log(response.status);
-//   // console.table(response.data);
-//   // return response.data
-//   const registeredPlayerData = response.data;
-//   registeredPlayerData.sort((a, b) => b.ratePoints - a.ratePoints);
-//   console.table(registeredPlayerData);
-
-//   /* Game 101 -> 1 vs 16 */
-//   gamesData[0].player1Id = registeredPlayerData[0].person_id;
-//   gamesData[0].player1FistName = registeredPlayerData[0].first_name;
-//   gamesData[0].player1FamName = registeredPlayerData[0].fam_name;
-//   gamesData[0].player2Id = registeredPlayerData[15].person_id;
-//   gamesData[0].player2FistName = registeredPlayerData[15].first_name;
-//   gamesData[0].player2FamName = registeredPlayerData[15].fam_name;
-//   /* Game 102 -> 9 vs 8 */
-//   gamesData[1].player1Id = registeredPlayerData[8].person_id;
-//   gamesData[1].player1FistName = registeredPlayerData[8].first_name;
-//   gamesData[1].player1FamName = registeredPlayerData[8].fam_name;
-//   gamesData[1].player2Id = registeredPlayerData[7].person_id;
-//   gamesData[1].player2FistName = registeredPlayerData[7].first_name;
-//   gamesData[1].player2FamName = registeredPlayerData[7].fam_name;
-//   /* Game 103 -> 5 vs 12 */
-//   gamesData[2].player1Id = registeredPlayerData[4].person_id;
-//   gamesData[2].player1FistName = registeredPlayerData[4].first_name;
-//   gamesData[2].player1FamName = registeredPlayerData[4].fam_name;
-//   gamesData[2].player2Id = registeredPlayerData[11].person_id;
-//   gamesData[2].player2FistName = registeredPlayerData[11].first_name;
-//   gamesData[2].player2FamName = registeredPlayerData[11].fam_name;
-//   /* Game 104 -> 13 vs 4 */
-//   gamesData[3].player1Id = registeredPlayerData[12].person_id;
-//   gamesData[3].player1FistName = registeredPlayerData[12].first_name;
-//   gamesData[3].player1FamName = registeredPlayerData[12].fam_name;
-//   gamesData[3].player2Id = registeredPlayerData[3].person_id;
-//   gamesData[3].player2FistName = registeredPlayerData[3].first_name;
-//   gamesData[3].player2FamName = registeredPlayerData[3].fam_name;
-//   /* Game 105 -> 3 vs 14 */
-//   gamesData[4].player1Id = registeredPlayerData[2].person_id;
-//   gamesData[4].player1FistName = registeredPlayerData[2].first_name;
-//   gamesData[4].player1FamName = registeredPlayerData[2].fam_name;
-//   gamesData[4].player2Id = registeredPlayerData[13].person_id;
-//   gamesData[4].player2FistName = registeredPlayerData[13].first_name;
-//   gamesData[4].player2FamName = registeredPlayerData[13].fam_name;
-//   /* Game 106 -> 11 vs 6 */
-//   gamesData[5].player1Id = registeredPlayerData[10].person_id;
-//   gamesData[5].player1FistName = registeredPlayerData[10].first_name;
-//   gamesData[5].player1FamName = registeredPlayerData[10].fam_name;
-//   gamesData[5].player2Id = registeredPlayerData[5].person_id;
-//   gamesData[5].player2FistName = registeredPlayerData[5].first_name;
-//   gamesData[5].player2FamName = registeredPlayerData[5].fam_name;
-//   /* Game 107 -> 7 vs 10 */
-//   gamesData[6].player1Id = registeredPlayerData[6].person_id;
-//   gamesData[6].player1FistName = registeredPlayerData[6].first_name;
-//   gamesData[6].player1FamName = registeredPlayerData[6].fam_name;
-//   gamesData[6].player2Id = registeredPlayerData[9].person_id;
-//   gamesData[6].player2FistName = registeredPlayerData[9].first_name;
-//   gamesData[6].player2FamName = registeredPlayerData[9].fam_name;
-//   /* Game 108 -> 15 vs 2 */
-//   gamesData[7].player1Id = registeredPlayerData[14].person_id;
-//   gamesData[7].player1FistName = registeredPlayerData[14].first_name;
-//   gamesData[7].player1FamName = registeredPlayerData[14].fam_name;
-//   gamesData[7].player2Id = registeredPlayerData[2].person_id;
-//   gamesData[7].player2FistName = registeredPlayerData[2].first_name;
-//   gamesData[7].player2FamName = registeredPlayerData[2].fam_name;
-
-//   insertGameTable();
-//   console.table(gamesData);
-// });
-
-// function insertGameTable() {
-//   const compGameTableBody = document.getElementById('compGameTableBody');
-//   compGameTableBody.innerHTML = '';
-//   for (let i = 0; i < gamesData.length; i++) {
-//     compGameTableBody.innerHTML += `
-//         <tr id="${gamesData[i].matchId}">
-//           <td class="text-center">${gamesData[i].matchId}</td>
-//           <td id="${gamesData[i].player1Id}" data-bs-toggle="tooltip" data-bs-placement="top" title="ID ${gamesData[i].player1Id}">${gamesData[i].player1FistName} ${gamesData[i].player1FamName}</td>
-//           <td id="${gamesData[i].player2Id}" data-bs-toggle="tooltip" data-bs-placement="top" title="ID ${gamesData[i].player2Id}">${gamesData[i].player2FistName} ${gamesData[i].player2FamName}</td>
-//           <td class="text-center">
-//             <select id="gameTables">
-//               <option value="0">&nbsp;</option>
-//               <option value="1">1</option>
-//               <option value="2">2</option>
-//               <option value="3">3</option>
-//               <option value="4">4</option>
-//               <option value="5">5</option>
-//               <option value="6">6</option>
-//               <option value="7">7</option>
-//               <option value="8">8</option>
-//               <option value="9">9</option>
-//               <option value="10">10</option>
-//             </select>
-//           </td>
-//           <td>
-//             <select id="${gamesData[i].matchId}gameWinner" class="w-100">
-//               <option value="0" selected>&nbsp;</option>
-//               <option value="${gamesData[i].player1Id}" label="${gamesData[i].player1FistName} ${gamesData[i].player1FamName}">${gamesData[i].player1FistName} ${gamesData[i].player1FamName}</option>
-//               <option value="${gamesData[i].player2Id}" label="${gamesData[i].player2FistName} ${gamesData[i].player2FamName}">${gamesData[i].player2FistName} ${gamesData[i].player2FamName}</option>
-//             </select>
-//           </td>
-//           <td class="text-center">
-//             <select id="${gamesData[i].matchId}gameWinnerScore">
-//               <option value="0" selected>&nbsp;</option>
-//               <option value="3:0">3:0</option>
-//               <option value="3:1">3:1</option>
-//               <option value="3:2">3:2</option>
-//               <option value="w:o">w:o</option>
-//             </select>
-//           </td>
-//           <td class="text-center">
-//             <ul class="m-0 p-0">
-//               <!-- <li class="list-inline-item">
-//                 <button class="btn btn-outline-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-//                   data-placement="top" title="Muuda"><i class="fa fa-edit"></i></button>
-//               </li> -->
-//               <li class="list-inline-item">
-//                 <a class="btn btn-outline-secondary btn-sm rounded-0" data-toggle="tooltip"
-//                   data-placement="top" title="Salvesta"><i class="fas fa-save" onclick="saveGameResults(${gamesData[i].matchId})"></i></a>
-//               </li>
-//             </ul>
-//           </td>
-//         </tr>
-//       `;
-//   }
-// }
+}
 
 // function saveGameResults(gameId) {
 //   /* Game 101 -> 1 vs 16 results */
@@ -324,75 +426,5 @@ axios({
 
 //     insertGameTable();
 //     console.table(gamesData);
-//   }
-// }
-
-// GET competitions list from API
-// fetch('http://localhost:3000/api/competitions-games')
-// fetch(apiUrl)
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (dataJson) {
-//     appendData2CompetitionGameTable(dataJson);
-//   })
-//   .catch(function (err) {
-//     console.log('error: ' + err);
-//   });
-
-// // Display data from API to HTML Tables
-// function appendData2CompetitionGameTable(data) {
-//   const competitionGameTableContainer = document.getElementById(
-//     'competitionGameTable'
-//   );
-
-//   for (let i = 0; i < data.length; i++) {
-//     competitionGameTableContainer.innerHTML += `<tr>
-//         <td class="text-center">${data[i].gameId}</td>
-//         <td>${data[i].player1}</td>
-//         <td>${data[i].player2}</td>
-//         <td class="text-center">
-//           <select id="compTables">
-//             <option value="0">&nbsp;</option>
-//             <option value="1">1</option>
-//             <option value="2">2</option>
-//             <option value="3">3</option>
-//             <option value="4">4</option>
-//             <option value="5">5</option>
-//             <option value="6">6</option>
-//             <option value="7">7</option>
-//             <option value="8">8</option>
-//             <option value="9">9</option>
-//             <option value="10">10</option>
-//           </select>
-//         </td>
-//         <td>
-//           <select name="compWinner" id="compWinner" class="w-100">
-//             <option value="0" selected>&nbsp;</option>
-//             <option value="1"></option>
-//             <option value="2"></option>
-//           </select>
-//         </td>
-//         <td class="text-center">
-//           <select name="compWinnerScore" id="compWinnerScore">
-//             <option value="0" selected>&nbsp;</option>
-//             <option value="1">3:0</option>
-//             <option value="2">3:1</option>
-//             <option value="3">3:2</option>
-//           </select>
-//         </td>
-//         <td class="text-center">
-//           <ul class="m-0 p-0">
-//             <li class="list-inline-item">
-//               <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-//                 data-placement="top" title="Muuda"><i class="fa fa-edit"></i></button>
-//             </li>
-//             <li class="list-inline-item">
-//               <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-//                 data-placement="top" title="Salvesta"><i class="fas fa-save"></i></button>
-//             </li>
-//           </ul>
-//         </td>
-//       </tr>`;
 //   }
 // }

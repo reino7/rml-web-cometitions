@@ -17,9 +17,7 @@ router.get('/', async function (req, res, next) {
 router.get('/:competitionId', async function (req, res, next) {
   try {
     const id = req.params.competitionId;
-    const competitionsData = await registrationDb.getMultiple(
-      req.query.page
-    );
+    const competitionsData = await registrationDb.getMultiple(req.query.page);
 
     const competition = competitionsData.filter(function (competition) {
       return competition.comp_id === id;
@@ -35,15 +33,22 @@ router.get('/:competitionId', async function (req, res, next) {
   }
 });
 
+/* GET by competition ID and game ID*/
+router.get('/:competitionId/:personId', async function (req, res, next) {
+  res.json('not working yet');
+});
+
 /* POST */
 router.post('/', async function (req, res, next) {
   try {
     res.json(await registrationDb.create(req.body));
   } catch (err) {
-    console.error(`Error while adding competition registration info`, err.message);
+    console.error(
+      `Error while adding competition registration info`,
+      err.message
+    );
     next(err);
   }
 });
-
 
 module.exports = router;

@@ -38,12 +38,20 @@ function generateCompetitionId(compName) {
   compName = compName.replace(',', ''); // remove dot
   compName = compName.replace(/\./g, ''); // remove dot
   compName = compName.replace(/\s+/g, '-'); // remove spaces and replace with dash
-  compName = Date.now() + '-' + compName; // add timestamp @ the end of name
+  compName = Date.now() + '-' + compName; // add timestamp @ the front of name
   return compName;
 }
 
+function sleep(duration) {
+  return new Promise(resolve => {
+    setTimeout(resolve, duration);
+  });
+}
+
 function compAddSendFormData() {
-  console.log('ID: ' + generateCompetitionId(compAddNameFormInput.value));
+  const compNameId = generateCompetitionId(compAddNameFormInput.value);
+
+  console.log('ID: ' + compNameId);
   console.log('Kuupäev: ' + compAddDateFormInput.value);
   console.log('Kellaaeg: ' + compAddTimeFormInput.value);
   console.log('Võistluse nimi: ' + compAddNameFormInput.value);
@@ -52,17 +60,14 @@ function compAddSendFormData() {
   console.log('Kontakttelefon: ' + compAddUmpireContactFormInput.value);
   console.log('Korraldaja: ' + compAddOrganizerFormInput.value);
   console.log('Kontakttelefon: ' + compAddOrganizerContactFormInput.value);
-  localStorage.setItem(
-    'compId',
-    generateCompetitionId(compAddNameFormInput.value)
-  );
+  localStorage.setItem('compId', compNameId);
   localStorage.setItem('compName', compAddNameFormInput.value);
 
   axios({
     method: 'post',
     url: apiUrl,
     data: {
-      compId: generateCompetitionId(compAddNameFormInput.value),
+      compId: compNameId,
       compDate: compAddDateFormInput.value,
       compTime: compAddTimeFormInput.value,
       compName: compAddNameFormInput.value,
@@ -86,11 +91,11 @@ function compAddSendFormData() {
           messageElement.innerHTML =
             '<div class="alert alert-success text-center">Võistlus salvestatud</div>';
           console.log('Võistlus salvestatud');
-          setTimeout(() => {
-            window.location.href =
-              '/voistlus/registreeri/' +
-              generateCompetitionId(compAddNameFormInput.value);
-          }, 2000); // redirect after 2 seconds
+          // redirect after 2 seconds
+          // sleep(2000).then(() => {
+          //   window.location.href =
+          //     '/voistlus/mangud/' + localStorage.getItem('compId');
+          // });
         } else {
           if (messageElement.style.display === 'none') {
             messageElement.style.display = 'block';
