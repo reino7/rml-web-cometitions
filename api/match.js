@@ -32,9 +32,14 @@ router.get('/:competitionId', async function (req, res, next) {
   }
 });
 
-/* GET by competition ID and game ID*/
-router.get('/:competitionId/:matchId', async function (req, res, next) {
-  res.json('not working yet');
+/* PUT */
+router.put('/:id', async function (req, res, next) {
+  try {
+    res.json(await matchDb.update(req.body));
+  } catch (err) {
+    console.error(`Error while updating match`, err.message);
+    next(err);
+  }
 });
 
 module.exports = router;
