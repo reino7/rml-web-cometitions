@@ -21,6 +21,33 @@ if (getGurrentUrlHost == 'localhost') {
 let apiUrlForRegistration = `${apiBaseUrl}${apiUrlPathForRegistration}${getGurrentUrlPathLastItem}`;
 let apiUrlForMatch = `${apiBaseUrl}${apiUrlPathForMatch}${getGurrentUrlPathLastItem}`;
 
+/* Second Navigation URL paths */
+let secondNavLinkPath = '/voistlus/';
+let secondNavLinkPathInfo = 'info/';
+let secondNavLinkPathPlacement = 'paigutus/';
+let secondNavLinkPathTable = 'tabel/';
+let secondNavLinkPathMatches = 'mangud/';
+let secondNavLinkPathResults = 'tulemused/';
+let secondNavLinkPathAwards = 'auhinnad/';
+document.getElementById(
+  'linkInfo'
+).href = `${secondNavLinkPath}${secondNavLinkPathInfo}${getGurrentUrlPathLastItem}`;
+document.getElementById(
+  'linkPaigutus'
+).href = `${secondNavLinkPath}${secondNavLinkPathPlacement}${getGurrentUrlPathLastItem}`;
+document.getElementById(
+  'linkTabel'
+).href = `${secondNavLinkPath}${secondNavLinkPathTable}${getGurrentUrlPathLastItem}`;
+document.getElementById(
+  'linkMangud'
+).href = `${secondNavLinkPath}${secondNavLinkPathMatches}${getGurrentUrlPathLastItem}`;
+document.getElementById(
+  'linkTulemused'
+).href = `${secondNavLinkPath}${secondNavLinkPathResults}${getGurrentUrlPathLastItem}`;
+document.getElementById(
+  'linkAuhinnad'
+).href = `${secondNavLinkPath}${secondNavLinkPathAwards}${getGurrentUrlPathLastItem}`;
+
 console.log('----- -----');
 console.log('Võistluse Nimi: ' + localStorage.getItem('compName'));
 console.log('Võistluse ID: ' + localStorage.getItem('compId'));

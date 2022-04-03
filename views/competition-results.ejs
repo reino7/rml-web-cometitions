@@ -2,7 +2,8 @@
 <html class="h-100 wxauktc idc0_332" lang="et">
   <head>
     <%- include('./partials/head'); %>
-    <!-- <script src="/js/competition-register-script.js" defer></script> -->
+    <script src="/js/axios-v0.26.0.min.js" defer></script>
+    <script src="/js/competition-results-script.js" defer></script>
   </head>
 
   <body class="d-flex flex-column h-100">
@@ -20,14 +21,25 @@
         <table class="table table-hover table-bordered me-3" id="table">
           <thead class="table-secondary">
             <tr>
-              <th scope="col">Nr</th>
-              <th scope="col">ELTLID</th>
-              <th scope="col">Nimi</th>
-              <th scope="col">Sünniaeg</th>
-              <th scope="col">Sugu</th>
+              <th class="text-center" scope="col">Koht</th>
+              <th scope="col">Eesnimi</th>
+              <th scope="col">Perekonnanimi</th>
+
+              <th
+                class="text-center"
+                scope="col"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title=""
+                data-bs-original-title="Eesti Lauatennise Liidu võistleja ID"
+              >
+                ELTLID
+              </th>
+              <th class="text-center" scope="col">Sünniaeg</th>
+              <th class="text-center" scope="col">Sugu</th>
             </tr>
           </thead>
-          <tbody id="reitingsTable"></tbody>
+          <tbody id="resultsTable"></tbody>
         </table>
       </div>
     </main>
