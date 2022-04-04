@@ -56,6 +56,10 @@ console.log('Reg API URL: ' + apiUrlForRegistration);
 console.log('Match API URL: ' + apiUrlForMatch);
 console.log('----- -----');
 
+/* get  competitionName element from html and display compName from LocalStorage*/
+const competitionName = document.getElementById('competitionName');
+competitionName.innerText = localStorage.getItem('compName');
+
 /* GET data from API-s */
 function getData() {
   // eslint-disable-next-line no-undef
@@ -79,9 +83,9 @@ getData();
 
 function insertTable(registrationData, matchData) {
   const resultsTableBody = document.getElementById('resultsTable');
+  // 1, 2, 3 and s
   const placementArray = [30, 37, 36, 35, 34, 33, 32, 31];
   for (const [i, value] of placementArray.entries()) {
-    console.log('%d: %s', i, value);
     resultsTableBody.innerHTML += `
     <tr>
       <td class="text-center fw-bolder"></td>
@@ -90,9 +94,9 @@ function insertTable(registrationData, matchData) {
       }</td>
       <td>${findPlayer(matchData[value].winner, registrationData).fam_name}</td>
       <td class="text-center">${matchData[value].winner}</td>
-      <td class="text-center">${
+      <td class="text-center">${parseDate(
         findPlayer(matchData[value].winner, registrationData).birthdate
-      }</td>
+      )}</td>
       <td class="text-center">${
         findPlayer(matchData[value].winner, registrationData).sex
       }</td>
@@ -104,9 +108,9 @@ function insertTable(registrationData, matchData) {
       }</td>
       <td>${findPlayer(matchData[value].loser, registrationData).fam_name}</td>
       <td class="text-center">${matchData[value].loser}</td>
-      <td class="text-center">${
+      <td class="text-center">${parseDate(
         findPlayer(matchData[value].loser, registrationData).birthdate
-      }</td>
+      )}</td>
       <td class="text-center">${
         findPlayer(matchData[value].loser, registrationData).sex
       }</td>
@@ -135,4 +139,21 @@ function findPlayer(id, data) {
     fullName: player.first_name + ' ' + player.fam_name,
   };
   return playerData;
+}
+
+function parseDate(dateString) {
+  /* axios uses JSON.stringify for serialisation and it causes 
+  the translation to UTC. This loses 2 hours for timezone difference.
+  Adding 2 hours to correct this */
+  // dateString = moment(dateString).add(2, 'hours').format();
+
+  let dateComponents = dateString.split('T');
+  let datePieces = dateComponents[0].split('-');
+  let year = datePieces[0];
+  let month = datePieces[1];
+  let day = datePieces[2];
+
+  let competitionDate = `${day}.${month}.${year}`;
+
+  return competitionDate;
 }
