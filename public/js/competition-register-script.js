@@ -182,13 +182,40 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
         compId: localStorage.getItem('compId'),
       });
 
-      registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
+      registerTableData.sort((a, b) => arvutaRegistreerinuteSort(a, b));
       console.table(registerTableData);
 
       reloadRows();
     }
   });
 }
+
+function arvutaRegistreerinuteSort(a, b) {
+  if (a.ratePoints === b.ratePoints) {
+    let uusA = a.rateOrder;
+    let uusB = b.rateOrder;
+    if (uusA === 0) {
+      uusA = 100000;
+    }
+    if (uusB === 0) {
+      uusB = 100000;
+    }
+    return uusB - uusA;
+  } else {
+    return b.ratePoints - a.ratePoints;
+  }
+}
+
+let test1 = new Object();
+let test2 = new Object();
+test1.ratePoints = 10;
+test1.rateOrder = 0;
+test2.ratePoints = 10;
+test2.rateOrder = 2;
+
+console.log('testi sortimist');
+console.log(arvutaRegistreerinuteSort(test1, test2));
+console.log(arvutaRegistreerinuteSort(test2, test1));
 
 function sleep(duration) {
   return new Promise(resolve => {
