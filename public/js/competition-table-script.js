@@ -11,14 +11,14 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
 );
 
 let apiBaseUrl = `${getGurrentUrlProtocol}//lt-test.ristissaar.ee`;
-const apiUrlPathForRegistration = '/api/v1/registration/';
+const apiUrlPathForMatch = '/api/v1/match/';
 const apiUrlPathForComp = '/api/v1/competition/';
 
 if (getGurrentUrlHost == 'localhost') {
   apiBaseUrl = `${getGurrentUrlProtocol}//${getGurrentUrlHost}:${getGurrentUrlPort}`;
 }
 
-let apiUrlForRegistration = `${apiBaseUrl}${apiUrlPathForRegistration}${getGurrentUrlPathLastItem}`;
+let apiUrlForMatch = `${apiBaseUrl}${apiUrlPathForMatch}${getGurrentUrlPathLastItem}`;
 let apiUrlForComp = `${apiBaseUrl}${apiUrlPathForComp}${getGurrentUrlPathLastItem}`;
 
 /* Second Navigation URL paths */
@@ -52,9 +52,8 @@ console.log('----- -----');
 console.log('Võistluse Nimi: ' + localStorage.getItem('compName'));
 console.log('Võistluse ID: ' + localStorage.getItem('compId'));
 console.log('Võistluse ID from URL: ' + getGurrentUrlPathLastItem);
-console.log('Reg API URL: ' + apiUrlForRegistration);
 console.log('Comp API URL: ' + apiUrlForComp);
-
+console.log('Match API URL: ' + apiUrlForMatch);
 console.log('----- -----');
 
 /* GET data from API-s */
@@ -62,40 +61,20 @@ function getData() {
   // eslint-disable-next-line no-undef
   axios
     // eslint-disable-next-line no-undef
-    .all([axios.get(apiUrlForRegistration), axios.get(apiUrlForComp)])
+    .all([axios.get(apiUrlForComp), axios.get(apiUrlForMatch)])
     .then(response => {
       // console.table(response.data);
-      /* registration API Data*/
-      const registrationData = response[0].data;
       /* competition API Data*/
-      const competitionData = response[1].data;
-      console.table(registrationData);
+      const competitionData = response[0].data;
+      /* match API Data*/
+      const registrationData = response[1].data;
       console.table(competitionData);
+      console.table(registrationData);
 
       /* get  competitionName element from html and display compName from LocalStorage*/
       const competitionName = document.getElementById('competitionName');
       competitionName.innerText = competitionData.comp_name;
-
-      insertTable(registrationData);
     })
     .catch(error => console.log(error));
 }
 getData();
-
-function insertTable(registrationData) {
-  const placementTableBody = document.getElementById('placementTable');
-  for (let i = 0; i < registrationData.length; i++) {
-    placementTableBody.innerHTML += `
-      <tr>
-        <td class="text-center fw-bolder">${i + 1}</td>
-        <td>${registrationData[i].first_name}</td>
-        <td>${registrationData[i].fam_name}</td>
-        <td class="text-center">${registrationData[i].person_id}</td>
-        <td class="text-center">${registrationData[i].rate_order}</td>
-        <td class="text-center">${registrationData[i].rate_points}</td>
-        <td class="text-center">${registrationData[i].birthdate}</td>
-        <td class="text-center">${registrationData[i].sex}</td>
-      </tr>
-    `;
-  }
-}

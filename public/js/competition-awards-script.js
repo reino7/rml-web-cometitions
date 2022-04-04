@@ -11,17 +11,17 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
 );
 
 let apiBaseUrl = `${getGurrentUrlProtocol}//lt-test.ristissaar.ee`;
-const apiUrlPathForRegistration = '/api/v1/registration/';
 const apiUrlPathForMatch = '/api/v1/match/';
 const apiUrlPathForComp = '/api/v1/competition/';
+const apiUrlPathForRegistration = '/api/v1/registration/';
 
 if (getGurrentUrlHost == 'localhost') {
   apiBaseUrl = `${getGurrentUrlProtocol}//${getGurrentUrlHost}:${getGurrentUrlPort}`;
 }
 
-let apiUrlForRegistration = `${apiBaseUrl}${apiUrlPathForRegistration}${getGurrentUrlPathLastItem}`;
 let apiUrlForMatch = `${apiBaseUrl}${apiUrlPathForMatch}${getGurrentUrlPathLastItem}`;
 let apiUrlForComp = `${apiBaseUrl}${apiUrlPathForComp}${getGurrentUrlPathLastItem}`;
+let apiUrlForRegistration = `${apiBaseUrl}${apiUrlPathForRegistration}${getGurrentUrlPathLastItem}`;
 
 /* Second Navigation URL paths */
 let secondNavLinkPath = '/voistlus/';
@@ -54,8 +54,9 @@ console.log('----- -----');
 console.log('Võistluse Nimi: ' + localStorage.getItem('compName'));
 console.log('Võistluse ID: ' + localStorage.getItem('compId'));
 console.log('Võistluse ID from URL: ' + getGurrentUrlPathLastItem);
-console.log('Reg API URL: ' + apiUrlForRegistration);
 console.log('Match API URL: ' + apiUrlForMatch);
+console.log('Comp API URL: ' + apiUrlForComp);
+console.log('Reg API URL: ' + apiUrlForRegistration);
 console.log('----- -----');
 
 /* GET data from API-s */
@@ -64,77 +65,46 @@ function getData() {
   axios
     // eslint-disable-next-line no-undef
     .all([
-      axios.get(apiUrlForRegistration),
       axios.get(apiUrlForMatch),
       axios.get(apiUrlForComp),
+      axios.get(apiUrlForRegistration),
     ])
     .then(response => {
-      /* ELTL Reiting API Data*/
-      const registrationData = response[0].data;
-      console.table(registrationData);
-
       /* Match API Data*/
-      const matchData = response[1].data;
+      const matchData = response[0].data;
       console.table(matchData);
 
-      /* Match API Data*/
-      const compData = response[2].data;
+      /* Competition API Data*/
+      const compData = response[1].data;
       console.table(compData);
+
+      /* Registration API Data*/
+      const regData = response[2].data;
+      console.table(regData);
+
       /* get  competitionName element from html and display compName from LocalStorage*/
       const competitionName = document.getElementById('competitionName');
       competitionName.innerText = compData.comp_name;
 
-      insertTable(registrationData, matchData);
+      /* I place */
+      document.getElementById('compFirstPlace').innerText = findPlayer(
+        matchData[30].winner,
+        regData
+      ).fullName;
+      /* II place */
+      document.getElementById('compSecondPlace').innerText = findPlayer(
+        matchData[30].loser,
+        regData
+      ).fullName;
+      /* III place */
+      document.getElementById('compThirdPlace').innerText = findPlayer(
+        matchData[37].winner,
+        regData
+      ).fullName;
     })
     .catch(error => console.log(error));
 }
 getData();
-
-function insertTable(registrationData, matchData) {
-  const resultsTableBody = document.getElementById('resultsTable');
-  // 1, 2, 3 place and so on ...
-  const placementArray = [30, 37, 36, 35, 34, 33, 32, 31];
-
-  for (const [i, value] of placementArray.entries()) {
-    resultsTableBody.innerHTML += `
-    <tr>
-      <td class="text-center fw-bolder"></td>
-      <td>${
-        findPlayer(matchData[value].winner, registrationData).first_name
-      }</td>
-      <td>${findPlayer(matchData[value].winner, registrationData).fam_name}</td>
-      <td class="text-center">${matchData[value].winner}</td>
-      <td class="text-center">${parseDate(
-        findPlayer(matchData[value].winner, registrationData).birthdate
-      )}</td>
-      <td class="text-center">${
-        findPlayer(matchData[value].winner, registrationData).sex
-      }</td>
-    </tr>
-    <tr>
-      <td class="text-center fw-bolder"></td>
-      <td>${
-        findPlayer(matchData[value].loser, registrationData).first_name
-      }</td>
-      <td>${findPlayer(matchData[value].loser, registrationData).fam_name}</td>
-      <td class="text-center">${matchData[value].loser}</td>
-      <td class="text-center">${parseDate(
-        findPlayer(matchData[value].loser, registrationData).birthdate
-      )}</td>
-      <td class="text-center">${
-        findPlayer(matchData[value].loser, registrationData).sex
-      }</td>
-    </tr>
-  `;
-  }
-
-  const placement = document.querySelectorAll('.fw-bolder');
-
-  for (let i = 0; i < placement.length; i++) {
-    const element = placement[i];
-    element.innerText = i + 1;
-  }
-}
 
 function findPlayer(id, data) {
   if (id === null) {
@@ -149,21 +119,4 @@ function findPlayer(id, data) {
     fullName: player.first_name + ' ' + player.fam_name,
   };
   return playerData;
-}
-
-function parseDate(dateString) {
-  /* axios uses JSON.stringify for serialisation and it causes 
-  the translation to UTC. This loses 2 hours for timezone difference.
-  Adding 2 hours to correct this */
-  // dateString = moment(dateString).add(2, 'hours').format();
-
-  let dateComponents = dateString.split('T');
-  let datePieces = dateComponents[0].split('-');
-  let year = datePieces[0];
-  let month = datePieces[1];
-  let day = datePieces[2];
-
-  let competitionDate = `${day}.${month}.${year}`;
-
-  return competitionDate;
 }

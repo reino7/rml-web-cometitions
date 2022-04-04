@@ -92,10 +92,10 @@ function compAddSendFormData() {
             '<div class="alert alert-success text-center">Võistlus salvestatud</div>';
           console.log('Võistlus salvestatud');
           // redirect after 2 seconds
-          // sleep(2000).then(() => {
-          //   window.location.href =
-          //     '/voistlus/mangud/' + localStorage.getItem('compId');
-          // });
+          sleep(2000).then(() => {
+            window.location.href =
+              '/voistlus/mangud/' + localStorage.getItem('compId');
+          });
         } else {
           if (messageElement.style.display === 'none') {
             messageElement.style.display = 'block';

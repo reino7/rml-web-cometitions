@@ -246,10 +246,10 @@ function registerPlayers() {
             '<div class="alert alert-success text-center">Registreeritud mängijad salvestatud</div>';
           console.log('Registreeritud mängijad salvestatud');
           // redirect after 2 seconds
-          // sleep(2000).then(() => {
-          //   window.location.href =
-          //     '/voistlus/mangud/' + localStorage.getItem('compId');
-          // });
+          sleep(2000).then(() => {
+            window.location.href =
+              '/voistlus/mangud/' + localStorage.getItem('compId');
+          });
         } else {
           if (messageElement.style.display === 'none') {
             messageElement.style.display = 'block';

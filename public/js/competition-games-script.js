@@ -13,6 +13,7 @@ const getGurrentUrlPathLastItem = getGurrentUrlPath.substring(
 let apiBaseUrl = `${getGurrentUrlProtocol}//lt-test.ristissaar.ee`;
 const apiUrlPathForRegistration = '/api/v1/registration/';
 const apiUrlPathForMatch = '/api/v1/match/';
+const apiUrlPathForComp = '/api/v1/competition/';
 
 if (getGurrentUrlHost == 'localhost') {
   apiBaseUrl = `${getGurrentUrlProtocol}//${getGurrentUrlHost}:${getGurrentUrlPort}`;
@@ -20,6 +21,7 @@ if (getGurrentUrlHost == 'localhost') {
 
 let apiUrlForRegistration = `${apiBaseUrl}${apiUrlPathForRegistration}${getGurrentUrlPathLastItem}`;
 let apiUrlForMatch = `${apiBaseUrl}${apiUrlPathForMatch}${getGurrentUrlPathLastItem}`;
+let apiUrlForComp = `${apiBaseUrl}${apiUrlPathForComp}${getGurrentUrlPathLastItem}`;
 
 /* Second Navigation URL paths */
 let secondNavLinkPath = '/voistlus/';
@@ -56,23 +58,28 @@ console.log('Reg API URL: ' + apiUrlForRegistration);
 console.log('Match API URL: ' + apiUrlForMatch);
 console.log('----- -----');
 
-/* get  competitionName element from html and display compName from LocalStorage*/
-const competitionName = document.getElementById('competitionName');
-competitionName.innerText = localStorage.getItem('compName');
-
 /* GET data from API-s */
 function getData() {
   // eslint-disable-next-line no-undef
   axios
     // eslint-disable-next-line no-undef
-    .all([axios.get(apiUrlForRegistration), axios.get(apiUrlForMatch)])
+    .all([
+      axios.get(apiUrlForRegistration),
+      axios.get(apiUrlForMatch),
+      axios.get(apiUrlForComp),
+    ])
     .then(response => {
-      console.table(response[0].data);
-      // console.table(response[1].data);
       /* Registration API Data*/
       const registrationData = response[0].data;
       /* Match API Data*/
       const matchData = response[1].data;
+
+      /* Match API Data*/
+      const compData = response[2].data;
+      console.table(compData);
+      /* get  competitionName element from html and display compName from LocalStorage*/
+      const competitionName = document.getElementById('competitionName');
+      competitionName.innerText = compData.comp_name;
 
       insertTable(registrationData, matchData);
     })
