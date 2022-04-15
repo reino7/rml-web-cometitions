@@ -72,15 +72,12 @@ function getData() {
     .then(response => {
       /* Match API Data*/
       const matchData = response[0].data;
-      console.table(matchData);
 
       /* Competition API Data*/
       const compData = response[1].data;
-      console.table(compData);
 
       /* Registration API Data*/
       const regData = response[2].data;
-      console.table(regData);
 
       /* get  competitionName element from html and display compName from LocalStorage*/
       const competitionName = document.getElementById('competitionName');
@@ -101,11 +98,43 @@ function getData() {
         matchData[37].winner,
         regData
       ).fullName;
+
+      /* Creating array with results and player data 
+        1. place -> 30.winner
+        2. place -> 30.loser
+        3. place  37.winner and so on based on placementArray */
+      const placementArray = [30, 37, 36, 35, 34, 33, 32, 31];
+      let placementArrayWitdhData = [];
+      for (const [i, value] of placementArray.entries()) {
+        placementArrayWitdhData.push(
+          findPlayer(matchData[value].winner, regData)
+        );
+        placementArrayWitdhData.push(
+          findPlayer(matchData[value].loser, regData)
+        );
+      }
+
+      const compWomanArray = findPlayerBySex('N', placementArrayWitdhData);
+      document.getElementById('compBestWoman').innerText =
+        compWomanArray[0].fullName;
+      const compManArray = findPlayerBySex('M', placementArrayWitdhData);
+      document.getElementById('compBestMan').innerText =
+        compManArray[0].fullName;
     })
     .catch(error => console.log(error));
 }
 getData();
 
+/* find player by sex, return array with objects */
+function findPlayerBySex(sex, data) {
+  const player = data.filter(element => {
+    return element.sex === sex;
+  });
+  // console.log(player);
+  return player;
+}
+
+/* find player by person_id, return array with objects */
 function findPlayer(id, data) {
   if (id === null) {
     return null;

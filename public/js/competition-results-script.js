@@ -92,40 +92,93 @@ getData();
 
 function insertTable(registrationData, matchData) {
   const resultsTableBody = document.getElementById('resultsTable');
-  // 1, 2, 3 place and so on ...
+  /*  1. place -> 30.winner
+      2. place -> 30.loser
+      3. place  37.winner and so on based on placementArray */
   const placementArray = [30, 37, 36, 35, 34, 33, 32, 31];
+  let emptyString = '';
 
   for (const [i, value] of placementArray.entries()) {
+    /* if placement game is not played, display empty string
+      @firstName, @famName, @winnerPersonId, @loserPersonId
+    */
+
+    // winner
+    let winnerFirstName = findPlayer(
+      matchData[value].winner,
+      registrationData
+    ).first_name;
+    if (winnerFirstName === undefined) {
+      winnerFirstName = emptyString;
+    }
+
+    let winnerFamName = findPlayer(
+      matchData[value].winner,
+      registrationData
+    ).fam_name;
+    if (winnerFamName === undefined) {
+      winnerFamName = emptyString;
+    }
+
+    let winnerPersonId = matchData[value].winner;
+    if (winnerPersonId === null) {
+      winnerPersonId = emptyString;
+    }
+
+    let winnerSex = findPlayer(matchData[value].winner, registrationData).sex;
+    if (winnerSex === undefined) {
+      winnerSex = emptyString;
+    }
+
+    // loser
+    let loserFirstName = findPlayer(
+      matchData[value].loser,
+      registrationData
+    ).first_name;
+    if (loserFirstName === undefined) {
+      loserFirstName = emptyString;
+    }
+
+    let loserFamName = findPlayer(
+      matchData[value].loser,
+      registrationData
+    ).fam_name;
+    if (loserFamName === undefined) {
+      loserFamName = emptyString;
+    }
+
+    let loserPersonId = matchData[value].loser;
+    if (loserPersonId === null) {
+      loserPersonId = emptyString;
+    }
+
+    let loserSex = findPlayer(matchData[value].loser, registrationData).sex;
+    if (loserSex === undefined) {
+      loserSex = emptyString;
+    }
+
     resultsTableBody.innerHTML += `
-    <tr>
-      <td class="text-center fw-bolder"></td>
-      <td>${
-        findPlayer(matchData[value].winner, registrationData).first_name
-      }</td>
-      <td>${findPlayer(matchData[value].winner, registrationData).fam_name}</td>
-      <td class="text-center">${matchData[value].winner}</td>
-      <td class="text-center">${parseDate(
-        findPlayer(matchData[value].winner, registrationData).birthdate
-      )}</td>
-      <td class="text-center">${
-        findPlayer(matchData[value].winner, registrationData).sex
-      }</td>
-    </tr>
-    <tr>
-      <td class="text-center fw-bolder"></td>
-      <td>${
-        findPlayer(matchData[value].loser, registrationData).first_name
-      }</td>
-      <td>${findPlayer(matchData[value].loser, registrationData).fam_name}</td>
-      <td class="text-center">${matchData[value].loser}</td>
-      <td class="text-center">${parseDate(
-        findPlayer(matchData[value].loser, registrationData).birthdate
-      )}</td>
-      <td class="text-center">${
-        findPlayer(matchData[value].loser, registrationData).sex
-      }</td>
-    </tr>
-  `;
+      <tr>
+        <td class="text-center fw-bolder"></td>
+        <td>${winnerFirstName}</td>
+        <td>${winnerFamName}</td>
+        <td class="text-center">${winnerPersonId}</td>
+        <td class="text-center">${parseDate(
+          findPlayer(matchData[value].winner, registrationData).birthdate
+        )}</td>
+        <td class="text-center">${winnerSex}</td>
+      </tr>
+      <tr>
+        <td class="text-center fw-bolder"></td>
+        <td>${loserFirstName}</td>
+        <td>${loserFamName}</td>
+        <td class="text-center">${loserPersonId}</td>
+        <td class="text-center">${parseDate(
+          findPlayer(matchData[value].loser, registrationData).birthdate
+        )}</td>
+        <td class="text-center">${loserSex}</td>
+      </tr>
+    `;
   }
 
   const placement = document.querySelectorAll('.fw-bolder');
@@ -137,17 +190,20 @@ function insertTable(registrationData, matchData) {
 }
 
 function findPlayer(id, data) {
-  if (id === null) {
-    return null;
+  if (id === null || id === undefined) {
+    let emptyString = '';
+    return emptyString;
   }
 
   const player = data.find(object => {
     return object.person_id === id;
   });
+
   const playerData = {
     ...player,
     fullName: player.first_name + ' ' + player.fam_name,
   };
+
   return playerData;
 }
 
@@ -156,6 +212,11 @@ function parseDate(dateString) {
   the translation to UTC. This loses 2 hours for timezone difference.
   Adding 2 hours to correct this */
   // dateString = moment(dateString).add(2, 'hours').format();
+
+  if (dateString === undefined) {
+    let emptyString = '';
+    return emptyString;
+  }
 
   let dateComponents = dateString.split('T');
   let datePieces = dateComponents[0].split('-');

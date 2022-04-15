@@ -94,7 +94,7 @@ function compAddSendFormData() {
           // redirect after 2 seconds
           sleep(2000).then(() => {
             window.location.href =
-              '/voistlus/mangud/' + localStorage.getItem('compId');
+              '/voistlus/registreeri/' + localStorage.getItem('compId');
           });
         } else {
           if (messageElement.style.display === 'none') {

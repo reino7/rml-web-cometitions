@@ -82,6 +82,7 @@ function addPlayerWithoutReiting2Table() {
     compId: localStorage.getItem('compId'),
   });
 
+  // registerTableData.sort((a, b) => sortRegisteredPlayerByRPandNR(a, b));
   registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
 
   reloadRows();
@@ -182,7 +183,9 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
         compId: localStorage.getItem('compId'),
       });
 
-      registerTableData.sort((a, b) => arvutaRegistreerinuteSort(a, b));
+      // registerTableData.sort((a, b) => sortRegisteredPlayerByRPandNR(a, b));
+      registerTableData.sort((a, b) => b.ratePoints - a.ratePoints);
+
       console.table(registerTableData);
 
       reloadRows();
@@ -190,7 +193,7 @@ for (let i = 1; i < reitingsTableFull.rows.length; i++) {
   });
 }
 
-function arvutaRegistreerinuteSort(a, b) {
+function sortRegisteredPlayerByRPandNR(a, b) {
   if (a.ratePoints === b.ratePoints) {
     let uusA = a.rateOrder;
     let uusB = b.rateOrder;
@@ -206,16 +209,16 @@ function arvutaRegistreerinuteSort(a, b) {
   }
 }
 
-let test1 = new Object();
-let test2 = new Object();
-test1.ratePoints = 10;
-test1.rateOrder = 0;
-test2.ratePoints = 10;
-test2.rateOrder = 2;
+// let test1 = new Object();
+// let test2 = new Object();
+// test1.ratePoints = 10;
+// test1.rateOrder = 0;
+// test2.ratePoints = 10;
+// test2.rateOrder = 2;
 
-console.log('testi sortimist');
-console.log(arvutaRegistreerinuteSort(test1, test2));
-console.log(arvutaRegistreerinuteSort(test2, test1));
+// console.log('testi sortimist');
+// console.log(sortRegisteredPlayerByRPandNR(test1, test2));
+// console.log(sortRegisteredPlayerByRPandNR(test2, test1));
 
 function sleep(duration) {
   return new Promise(resolve => {

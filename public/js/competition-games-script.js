@@ -103,7 +103,7 @@ function insertTable(registrationData, matchData) {
 
     compGameTableBody.innerHTML += `
     <tr id="${matchData[i].match_id}">
-      <td class="text-center">${matchData[i].match_id}</td>
+      <td class="text-center fw-bold">${matchData[i].match_id}</td>
       <td id="${
         matchData[i].match_id + 'player1'
       }" data-bs-toggle="tooltip" data-bs-placement="top" title="ID"></td>
@@ -1306,16 +1306,16 @@ function insertTable(registrationData, matchData) {
   const g109Player1Id = matchData[8].player1;
   const g109Player2Id = matchData[8].player2;
 
-  if (typeof g109Player1Id !== 'number' && typeof g109Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g109Player1Id !== 'number') {
     g109player1Element.innerText = '';
     g109player1Element.title = '';
     g109matchWinnerElement.options[1] = new Option('', '', false, false);
-    g109player2Element.innerText = '';
-    g109player2Element.title = '';
-    g109matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g109Player1Id === 'number' && typeof g109Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g109Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g109player1Element.innerText = findPlayer(
       g109Player1Id,
@@ -1329,6 +1329,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g109Player1Id === matchData[8].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g109matchWinnerElement.options[1].selected = true;
+      g109matchScoreElement.options[matchData[8].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g109Player2Id !== 'number') {
+    g109player2Element.innerText = '';
+    g109player2Element.title = '';
+    g109matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g109Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g109player2Element.innerText = findPlayer(
       g109Player2Id,
@@ -1342,11 +1360,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g109Player1Id === matchData[8].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g109matchWinnerElement.options[1].selected = true;
-      g109matchScoreElement.options[matchData[8].score_id].selected = true;
-    }
 
     if (g109Player2Id === matchData[8].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -1453,16 +1466,16 @@ function insertTable(registrationData, matchData) {
   const g110Player1Id = matchData[9].player1;
   const g110Player2Id = matchData[9].player2;
 
-  if (typeof g110Player1Id !== 'number' && typeof g110Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g110Player1Id !== 'number') {
     g110player1Element.innerText = '';
     g110player1Element.title = '';
     g110matchWinnerElement.options[1] = new Option('', '', false, false);
-    g110player2Element.innerText = '';
-    g110player2Element.title = '';
-    g110matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g110Player1Id === 'number' && typeof g110Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g110Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g110player1Element.innerText = findPlayer(
       g110Player1Id,
@@ -1476,6 +1489,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g110Player1Id === matchData[9].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g110matchWinnerElement.options[1].selected = true;
+      g110matchScoreElement.options[matchData[9].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g110Player2Id !== 'number') {
+    g110player2Element.innerText = '';
+    g110player2Element.title = '';
+    g110matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g110Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g110player2Element.innerText = findPlayer(
       g110Player2Id,
@@ -1489,11 +1520,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g110Player1Id === matchData[9].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g110matchWinnerElement.options[1].selected = true;
-      g110matchScoreElement.options[matchData[9].score_id].selected = true;
-    }
 
     if (g110Player2Id === matchData[9].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -1501,6 +1527,7 @@ function insertTable(registrationData, matchData) {
       g110matchScoreElement.options[matchData[9].score_id].selected = true;
     }
   }
+
   /* add addEventListener to match 110 save button */
   document.getElementById('saveMatch110').addEventListener('click', () => {
     let g110matchId = document.getElementById('110').cells[0].innerText;
@@ -1599,16 +1626,16 @@ function insertTable(registrationData, matchData) {
   const g111Player1Id = matchData[10].player1;
   const g111Player2Id = matchData[10].player2;
 
-  if (typeof g111Player1Id !== 'number' && typeof g111Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g111Player1Id !== 'number') {
     g111player1Element.innerText = '';
     g111player1Element.title = '';
     g111matchWinnerElement.options[1] = new Option('', '', false, false);
-    g111player2Element.innerText = '';
-    g111player2Element.title = '';
-    g111matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g111Player1Id === 'number' && typeof g111Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g111Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g111player1Element.innerText = findPlayer(
       g111Player1Id,
@@ -1622,6 +1649,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g111Player1Id === matchData[10].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g111matchWinnerElement.options[1].selected = true;
+      g111matchScoreElement.options[matchData[10].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g111Player2Id !== 'number') {
+    g111player2Element.innerText = '';
+    g111player2Element.title = '';
+    g111matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g111Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g111player2Element.innerText = findPlayer(
       g111Player2Id,
@@ -1635,11 +1680,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g111Player1Id === matchData[10].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g111matchWinnerElement.options[1].selected = true;
-      g111matchScoreElement.options[matchData[10].score_id].selected = true;
-    }
 
     if (g111Player2Id === matchData[10].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -1746,16 +1786,16 @@ function insertTable(registrationData, matchData) {
   const g112Player1Id = matchData[11].player1;
   const g112Player2Id = matchData[11].player2;
 
-  if (typeof g112Player1Id !== 'number' && typeof g112Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g112Player1Id !== 'number') {
     g112player1Element.innerText = '';
     g112player1Element.title = '';
     g112matchWinnerElement.options[1] = new Option('', '', false, false);
-    g112player2Element.innerText = '';
-    g112player2Element.title = '';
-    g112matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g112Player1Id === 'number' && typeof g112Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g112Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g112player1Element.innerText = findPlayer(
       g112Player1Id,
@@ -1769,6 +1809,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g112Player1Id === matchData[11].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g112matchWinnerElement.options[1].selected = true;
+      g112matchScoreElement.options[matchData[11].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g112Player2Id !== 'number') {
+    g112player2Element.innerText = '';
+    g112player2Element.title = '';
+    g112matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g112Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g112player2Element.innerText = findPlayer(
       g112Player2Id,
@@ -1782,11 +1840,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g112Player1Id === matchData[11].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g112matchWinnerElement.options[1].selected = true;
-      g112matchScoreElement.options[matchData[11].score_id].selected = true;
-    }
 
     if (g112Player2Id === matchData[11].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -1893,16 +1946,16 @@ function insertTable(registrationData, matchData) {
   const g113Player1Id = matchData[12].player1;
   const g113Player2Id = matchData[12].player2;
 
-  if (typeof g113Player1Id !== 'number' && typeof g113Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g113Player1Id !== 'number') {
     g113player1Element.innerText = '';
     g113player1Element.title = '';
     g113matchWinnerElement.options[1] = new Option('', '', false, false);
-    g113player2Element.innerText = '';
-    g113player2Element.title = '';
-    g113matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g113Player1Id === 'number' && typeof g113Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g113Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g113player1Element.innerText = findPlayer(
       g113Player1Id,
@@ -1916,6 +1969,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g113Player1Id === matchData[12].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g113matchWinnerElement.options[1].selected = true;
+      g113matchScoreElement.options[matchData[12].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g113Player2Id !== 'number') {
+    g113player2Element.innerText = '';
+    g113player2Element.title = '';
+    g113matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g113Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g113player2Element.innerText = findPlayer(
       g113Player2Id,
@@ -1929,11 +2000,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g113Player1Id === matchData[12].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g113matchWinnerElement.options[1].selected = true;
-      g113matchScoreElement.options[matchData[12].score_id].selected = true;
-    }
 
     if (g113Player2Id === matchData[12].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -2040,16 +2106,16 @@ function insertTable(registrationData, matchData) {
   const g114Player1Id = matchData[13].player1;
   const g114Player2Id = matchData[13].player2;
 
-  if (typeof g114Player1Id !== 'number' && typeof g114Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g114Player1Id !== 'number') {
     g114player1Element.innerText = '';
     g114player1Element.title = '';
     g114matchWinnerElement.options[1] = new Option('', '', false, false);
-    g114player2Element.innerText = '';
-    g114player2Element.title = '';
-    g114matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g114Player1Id === 'number' && typeof g114Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g114Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g114player1Element.innerText = findPlayer(
       g114Player1Id,
@@ -2063,6 +2129,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g114Player1Id === matchData[13].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g114matchWinnerElement.options[1].selected = true;
+      g114matchScoreElement.options[matchData[13].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g114Player2Id !== 'number') {
+    g114player2Element.innerText = '';
+    g114player2Element.title = '';
+    g114matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g114Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g114player2Element.innerText = findPlayer(
       g114Player2Id,
@@ -2076,11 +2160,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g114Player1Id === matchData[13].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g114matchWinnerElement.options[1].selected = true;
-      g114matchScoreElement.options[matchData[13].score_id].selected = true;
-    }
 
     if (g114Player2Id === matchData[13].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -2088,6 +2167,7 @@ function insertTable(registrationData, matchData) {
       g114matchScoreElement.options[matchData[13].score_id].selected = true;
     }
   }
+
   /* add addEventListener to match 114 save button */
   document.getElementById('saveMatch114').addEventListener('click', () => {
     let g114matchId = document.getElementById('114').cells[0].innerText;
@@ -2186,16 +2266,16 @@ function insertTable(registrationData, matchData) {
   const g115Player1Id = matchData[14].player1;
   const g115Player2Id = matchData[14].player2;
 
-  if (typeof g115Player1Id !== 'number' && typeof g115Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g115Player1Id !== 'number') {
     g115player1Element.innerText = '';
     g115player1Element.title = '';
     g115matchWinnerElement.options[1] = new Option('', '', false, false);
-    g115player2Element.innerText = '';
-    g115player2Element.title = '';
-    g115matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g115Player1Id === 'number' && typeof g115Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g115Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g115player1Element.innerText = findPlayer(
       g115Player1Id,
@@ -2209,6 +2289,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g115Player1Id === matchData[14].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g115matchWinnerElement.options[1].selected = true;
+      g115matchScoreElement.options[matchData[14].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g115Player2Id !== 'number') {
+    g115player2Element.innerText = '';
+    g115player2Element.title = '';
+    g115matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g115Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g115player2Element.innerText = findPlayer(
       g115Player2Id,
@@ -2222,11 +2320,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g115Player1Id === matchData[14].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g115matchWinnerElement.options[1].selected = true;
-      g115matchScoreElement.options[matchData[14].score_id].selected = true;
-    }
 
     if (g115Player2Id === matchData[14].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -2305,7 +2398,7 @@ function insertTable(registrationData, matchData) {
     // save to Object
     matchData[23].player1 = g115gameLoserId;
     // set cell value to player first- and lastname
-    g124player2Element.innerText = findPlayer(
+    g124player1Element.innerText = findPlayer(
       g115gameLoserId,
       registrationData
     ).fullName;
@@ -2333,16 +2426,16 @@ function insertTable(registrationData, matchData) {
   const g116Player1Id = matchData[15].player1;
   const g116Player2Id = matchData[15].player2;
 
-  if (typeof g116Player1Id !== 'number' && typeof g116Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g116Player1Id !== 'number') {
     g116player1Element.innerText = '';
     g116player1Element.title = '';
     g116matchWinnerElement.options[1] = new Option('', '', false, false);
-    g116player2Element.innerText = '';
-    g116player2Element.title = '';
-    g116matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g116Player1Id === 'number' && typeof g116Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g116Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g116player1Element.innerText = findPlayer(
       g116Player1Id,
@@ -2356,6 +2449,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g116Player1Id === matchData[15].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g116matchWinnerElement.options[1].selected = true;
+      g116matchScoreElement.options[matchData[15].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g116Player2Id !== 'number') {
+    g116player2Element.innerText = '';
+    g116player2Element.title = '';
+    g116matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g116Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g116player2Element.innerText = findPlayer(
       g116Player2Id,
@@ -2369,11 +2480,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g116Player1Id === matchData[15].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g116matchWinnerElement.options[1].selected = true;
-      g116matchScoreElement.options[matchData[15].score_id].selected = true;
-    }
 
     if (g116Player2Id === matchData[15].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -2489,7 +2595,16 @@ function insertTable(registrationData, matchData) {
     g117matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g117Player1Id === 'number' && typeof g117Player2Id === 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g117Player1Id !== 'number') {
+    g117player1Element.innerText = '';
+    g117player1Element.title = '';
+    g117matchWinnerElement.options[1] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g117Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g117player1Element.innerText = findPlayer(
       g117Player1Id,
@@ -2503,6 +2618,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g117Player1Id === matchData[16].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g117matchWinnerElement.options[1].selected = true;
+      g117matchScoreElement.options[matchData[16].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g117Player2Id !== 'number') {
+    g117player2Element.innerText = '';
+    g117player2Element.title = '';
+    g117matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g117Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g117player2Element.innerText = findPlayer(
       g117Player2Id,
@@ -2516,13 +2649,8 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g117Player1Id === matchData[16].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g117matchWinnerElement.options[1].selected = true;
-      g117matchScoreElement.options[matchData[16].score_id].selected = true;
-    }
 
-    if (g117Player2Id === matchData[8].winner) {
+    if (g117Player2Id === matchData[16].winner) {
       // if player 2 winner, then select it from dropdown menu
       g117matchWinnerElement.options[2].selected = true;
       g117matchScoreElement.options[matchData[16].score_id].selected = true;
@@ -2627,16 +2755,16 @@ function insertTable(registrationData, matchData) {
   const g118Player1Id = matchData[17].player1;
   const g118Player2Id = matchData[17].player2;
 
-  if (typeof g118Player1Id !== 'number' && typeof g118Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g118Player1Id !== 'number') {
     g118player1Element.innerText = '';
     g118player1Element.title = '';
     g118matchWinnerElement.options[1] = new Option('', '', false, false);
-    g118player2Element.innerText = '';
-    g118player2Element.title = '';
-    g118matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g118Player1Id === 'number' && typeof g118Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g118Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g118player1Element.innerText = findPlayer(
       g118Player1Id,
@@ -2650,6 +2778,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g118Player1Id === matchData[17].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g118matchWinnerElement.options[1].selected = true;
+      g118matchScoreElement.options[matchData[17].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g118Player2Id !== 'number') {
+    g118player2Element.innerText = '';
+    g118player2Element.title = '';
+    g118matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g118Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g118player2Element.innerText = findPlayer(
       g118Player2Id,
@@ -2663,11 +2809,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g118Player1Id === matchData[17].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g118matchWinnerElement.options[1].selected = true;
-      g118matchScoreElement.options[matchData[17].score_id].selected = true;
-    }
 
     if (g118Player2Id === matchData[17].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -2774,16 +2915,16 @@ function insertTable(registrationData, matchData) {
   const g119Player1Id = matchData[18].player1;
   const g119Player2Id = matchData[18].player2;
 
-  if (typeof g119Player1Id !== 'number' && typeof g119Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g119Player1Id !== 'number') {
     g119player1Element.innerText = '';
     g119player1Element.title = '';
     g119matchWinnerElement.options[1] = new Option('', '', false, false);
-    g119player2Element.innerText = '';
-    g119player2Element.title = '';
-    g119matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g119Player1Id === 'number' && typeof g119Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g119Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g119player1Element.innerText = findPlayer(
       g119Player1Id,
@@ -2797,6 +2938,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g119Player1Id === matchData[18].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g119matchWinnerElement.options[1].selected = true;
+      g119matchScoreElement.options[matchData[18].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g119Player2Id !== 'number') {
+    g119player2Element.innerText = '';
+    g119player2Element.title = '';
+    g119matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g119Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g119player2Element.innerText = findPlayer(
       g119Player2Id,
@@ -2810,11 +2969,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g119Player1Id === matchData[18].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g119matchWinnerElement.options[1].selected = true;
-      g119matchScoreElement.options[matchData[18].score_id].selected = true;
-    }
 
     if (g119Player2Id === matchData[18].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -2921,16 +3075,16 @@ function insertTable(registrationData, matchData) {
   const g120Player1Id = matchData[19].player1;
   const g120Player2Id = matchData[19].player2;
 
-  if (typeof g120Player1Id !== 'number' && typeof g120Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g120Player1Id !== 'number') {
     g120player1Element.innerText = '';
     g120player1Element.title = '';
     g120matchWinnerElement.options[1] = new Option('', '', false, false);
-    g120player2Element.innerText = '';
-    g120player2Element.title = '';
-    g120matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g120Player1Id === 'number' && typeof g120Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g120Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g120player1Element.innerText = findPlayer(
       g120Player1Id,
@@ -2944,6 +3098,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g120Player1Id === matchData[19].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g120matchWinnerElement.options[1].selected = true;
+      g120matchScoreElement.options[matchData[19].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g120Player2Id !== 'number') {
+    g120player2Element.innerText = '';
+    g120player2Element.title = '';
+    g120matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g120Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g120player2Element.innerText = findPlayer(
       g120Player2Id,
@@ -2957,11 +3129,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g120Player1Id === matchData[19].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g120matchWinnerElement.options[1].selected = true;
-      g120matchScoreElement.options[matchData[19].score_id].selected = true;
-    }
 
     if (g120Player2Id === matchData[19].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -3068,16 +3235,16 @@ function insertTable(registrationData, matchData) {
   const g121Player1Id = matchData[20].player1;
   const g121Player2Id = matchData[20].player2;
 
-  if (typeof g121Player1Id !== 'number' && typeof g121Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g121Player1Id !== 'number') {
     g121player1Element.innerText = '';
     g121player1Element.title = '';
     g121matchWinnerElement.options[1] = new Option('', '', false, false);
-    g121player2Element.innerText = '';
-    g121player2Element.title = '';
-    g121matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g121Player1Id === 'number' && typeof g121Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g121Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g121player1Element.innerText = findPlayer(
       g121Player1Id,
@@ -3091,6 +3258,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g121Player1Id === matchData[20].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g121matchWinnerElement.options[1].selected = true;
+      g121matchScoreElement.options[matchData[20].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g121Player2Id !== 'number') {
+    g121player2Element.innerText = '';
+    g121player2Element.title = '';
+    g121matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g121Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g121player2Element.innerText = findPlayer(
       g121Player2Id,
@@ -3104,11 +3289,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g121Player1Id === matchData[20].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g121matchWinnerElement.options[1].selected = true;
-      g121matchScoreElement.options[matchData[20].score_id].selected = true;
-    }
 
     if (g121Player2Id === matchData[20].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -3215,16 +3395,16 @@ function insertTable(registrationData, matchData) {
   const g122Player1Id = matchData[21].player1;
   const g122Player2Id = matchData[21].player2;
 
-  if (typeof g122Player1Id !== 'number' && typeof g122Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g122Player1Id !== 'number') {
     g122player1Element.innerText = '';
     g122player1Element.title = '';
     g122matchWinnerElement.options[1] = new Option('', '', false, false);
-    g122player2Element.innerText = '';
-    g122player2Element.title = '';
-    g122matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g122Player1Id === 'number' && typeof g122Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g122Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g122player1Element.innerText = findPlayer(
       g122Player1Id,
@@ -3238,6 +3418,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g122Player1Id === matchData[21].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g122matchWinnerElement.options[1].selected = true;
+      g122matchScoreElement.options[matchData[21].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g122Player2Id !== 'number') {
+    g122player2Element.innerText = '';
+    g122player2Element.title = '';
+    g122matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g122Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g122player2Element.innerText = findPlayer(
       g122Player2Id,
@@ -3251,14 +3449,9 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g122Player1Id === matchData[21].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g122matchWinnerElement.options[1].selected = true;
-      g122matchScoreElement.options[matchData[21].score_id].selected = true;
-    }
 
     if (g122Player2Id === matchData[21].winner) {
-      // if player 2 winner, then se21ect it from dropdown menu
+      // if player 2 winner, then select it from dropdown menu
       g122matchWinnerElement.options[2].selected = true;
       g122matchScoreElement.options[matchData[21].score_id].selected = true;
     }
@@ -3362,16 +3555,16 @@ function insertTable(registrationData, matchData) {
   const g123Player1Id = matchData[22].player1;
   const g123Player2Id = matchData[22].player2;
 
-  if (typeof g123Player1Id !== 'number' && typeof g123Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g123Player1Id !== 'number') {
     g123player1Element.innerText = '';
     g123player1Element.title = '';
     g123matchWinnerElement.options[1] = new Option('', '', false, false);
-    g123player2Element.innerText = '';
-    g123player2Element.title = '';
-    g123matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g123Player1Id === 'number' && typeof g123Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g123Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g123player1Element.innerText = findPlayer(
       g123Player1Id,
@@ -3385,6 +3578,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g123Player1Id === matchData[22].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g123matchWinnerElement.options[1].selected = true;
+      g123matchScoreElement.options[matchData[22].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g123Player2Id !== 'number') {
+    g123player2Element.innerText = '';
+    g123player2Element.title = '';
+    g123matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g123Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g123player2Element.innerText = findPlayer(
       g123Player2Id,
@@ -3398,11 +3609,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g123Player1Id === matchData[22].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g123matchWinnerElement.options[1].selected = true;
-      g123matchScoreElement.options[matchData[22].score_id].selected = true;
-    }
 
     if (g123Player2Id === matchData[22].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -3509,16 +3715,16 @@ function insertTable(registrationData, matchData) {
   const g124Player1Id = matchData[23].player1;
   const g124Player2Id = matchData[23].player2;
 
-  if (typeof g124Player1Id !== 'number' && typeof g124Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g124Player1Id !== 'number') {
     g124player1Element.innerText = '';
     g124player1Element.title = '';
     g124matchWinnerElement.options[1] = new Option('', '', false, false);
-    g124player2Element.innerText = '';
-    g124player2Element.title = '';
-    g124matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g124Player1Id === 'number' && typeof g124Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g124Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g124player1Element.innerText = findPlayer(
       g124Player1Id,
@@ -3532,6 +3738,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g124Player1Id === matchData[23].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g124matchWinnerElement.options[1].selected = true;
+      g124matchScoreElement.options[matchData[23].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g124Player2Id !== 'number') {
+    g124player2Element.innerText = '';
+    g124player2Element.title = '';
+    g124matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g124Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g124player2Element.innerText = findPlayer(
       g124Player2Id,
@@ -3545,11 +3769,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g124Player1Id === matchData[23].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g124matchWinnerElement.options[1].selected = true;
-      g124matchScoreElement.options[matchData[23].score_id].selected = true;
-    }
 
     if (g124Player2Id === matchData[23].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -3610,12 +3829,12 @@ function insertTable(registrationData, matchData) {
     // save to Object
     matchData[32].player2 = g124matchWinnerId;
     // set cell value to player first- and lastname
-    g124player2Element.innerText = findPlayer(
+    g133player2Element.innerText = findPlayer(
       g124matchWinnerId,
       registrationData
     ).fullName;
     // set dropdown options to player first- and lastname, add player id as value
-    g124matchWinnerElement.options[2] = new Option(
+    g133matchWinnerElement.options[2] = new Option(
       findPlayer(g124matchWinnerId, registrationData).fullName,
       g124matchWinnerId,
       false,
@@ -3656,16 +3875,16 @@ function insertTable(registrationData, matchData) {
   const g125Player1Id = matchData[24].player1;
   const g125Player2Id = matchData[24].player2;
 
-  if (typeof g125Player1Id !== 'number' && typeof g125Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g125Player1Id !== 'number') {
     g125player1Element.innerText = '';
     g125player1Element.title = '';
     g125matchWinnerElement.options[1] = new Option('', '', false, false);
-    g125player2Element.innerText = '';
-    g125player2Element.title = '';
-    g125matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g125Player1Id === 'number' && typeof g125Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g125Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g125player1Element.innerText = findPlayer(
       g125Player1Id,
@@ -3679,6 +3898,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g125Player1Id === matchData[24].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g125matchWinnerElement.options[1].selected = true;
+      g125matchScoreElement.options[matchData[24].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g125Player2Id !== 'number') {
+    g125player2Element.innerText = '';
+    g125player2Element.title = '';
+    g125matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g125Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g125player2Element.innerText = findPlayer(
       g125Player2Id,
@@ -3692,11 +3929,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g125Player1Id === matchData[24].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g125matchWinnerElement.options[1].selected = true;
-      g125matchScoreElement.options[matchData[24].score_id].selected = true;
-    }
 
     if (g125Player2Id === matchData[24].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -3803,16 +4035,16 @@ function insertTable(registrationData, matchData) {
   const g126Player1Id = matchData[25].player1;
   const g126Player2Id = matchData[25].player2;
 
-  if (typeof g126Player1Id !== 'number' && typeof g126Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g126Player1Id !== 'number') {
     g126player1Element.innerText = '';
     g126player1Element.title = '';
     g126matchWinnerElement.options[1] = new Option('', '', false, false);
-    g126player2Element.innerText = '';
-    g126player2Element.title = '';
-    g126matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g126Player1Id === 'number' && typeof g126Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g126Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g126player1Element.innerText = findPlayer(
       g126Player1Id,
@@ -3826,6 +4058,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g126Player1Id === matchData[25].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g126matchWinnerElement.options[1].selected = true;
+      g126matchScoreElement.options[matchData[25].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g126Player2Id !== 'number') {
+    g126player2Element.innerText = '';
+    g126player2Element.title = '';
+    g126matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g126Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g126player2Element.innerText = findPlayer(
       g126Player2Id,
@@ -3839,11 +4089,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g126Player1Id === matchData[25].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g126matchWinnerElement.options[1].selected = true;
-      g126matchScoreElement.options[matchData[25].score_id].selected = true;
-    }
 
     if (g126Player2Id === matchData[25].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -3950,16 +4195,16 @@ function insertTable(registrationData, matchData) {
   const g127Player1Id = matchData[26].player1;
   const g127Player2Id = matchData[26].player2;
 
-  if (typeof g127Player1Id !== 'number' && typeof g127Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g127Player1Id !== 'number') {
     g127player1Element.innerText = '';
     g127player1Element.title = '';
     g127matchWinnerElement.options[1] = new Option('', '', false, false);
-    g127player2Element.innerText = '';
-    g127player2Element.title = '';
-    g127matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g127Player1Id === 'number' && typeof g127Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g127Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g127player1Element.innerText = findPlayer(
       g127Player1Id,
@@ -3973,6 +4218,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g127Player1Id === matchData[26].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g127matchWinnerElement.options[1].selected = true;
+      g127matchScoreElement.options[matchData[26].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g127Player2Id !== 'number') {
+    g127player2Element.innerText = '';
+    g127player2Element.title = '';
+    g127matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g127Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g127player2Element.innerText = findPlayer(
       g127Player2Id,
@@ -3986,11 +4249,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g127Player1Id === matchData[26].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g127matchWinnerElement.options[1].selected = true;
-      g127matchScoreElement.options[matchData[26].score_id].selected = true;
-    }
 
     if (g127Player2Id === matchData[26].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4097,16 +4355,16 @@ function insertTable(registrationData, matchData) {
   const g128Player1Id = matchData[27].player1;
   const g128Player2Id = matchData[27].player2;
 
-  if (typeof g128Player1Id !== 'number' && typeof g128Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g128Player1Id !== 'number') {
     g128player1Element.innerText = '';
     g128player1Element.title = '';
     g128matchWinnerElement.options[1] = new Option('', '', false, false);
-    g128player2Element.innerText = '';
-    g128player2Element.title = '';
-    g128matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g128Player1Id === 'number' && typeof g128Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g128Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g128player1Element.innerText = findPlayer(
       g128Player1Id,
@@ -4120,6 +4378,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g128Player1Id === matchData[27].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g128matchWinnerElement.options[1].selected = true;
+      g128matchScoreElement.options[matchData[27].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g128Player2Id !== 'number') {
+    g128player2Element.innerText = '';
+    g128player2Element.title = '';
+    g128matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g128Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g128player2Element.innerText = findPlayer(
       g128Player2Id,
@@ -4133,11 +4409,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g128Player1Id === matchData[27].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g128matchWinnerElement.options[1].selected = true;
-      g128matchScoreElement.options[matchData[27].score_id].selected = true;
-    }
 
     if (g128Player2Id === matchData[27].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4244,16 +4515,16 @@ function insertTable(registrationData, matchData) {
   const g129Player1Id = matchData[28].player1;
   const g129Player2Id = matchData[28].player2;
 
-  if (typeof g129Player1Id !== 'number' && typeof g129Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g129Player1Id !== 'number') {
     g129player1Element.innerText = '';
     g129player1Element.title = '';
     g129matchWinnerElement.options[1] = new Option('', '', false, false);
-    g129player2Element.innerText = '';
-    g129player2Element.title = '';
-    g129matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g129Player1Id === 'number' && typeof g129Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g129Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g129player1Element.innerText = findPlayer(
       g129Player1Id,
@@ -4267,6 +4538,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g129Player1Id === matchData[28].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g129matchWinnerElement.options[1].selected = true;
+      g129matchScoreElement.options[matchData[28].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g129Player2Id !== 'number') {
+    g129player2Element.innerText = '';
+    g129player2Element.title = '';
+    g129matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g129Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g129player2Element.innerText = findPlayer(
       g129Player2Id,
@@ -4280,11 +4569,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g129Player1Id === matchData[28].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g129matchWinnerElement.options[1].selected = true;
-      g129matchScoreElement.options[matchData[28].score_id].selected = true;
-    }
 
     if (g129Player2Id === matchData[28].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4391,16 +4675,16 @@ function insertTable(registrationData, matchData) {
   const g130Player1Id = matchData[29].player1;
   const g130Player2Id = matchData[29].player2;
 
-  if (typeof g130Player1Id !== 'number' && typeof g130Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g130Player1Id !== 'number') {
     g130player1Element.innerText = '';
     g130player1Element.title = '';
     g130matchWinnerElement.options[1] = new Option('', '', false, false);
-    g130player2Element.innerText = '';
-    g130player2Element.title = '';
-    g130matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g130Player1Id === 'number' && typeof g130Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g130Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g130player1Element.innerText = findPlayer(
       g130Player1Id,
@@ -4414,6 +4698,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g130Player1Id === matchData[29].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g130matchWinnerElement.options[1].selected = true;
+      g130matchScoreElement.options[matchData[29].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g130Player2Id !== 'number') {
+    g130player2Element.innerText = '';
+    g130player2Element.title = '';
+    g130matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g130Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g130player2Element.innerText = findPlayer(
       g130Player2Id,
@@ -4427,11 +4729,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g130Player1Id === matchData[29].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g130matchWinnerElement.options[1].selected = true;
-      g130matchScoreElement.options[matchData[29].score_id].selected = true;
-    }
 
     if (g130Player2Id === matchData[29].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4538,16 +4835,16 @@ function insertTable(registrationData, matchData) {
   const g131Player1Id = matchData[30].player1;
   const g131Player2Id = matchData[30].player2;
 
-  if (typeof g131Player1Id !== 'number' && typeof g131Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g131Player1Id !== 'number') {
     g131player1Element.innerText = '';
     g131player1Element.title = '';
     g131matchWinnerElement.options[1] = new Option('', '', false, false);
-    g131player2Element.innerText = '';
-    g131player2Element.title = '';
-    g131matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g131Player1Id === 'number' && typeof g131Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g131Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g131player1Element.innerText = findPlayer(
       g131Player1Id,
@@ -4561,6 +4858,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g131Player1Id === matchData[30].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g131matchWinnerElement.options[1].selected = true;
+      g131matchScoreElement.options[matchData[30].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g131Player2Id !== 'number') {
+    g131player2Element.innerText = '';
+    g131player2Element.title = '';
+    g131matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g131Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g131player2Element.innerText = findPlayer(
       g131Player2Id,
@@ -4574,11 +4889,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g131Player1Id === matchData[30].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g131matchWinnerElement.options[1].selected = true;
-      g131matchScoreElement.options[matchData[30].score_id].selected = true;
-    }
 
     if (g131Player2Id === matchData[30].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4649,16 +4959,16 @@ function insertTable(registrationData, matchData) {
   const g132Player1Id = matchData[31].player1;
   const g132Player2Id = matchData[31].player2;
 
-  if (typeof g132Player1Id !== 'number' && typeof g132Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g132Player1Id !== 'number') {
     g132player1Element.innerText = '';
     g132player1Element.title = '';
     g132matchWinnerElement.options[1] = new Option('', '', false, false);
-    g132player2Element.innerText = '';
-    g132player2Element.title = '';
-    g132matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g132Player1Id === 'number' && typeof g132Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g132Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g132player1Element.innerText = findPlayer(
       g132Player1Id,
@@ -4672,6 +4982,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g132Player1Id === matchData[31].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g132matchWinnerElement.options[1].selected = true;
+      g132matchScoreElement.options[matchData[31].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g132Player2Id !== 'number') {
+    g132player2Element.innerText = '';
+    g132player2Element.title = '';
+    g132matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g132Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g132player2Element.innerText = findPlayer(
       g132Player2Id,
@@ -4685,11 +5013,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g132Player1Id === matchData[31].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g132matchWinnerElement.options[1].selected = true;
-      g132matchScoreElement.options[matchData[31].score_id].selected = true;
-    }
 
     if (g132Player2Id === matchData[31].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4769,7 +5092,16 @@ function insertTable(registrationData, matchData) {
     g133matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g133Player1Id === 'number' && typeof g133Player2Id === 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g133Player1Id !== 'number') {
+    g133player1Element.innerText = '';
+    g133player1Element.title = '';
+    g133matchWinnerElement.options[1] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g133Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g133player1Element.innerText = findPlayer(
       g133Player1Id,
@@ -4783,6 +5115,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g133Player1Id === matchData[32].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g133matchWinnerElement.options[1].selected = true;
+      g133matchScoreElement.options[matchData[32].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g133Player2Id !== 'number') {
+    g133player2Element.innerText = '';
+    g133player2Element.title = '';
+    g133matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g133Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g133player2Element.innerText = findPlayer(
       g133Player2Id,
@@ -4796,11 +5146,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g133Player1Id === matchData[32].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g133matchWinnerElement.options[1].selected = true;
-      g133matchScoreElement.options[matchData[32].score_id].selected = true;
-    }
 
     if (g133Player2Id === matchData[32].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4871,16 +5216,16 @@ function insertTable(registrationData, matchData) {
   const g134Player1Id = matchData[33].player1;
   const g134Player2Id = matchData[33].player2;
 
-  if (typeof g134Player1Id !== 'number' && typeof g134Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g134Player1Id !== 'number') {
     g134player1Element.innerText = '';
     g134player1Element.title = '';
     g134matchWinnerElement.options[1] = new Option('', '', false, false);
-    g134player2Element.innerText = '';
-    g134player2Element.title = '';
-    g134matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g134Player1Id === 'number' && typeof g134Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g134Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g134player1Element.innerText = findPlayer(
       g134Player1Id,
@@ -4894,6 +5239,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g134Player1Id === matchData[33].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g134matchWinnerElement.options[1].selected = true;
+      g134matchScoreElement.options[matchData[33].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g134Player2Id !== 'number') {
+    g134player2Element.innerText = '';
+    g134player2Element.title = '';
+    g134matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g134Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g134player2Element.innerText = findPlayer(
       g134Player2Id,
@@ -4907,11 +5270,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g134Player1Id === matchData[33].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g134matchWinnerElement.options[1].selected = true;
-      g134matchScoreElement.options[matchData[33].score_id].selected = true;
-    }
 
     if (g134Player2Id === matchData[33].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -4982,16 +5340,16 @@ function insertTable(registrationData, matchData) {
   const g135Player1Id = matchData[34].player1;
   const g135Player2Id = matchData[34].player2;
 
-  if (typeof g135Player1Id !== 'number' && typeof g135Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g135Player1Id !== 'number') {
     g135player1Element.innerText = '';
     g135player1Element.title = '';
     g135matchWinnerElement.options[1] = new Option('', '', false, false);
-    g135player2Element.innerText = '';
-    g135player2Element.title = '';
-    g135matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g135Player1Id === 'number' && typeof g135Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g135Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g135player1Element.innerText = findPlayer(
       g135Player1Id,
@@ -5005,6 +5363,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g135Player1Id === matchData[34].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g135matchWinnerElement.options[1].selected = true;
+      g135matchScoreElement.options[matchData[34].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g135Player2Id !== 'number') {
+    g135player2Element.innerText = '';
+    g135player2Element.title = '';
+    g135matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g135Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g135player2Element.innerText = findPlayer(
       g135Player2Id,
@@ -5018,11 +5394,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g135Player1Id === matchData[34].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g135matchWinnerElement.options[1].selected = true;
-      g135matchScoreElement.options[matchData[34].score_id].selected = true;
-    }
 
     if (g135Player2Id === matchData[34].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -5093,16 +5464,16 @@ function insertTable(registrationData, matchData) {
   const g136Player1Id = matchData[35].player1;
   const g136Player2Id = matchData[35].player2;
 
-  if (typeof g136Player1Id !== 'number' && typeof g136Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g136Player1Id !== 'number') {
     g136player1Element.innerText = '';
     g136player1Element.title = '';
     g136matchWinnerElement.options[1] = new Option('', '', false, false);
-    g136player2Element.innerText = '';
-    g136player2Element.title = '';
-    g136matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g136Player1Id === 'number' && typeof g136Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g136Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g136player1Element.innerText = findPlayer(
       g136Player1Id,
@@ -5116,6 +5487,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g136Player1Id === matchData[35].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g136matchWinnerElement.options[1].selected = true;
+      g136matchScoreElement.options[matchData[35].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g136Player2Id !== 'number') {
+    g136player2Element.innerText = '';
+    g136player2Element.title = '';
+    g136matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g136Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g136player2Element.innerText = findPlayer(
       g136Player2Id,
@@ -5129,11 +5518,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g136Player1Id === matchData[35].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g136matchWinnerElement.options[1].selected = true;
-      g136matchScoreElement.options[matchData[35].score_id].selected = true;
-    }
 
     if (g136Player2Id === matchData[35].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -5204,16 +5588,16 @@ function insertTable(registrationData, matchData) {
   const g137Player1Id = matchData[36].player1;
   const g137Player2Id = matchData[36].player2;
 
-  if (typeof g137Player1Id !== 'number' && typeof g137Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g137Player1Id !== 'number') {
     g137player1Element.innerText = '';
     g137player1Element.title = '';
     g137matchWinnerElement.options[1] = new Option('', '', false, false);
-    g137player2Element.innerText = '';
-    g137player2Element.title = '';
-    g137matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g137Player1Id === 'number' && typeof g137Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g137Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g137player1Element.innerText = findPlayer(
       g137Player1Id,
@@ -5227,6 +5611,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g137Player1Id === matchData[36].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g137matchWinnerElement.options[1].selected = true;
+      g137matchScoreElement.options[matchData[36].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g137Player2Id !== 'number') {
+    g137player2Element.innerText = '';
+    g137player2Element.title = '';
+    g137matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g137Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g137player2Element.innerText = findPlayer(
       g137Player2Id,
@@ -5240,11 +5642,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g137Player1Id === matchData[36].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g137matchWinnerElement.options[1].selected = true;
-      g137matchScoreElement.options[matchData[36].score_id].selected = true;
-    }
 
     if (g137Player2Id === matchData[36].winner) {
       // if player 2 winner, then select it from dropdown menu
@@ -5315,16 +5712,16 @@ function insertTable(registrationData, matchData) {
   const g138Player1Id = matchData[37].player1;
   const g138Player2Id = matchData[37].player2;
 
-  if (typeof g138Player1Id !== 'number' && typeof g138Player2Id !== 'number') {
+  /* Player 1 */
+  // if number does not exist, display empty
+  if (typeof g138Player1Id !== 'number') {
     g138player1Element.innerText = '';
     g138player1Element.title = '';
     g138matchWinnerElement.options[1] = new Option('', '', false, false);
-    g138player2Element.innerText = '';
-    g138player2Element.title = '';
-    g138matchWinnerElement.options[2] = new Option('', '', false, false);
   }
 
-  if (typeof g138Player1Id === 'number' && typeof g138Player2Id === 'number') {
+  // if number does exist, display values
+  if (typeof g138Player1Id === 'number') {
     // set cell value to player1 first- and lastname
     g138player1Element.innerText = findPlayer(
       g138Player1Id,
@@ -5338,6 +5735,24 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
+
+    if (g138Player1Id === matchData[37].winner) {
+      // if player 1 winner, then select it from dropdown menu
+      g138matchWinnerElement.options[1].selected = true;
+      g138matchScoreElement.options[matchData[37].score_id].selected = true;
+    }
+  }
+
+  /* Player 2 */
+  // if number does not exist, display empty
+  if (typeof g138Player2Id !== 'number') {
+    g138player2Element.innerText = '';
+    g138player2Element.title = '';
+    g138matchWinnerElement.options[2] = new Option('', '', false, false);
+  }
+
+  // if number does exist, display values
+  if (typeof g138Player2Id === 'number') {
     // set cell value to player2 first- and lastname
     g138player2Element.innerText = findPlayer(
       g138Player2Id,
@@ -5351,11 +5766,6 @@ function insertTable(registrationData, matchData) {
       false,
       false
     );
-    if (g138Player1Id === matchData[37].winner) {
-      // if player 1 winner, then select it from dropdown menu
-      g138matchWinnerElement.options[1].selected = true;
-      g138matchScoreElement.options[matchData[37].score_id].selected = true;
-    }
 
     if (g138Player2Id === matchData[37].winner) {
       // if player 2 winner, then select it from dropdown menu
