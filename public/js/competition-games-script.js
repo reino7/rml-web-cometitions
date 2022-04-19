@@ -210,9 +210,13 @@ function insertTable(registrationData, matchData) {
     g101matchScoreElement.options[matchData[0].score_id].selected = true;
   }
 
-  // match_id 101 save data Object
-  matchData[0].player1 = g101Player1Id;
-  matchData[0].player2 = g101Player2Id;
+  if (matchData[0].player1 === null && matchData[0].player2 === null) {
+    // match_id 102 save data Object
+    matchData[0].player1 = g101Player1Id;
+    matchData[0].player2 = g101Player2Id;
+    // send match_id 102 to0API
+    saveMatch(matchData[0]);
+  }
 
   /* add addEventListener to match 101 save button */
   document.getElementById('saveMatch101').addEventListener('click', () => {
@@ -352,9 +356,13 @@ function insertTable(registrationData, matchData) {
     g102matchScoreElement.options[matchData[1].score_id].selected = true;
   }
 
-  // match_id 102 save data Object
-  matchData[1].player1 = g102Player1Id;
-  matchData[1].player2 = g102Player2Id;
+  if (matchData[1].player1 === null && matchData[1].player2 === null) {
+    // match_id 102 save data Object
+    matchData[1].player1 = g102Player1Id;
+    matchData[1].player2 = g102Player2Id;
+    // send match_id 102 to API
+    saveMatch(matchData[1]);
+  }
 
   /* add addEventListener to match 102 save button */
   document.getElementById('saveMatch102').addEventListener('click', () => {
@@ -493,9 +501,13 @@ function insertTable(registrationData, matchData) {
     g103matchScoreElement.options[matchData[0].score_id].selected = true;
   }
 
-  // match_id 103 save data Object
-  matchData[2].player1 = g103Player1Id;
-  matchData[2].player2 = g103Player2Id;
+  if (matchData[2].player1 === null && matchData[2].player2 === null) {
+    // match_id 104 save data Object
+    matchData[2].player1 = g103Player1Id;
+    matchData[2].player2 = g103Player2Id;
+    // send match_id 104 to API
+    saveMatch(matchData[2]);
+  }
 
   /* add addEventListener to match 103 save button */
   document.getElementById('saveMatch103').addEventListener('click', () => {
@@ -635,9 +647,13 @@ function insertTable(registrationData, matchData) {
     g104matchScoreElement.options[matchData[0].score_id].selected = true;
   }
 
-  // match_id 104 save data Object
-  matchData[3].player1 = g104Player1Id;
-  matchData[3].player2 = g104Player2Id;
+  if (matchData[3].player1 === null && matchData[3].player2 === null) {
+    // match_id 104 save data Object
+    matchData[3].player1 = g104Player1Id;
+    matchData[3].player2 = g104Player2Id;
+    // send match_id 104 to API
+    saveMatch(matchData[3]);
+  }
 
   /* add addEventListener to match 104 save button */
   document.getElementById('saveMatch104').addEventListener('click', () => {
@@ -777,9 +793,13 @@ function insertTable(registrationData, matchData) {
     g105matchScoreElement.options[matchData[0].score_id].selected = true;
   }
 
-  // match_id 105 save data Object
-  matchData[4].player1 = g105Player1Id;
-  matchData[4].player2 = g105Player2Id;
+  if (matchData[4].player1 === null && matchData[4].player2 === null) {
+    // match_id 102 save data Object
+    matchData[4].player1 = g105Player1Id;
+    matchData[4].player2 = g105Player2Id;
+    // send match_id 102 to0API
+    saveMatch(matchData[4]);
+  }
 
   /* add addEventListener to match 105 save button */
   document.getElementById('saveMatch105').addEventListener('click', () => {
@@ -919,9 +939,13 @@ function insertTable(registrationData, matchData) {
     g106matchScoreElement.options[matchData[0].score_id].selected = true;
   }
 
-  // match_id 106 save data Object
-  matchData[5].player1 = g106Player1Id;
-  matchData[5].player2 = g106Player2Id;
+  if (matchData[5].player1 === null && matchData[5].player2 === null) {
+    // match_id 102 save data Object
+    matchData[5].player1 = g106Player1Id;
+    matchData[5].player2 = g106Player2Id;
+    // send match_id 102 to0API
+    saveMatch(matchData[5]);
+  }
 
   /* add addEventListener to match 106 save button */
   document.getElementById('saveMatch106').addEventListener('click', () => {
@@ -1062,9 +1086,13 @@ function insertTable(registrationData, matchData) {
     g107matchScoreElement.options[matchData[0].score_id].selected = true;
   }
 
-  // match_id 107 save data Object
-  matchData[6].player1 = g107Player1Id;
-  matchData[6].player2 = g107Player2Id;
+  if (matchData[6].player1 === null && matchData[6].player2 === null) {
+    // match_id 102 save data Object
+    matchData[6].player1 = g107Player1Id;
+    matchData[6].player2 = g107Player2Id;
+    // send match_id 102 to0API
+    saveMatch(matchData[6]);
+  }
 
   /* add addEventListener to match 107 save button */
   document.getElementById('saveMatch107').addEventListener('click', () => {
@@ -1204,9 +1232,13 @@ function insertTable(registrationData, matchData) {
     g108matchScoreElement.options[matchData[7].score_id].selected = true;
   }
 
-  // match_id 108 save data Object
-  matchData[7].player1 = g108Player1Id;
-  matchData[7].player2 = g108Player2Id;
+  if (matchData[7].player1 === null && matchData[7].player2 === null) {
+    // match_id 102 save data Object
+    matchData[7].player1 = g108Player1Id;
+    matchData[7].player2 = g108Player2Id;
+    // send match_id 102 to0API
+    saveMatch(matchData[7]);
+  }
 
   /* add addEventListener to match 108 save button */
   document.getElementById('saveMatch108').addEventListener('click', () => {

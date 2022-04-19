@@ -88,44 +88,81 @@ function getData() {
       // set the first 8 games in place
       for (let i = 0; i < 8; i++) {
         let gameNumberPlayer1 = 'g' + (101 + i) + 'Player1';
-        let gameNumberPlayer2 = 'g' + (101 + i) + 'Player2';
-        document.getElementById(gameNumberPlayer1).innerText = findPlayer(
+        let getPlayer1FullName = findPlayer(
           matchData[i].player1,
           registrationData
         ).fullName;
-        document.getElementById(gameNumberPlayer2).innerText = findPlayer(
+        if (typeof getPlayer1FullName !== 'string') {
+          document.getElementById(gameNumberPlayer1).innerText = '';
+        }
+        if (typeof getPlayer1FullName === 'string') {
+          document.getElementById(gameNumberPlayer1).innerText =
+            getPlayer1FullName;
+        }
+
+        let gameNumberPlayer2 = 'g' + (101 + i) + 'Player2';
+        let getPlayer2FullName = findPlayer(
           matchData[i].player2,
           registrationData
         ).fullName;
+        if (typeof getPlayer2FullName !== 'string') {
+          document.getElementById(gameNumberPlayer2).innerText = '';
+        }
+        if (typeof getPlayer2FullName === 'string') {
+          document.getElementById(gameNumberPlayer2).innerText = findPlayer(
+            matchData[i].player2,
+            registrationData
+          ).fullName;
+        }
       }
 
       // set games from 108 -> 138
       for (let i = 0; i < 38; i++) {
+        // create element value strings
         let gameNumberWinner = 'g' + (101 + i) + 'Winner';
         let gameNumberLoser = 'g' + (101 + i) + 'Loser';
         let gameNumberScore = 'g' + (101 + i) + 'Score';
 
-        if (matchData[i].score_id === 0) {
+        // set matchData score to a real result
+        if (matchData[i].score_id === 1) {
           matchData[i].score_id = '3:0';
         }
-        if (matchData[i].score_id === 1) {
+        if (matchData[i].score_id === 2) {
           matchData[i].score_id = '3:1';
         }
-        if (matchData[i].score_id === 2) {
+        if (matchData[i].score_id === 3) {
           matchData[i].score_id = '3:2';
         }
-        if (matchData[i].score_id === 3) {
+        if (matchData[i].score_id === 4) {
           matchData[i].score_id = 'w:o';
         }
 
-        document.getElementById(gameNumberWinner).innerText = findPlayer(
+        // set winner value
+        let getWinnerFullName = findPlayer(
           matchData[i].winner,
           registrationData
         ).fullName;
-        document.getElementById(gameNumberLoser).innerText = findPlayer(
+
+        // if winner value is not a string the return empty string
+        if (typeof getWinnerFullName !== 'string') {
+          getWinnerFullName =
+            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        }
+        document.getElementById(gameNumberWinner).innerHTML = getWinnerFullName;
+
+        // set loser value
+        let getLoserFullName = findPlayer(
           matchData[i].loser,
           registrationData
         ).fullName;
+
+        // if loser value is not a string the return empty string
+        if (typeof getLoserFullName !== 'string') {
+          getLoserFullName =
+            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        }
+        document.getElementById(gameNumberLoser).innerHTML = getLoserFullName;
+
         document.getElementById(gameNumberScore).innerText =
           matchData[i].score_id;
       }

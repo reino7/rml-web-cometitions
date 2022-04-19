@@ -32,6 +32,7 @@ let messageElement = document.getElementById('message');
 messageElement.style.display = 'none';
 
 function generateCompetitionId(compName) {
+  compName = compName.trim(); // removes whitespace from both sides of a string
   compName = compName.toLowerCase(); // to lowercase
   compName = compName.normalize('NFD').replace(/\p{Diacritic}/gu, ''); // Unicode property escapes
   compName = compName.replace('-', ''); // remove dash
@@ -54,14 +55,14 @@ function compAddSendFormData() {
   console.log('ID: ' + compNameId);
   console.log('Kuupäev: ' + compAddDateFormInput.value);
   console.log('Kellaaeg: ' + compAddTimeFormInput.value);
-  console.log('Võistluse nimi: ' + compAddNameFormInput.value);
+  console.log('Võistluse nimi: ' + compAddNameFormInput.value.trim());
   console.log('Võistluskoht: ' + compAddLocationFormInput.value);
   console.log('Kohtunik: ' + compAddUmpireFormInput.value);
   console.log('Kontakttelefon: ' + compAddUmpireContactFormInput.value);
   console.log('Korraldaja: ' + compAddOrganizerFormInput.value);
   console.log('Kontakttelefon: ' + compAddOrganizerContactFormInput.value);
   localStorage.setItem('compId', compNameId);
-  localStorage.setItem('compName', compAddNameFormInput.value);
+  localStorage.setItem('compName', compAddNameFormInput.value.trim());
 
   axios({
     method: 'post',
@@ -70,7 +71,7 @@ function compAddSendFormData() {
       compId: compNameId,
       compDate: compAddDateFormInput.value,
       compTime: compAddTimeFormInput.value,
-      compName: compAddNameFormInput.value,
+      compName: compAddNameFormInput.value.trim(),
       compLocation: compAddLocationFormInput.value,
       compUmpire: compAddUmpireFormInput.value,
       compUmpireContact: compAddUmpireContactFormInput.value,
