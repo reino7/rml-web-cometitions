@@ -83,22 +83,6 @@ function getData() {
       const competitionName = document.getElementById('competitionName');
       competitionName.innerText = compData.comp_name;
 
-      /* I place */
-      document.getElementById('compFirstPlace').innerText = findPlayer(
-        matchData[30].winner,
-        regData
-      ).fullName;
-      /* II place */
-      document.getElementById('compSecondPlace').innerText = findPlayer(
-        matchData[30].loser,
-        regData
-      ).fullName;
-      /* III place */
-      document.getElementById('compThirdPlace').innerText = findPlayer(
-        matchData[37].winner,
-        regData
-      ).fullName;
-
       /* Creating array with results and player data 
         1. place -> 30.winner
         2. place -> 30.loser
@@ -113,13 +97,93 @@ function getData() {
           findPlayer(matchData[value].loser, regData)
         );
       }
+      console.log(placementArrayWitdhData);
+      /* I place overall */
+      if (placementArrayWitdhData[0] === null) {
+        document.getElementById('compFirstPlace').innerText = '';
+      }
+      if (placementArrayWitdhData[0] !== null) {
+        document.getElementById('compFirstPlace').innerText =
+          placementArrayWitdhData[0].fullName;
+      }
+      /* II place overall */
+      if (placementArrayWitdhData[1] === null) {
+        document.getElementById('compFirstPlace').innerText = '';
+      }
+      if (placementArrayWitdhData[1] !== null) {
+        document.getElementById('compSecondPlace').innerText =
+          placementArrayWitdhData[1].fullName;
+      }
 
+      /* III place overall */
+      if (placementArrayWitdhData[2] === null) {
+        document.getElementById('compFirstPlace').innerText = '';
+      }
+      if (placementArrayWitdhData[2] !== null) {
+        document.getElementById('compThirdPlace').innerText =
+          placementArrayWitdhData[2].fullName;
+      }
+
+      /* Best MAN overall */
+      const compManArray = findPlayerBySex('M', placementArrayWitdhData);
+      console.log(compManArray);
+      document.getElementById('compBestMan').innerText =
+        compManArray[0].fullName;
+      /* Best WOMAN overall */
       const compWomanArray = findPlayerBySex('N', placementArrayWitdhData);
       document.getElementById('compBestWoman').innerText =
         compWomanArray[0].fullName;
-      const compManArray = findPlayerBySex('M', placementArrayWitdhData);
-      document.getElementById('compBestMan').innerText =
-        compManArray[0].fullName;
+
+      /* Best of boys/men between the age of 0 and 10 */
+      const boysBetween0and10Array = findPlayerBySexAndAge(
+        'M',
+        0,
+        10,
+        placementArrayWitdhData
+      );
+      // if array is empty then display nothing
+      if (boysBetween0and10Array.length === 0) {
+        document.getElementById('boysBetween0and10').innerHTML = '';
+      }
+      // if array lenght is larger then 0, then loop it
+      if (boysBetween0and10Array.length > 0) {
+        for (let i = 0; i < boysBetween0and10Array.length; i++) {
+          document.getElementById('boysBetween0and10').innerHTML += `
+            <tr>
+              <th scope="row">${i + 1}.</th>
+              <td>${boysBetween0and10Array[i].fullName}</td>
+
+          `;
+        }
+      }
+
+      /* Best of girls/women between the age of 0 and 10 */
+      const girlsBetween0and10Array = findPlayerBySexAndAge(
+        'N',
+        0,
+        10,
+        placementArrayWitdhData
+      );
+      // if array is empty then display nothing
+      if (girlsBetween0and10Array.length === 0) {
+        document.getElementById('girlsBetween0and10').innerHTML = '';
+      }
+      // if array lenght is larger then 0, then loop it
+      if (girlsBetween0and10Array.length > 0) {
+        for (let i = 0; i < girlsBetween0and10Array.length; i++) {
+          document.getElementById('girlsBetween0and10').innerHTML += `
+            <tr>
+              <th scope="row">${i + 1}.</th>
+              <td>${girlsBetween0and10Array[i].fullName}</td>
+
+          `;
+        }
+      }
+
+      console.log(placementArrayWitdhData);
+      console.log(compManArray);
+      console.log(compWomanArray);
+      console.log(boysBetween0and10Array);
     })
     .catch(error => console.log(error));
 }
@@ -129,6 +193,16 @@ getData();
 function findPlayerBySex(sex, data) {
   const player = data.filter(element => {
     return element.sex === sex;
+  });
+  return player;
+}
+
+/* find player by sex and age, return array with objects */
+function findPlayerBySexAndAge(sex, ageStart, ageEnd, data) {
+  const player = data.filter(element => {
+    return (
+      element.sex === sex && element.age >= ageStart && element.age <= ageEnd
+    );
   });
   // console.log(player);
   return player;
@@ -143,9 +217,18 @@ function findPlayer(id, data) {
   const player = data.find(object => {
     return object.person_id === id;
   });
+
+  let startDate = new Date();
+
   const playerData = {
     ...player,
     fullName: player.first_name + ' ' + player.fam_name,
+    calcAge: function () {
+      const endDate = new Date(player.birthdate);
+      this.age = Math.abs(moment.duration(endDate - startDate).years());
+      return this.age;
+    },
   };
+  playerData.calcAge();
   return playerData;
 }
