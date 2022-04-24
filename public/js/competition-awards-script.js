@@ -50,14 +50,26 @@ document.getElementById(
   'linkAuhinnad'
 ).href = `${secondNavLinkPath}${secondNavLinkPathAwards}${getGurrentUrlPathLastItem}`;
 
-console.log('----- -----');
-console.log('Võistluse Nimi: ' + localStorage.getItem('compName'));
-console.log('Võistluse ID: ' + localStorage.getItem('compId'));
-console.log('Võistluse ID from URL: ' + getGurrentUrlPathLastItem);
-console.log('Match API URL: ' + apiUrlForMatch);
-console.log('Comp API URL: ' + apiUrlForComp);
-console.log('Reg API URL: ' + apiUrlForRegistration);
-console.log('----- -----');
+console.log('%c----- -----', `color: red`);
+console.log(
+  '%cVõistluse Nimi: ' + '%c' + localStorage.getItem('compName'),
+  `color: red`,
+  `color: green`
+);
+console.log(
+  '%cVõistluse ID: ' + '%c' + localStorage.getItem('compId'),
+  `color: red`,
+  `color: green`
+);
+console.log(
+  '%cVõistluse ID from URL: ' + '%c' + getGurrentUrlPathLastItem,
+  `color: red`,
+  `color: green`
+);
+console.log('%cMatch API URL: ' + apiUrlForMatch, `color: red`);
+console.log('%cComp API URL: ' + apiUrlForComp, `color: red`);
+console.log('%cReg API URL: ' + apiUrlForRegistration, `color: red`);
+console.log('%c----- -----', `color: red`);
 
 /* GET data from API-s */
 function getData() {
@@ -90,104 +102,229 @@ function getData() {
       const placementArray = [30, 37, 36, 35, 34, 33, 32, 31];
       let placementArrayWitdhData = [];
       for (const [i, value] of placementArray.entries()) {
-        placementArrayWitdhData.push(
-          findPlayer(matchData[value].winner, regData)
-        );
-        placementArrayWitdhData.push(
-          findPlayer(matchData[value].loser, regData)
-        );
+        if (typeof matchData[value].winner === 'number') {
+          placementArrayWitdhData.push(
+            findPlayer(matchData[value].winner, regData)
+          );
+        }
+        if (typeof matchData[value].loser === 'number') {
+          placementArrayWitdhData.push(
+            findPlayer(matchData[value].loser, regData)
+          );
+        }
       }
-      console.log(placementArrayWitdhData);
+
       /* I place overall */
-      if (placementArrayWitdhData[0] === null) {
+      if (placementArrayWitdhData[0] === undefined) {
         document.getElementById('compFirstPlace').innerText = '';
       }
-      if (placementArrayWitdhData[0] !== null) {
+      if (placementArrayWitdhData[0] !== undefined) {
         document.getElementById('compFirstPlace').innerText =
           placementArrayWitdhData[0].fullName;
       }
       /* II place overall */
-      if (placementArrayWitdhData[1] === null) {
-        document.getElementById('compFirstPlace').innerText = '';
+      if (placementArrayWitdhData[1] === undefined) {
+        document.getElementById('compSecondPlace').innerText = '';
       }
-      if (placementArrayWitdhData[1] !== null) {
+      if (placementArrayWitdhData[1] !== undefined) {
         document.getElementById('compSecondPlace').innerText =
           placementArrayWitdhData[1].fullName;
       }
 
       /* III place overall */
-      if (placementArrayWitdhData[2] === null) {
-        document.getElementById('compFirstPlace').innerText = '';
+      if (placementArrayWitdhData[2] === undefined) {
+        document.getElementById('compThirdPlace').innerText = '';
       }
-      if (placementArrayWitdhData[2] !== null) {
+      if (placementArrayWitdhData[2] !== undefined) {
         document.getElementById('compThirdPlace').innerText =
           placementArrayWitdhData[2].fullName;
       }
 
       /* Best MAN overall */
       const compManArray = findPlayerBySex('M', placementArrayWitdhData);
-      console.log(compManArray);
-      document.getElementById('compBestMan').innerText =
-        compManArray[0].fullName;
+      if (compManArray.length === 0) {
+        document.getElementById('compBestMan').innerText = '';
+      }
+      if (compManArray.length >= 1) {
+        document.getElementById('compBestMan').innerText =
+          compManArray[0].fullName;
+      }
       /* Best WOMAN overall */
       const compWomanArray = findPlayerBySex('N', placementArrayWitdhData);
-      document.getElementById('compBestWoman').innerText =
-        compWomanArray[0].fullName;
+      if (compWomanArray.length === 0) {
+        document.getElementById('compBestWoman').innerText = '';
+      }
+      if (compWomanArray.length >= 1) {
+        document.getElementById('compBestWoman').innerText =
+          compWomanArray[0].fullName;
+      }
 
       /* Best of boys/men between the age of 0 and 10 */
-      const boysBetween0and10Array = findPlayerBySexAndAge(
+      findPlayersByAgeGroup(
         'M',
         0,
         10,
+        'boysBetween0and10',
         placementArrayWitdhData
       );
-      // if array is empty then display nothing
-      if (boysBetween0and10Array.length === 0) {
-        document.getElementById('boysBetween0and10').innerHTML = '';
-      }
-      // if array lenght is larger then 0, then loop it
-      if (boysBetween0and10Array.length > 0) {
-        for (let i = 0; i < boysBetween0and10Array.length; i++) {
-          document.getElementById('boysBetween0and10').innerHTML += `
-            <tr>
-              <th scope="row">${i + 1}.</th>
-              <td>${boysBetween0and10Array[i].fullName}</td>
-
-          `;
-        }
-      }
 
       /* Best of girls/women between the age of 0 and 10 */
-      const girlsBetween0and10Array = findPlayerBySexAndAge(
+      findPlayersByAgeGroup(
         'N',
         0,
         10,
+        'girlsBetween0and10',
         placementArrayWitdhData
       );
-      // if array is empty then display nothing
-      if (girlsBetween0and10Array.length === 0) {
-        document.getElementById('girlsBetween0and10').innerHTML = '';
-      }
-      // if array lenght is larger then 0, then loop it
-      if (girlsBetween0and10Array.length > 0) {
-        for (let i = 0; i < girlsBetween0and10Array.length; i++) {
-          document.getElementById('girlsBetween0and10').innerHTML += `
-            <tr>
-              <th scope="row">${i + 1}.</th>
-              <td>${girlsBetween0and10Array[i].fullName}</td>
 
-          `;
-        }
-      }
+      /* Best of boys/men between the age of 11 and 14 */
+      findPlayersByAgeGroup(
+        'M',
+        11,
+        14,
+        'boysBetween11and14',
+        placementArrayWitdhData
+      );
 
-      console.log(placementArrayWitdhData);
-      console.log(compManArray);
-      console.log(compWomanArray);
-      console.log(boysBetween0and10Array);
+      /* Best of girls/women between the age of 11 and 14 */
+      findPlayersByAgeGroup(
+        'N',
+        11,
+        14,
+        'girlsBetween11and14',
+        placementArrayWitdhData
+      );
+
+      /* Best of boys/men between the age of 15 and 18 */
+      findPlayersByAgeGroup(
+        'M',
+        15,
+        18,
+        'boysBetween15and18',
+        placementArrayWitdhData
+      );
+
+      /* Best of girls/women between the age of 15 and 18 */
+      findPlayersByAgeGroup(
+        'N',
+        15,
+        18,
+        'girlsBetween15and18',
+        placementArrayWitdhData
+      );
+
+      /* Best of MEN between the age of 19 and 34 */
+      findPlayersByAgeGroup(
+        'M',
+        19,
+        34,
+        'menBetween19and34',
+        placementArrayWitdhData
+      );
+      /* Best of WOMEN between the age of 19 and 34 */
+      findPlayersByAgeGroup(
+        'N',
+        19,
+        34,
+        'womenBetween19and34',
+        placementArrayWitdhData
+      );
+
+      /* Best of MEN between the age of 35 and 49 */
+      findPlayersByAgeGroup(
+        'M',
+        35,
+        49,
+        'menBetween35and49',
+        placementArrayWitdhData
+      );
+      /* Best of WOMEN between the age of 35 and 34 */
+      findPlayersByAgeGroup(
+        'N',
+        35,
+        44,
+        'womenBetween35and44',
+        placementArrayWitdhData
+      );
+
+      /* Best of MEN between the age of 50 and 59 */
+      findPlayersByAgeGroup(
+        'M',
+        50,
+        59,
+        'menBetween50and59',
+        placementArrayWitdhData
+      );
+      /* Best of WOMEN between the age of 45 and 54 */
+      findPlayersByAgeGroup(
+        'N',
+        45,
+        54,
+        'womenBetween45and54',
+        placementArrayWitdhData
+      );
+
+      /* Best of MEN between the age of 60 and 69 */
+      findPlayersByAgeGroup(
+        'M',
+        60,
+        69,
+        'menBetween60and69',
+        placementArrayWitdhData
+      );
+      /* Best of WOMEN between the age of 55 and 64 */
+      findPlayersByAgeGroup(
+        'N',
+        55,
+        64,
+        'womenBetween55and64',
+        placementArrayWitdhData
+      );
+
+      /* Best of MEN between the age of 70 and older */
+      findPlayersByAgeGroup(
+        'M',
+        70,
+        100,
+        'menBetween70andOlder',
+        placementArrayWitdhData
+      );
+      /* Best of WOMEN between the age of 65 and older */
+      findPlayersByAgeGroup(
+        'N',
+        65,
+        100,
+        'womenBetween65andOlder',
+        placementArrayWitdhData
+      );
+
+      console.table(placementArrayWitdhData);
+      console.table(compManArray);
+      console.table(compWomanArray);
     })
     .catch(error => console.log(error));
 }
 getData();
+
+/* display filtered players by age and sex */
+function findPlayersByAgeGroup(sex, ageStart, ageEnd, displayElement, data) {
+  const filterResults = findPlayerBySexAndAge(sex, ageStart, ageEnd, data);
+  // if array is empty then display nothing
+  if (filterResults.length === 0) {
+    document.getElementById(displayElement).innerHTML = 'Võistlejaid ei leitud';
+  }
+  // if array lenght is larger then 0, then loop it
+  if (filterResults.length > 0) {
+    for (let i = 0; i < filterResults.length; i++) {
+      document.getElementById(displayElement).innerHTML += `
+            <tr>
+              <th scope="row">${i + 1}.</th>
+              <td>${filterResults[i].fullName}</td>
+
+          `;
+    }
+  }
+}
 
 /* find player by sex, return array with objects */
 function findPlayerBySex(sex, data) {
