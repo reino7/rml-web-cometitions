@@ -222,6 +222,25 @@ function sleep(duration) {
 }
 
 function registerPlayers() {
+  if (registerTableData.length <= 15) {
+    console.log('registerTableData.length: ' + registerTableData.length);
+    console.log('Bye bye # ' + (15 - registerTableData.length));
+    let byebyePlayersNeeded = 15 - registerTableData.length;
+    for (let i = 0; i <= byebyePlayersNeeded; i++) {
+      /* array to show in the registerTableBody */
+      registerTableData.push({
+        rateOrder: 0,
+        ratePoints: 0,
+        personId: idForPlayerWithoutReiting(),
+        firstName: 'bye',
+        famName: 'bye',
+        birthdate: '1900-01-01',
+        sex: 'M',
+        compId: localStorage.getItem('compId'),
+      });
+    }
+  }
+
   console.log('Data 2 Axios');
   console.table(registerTableData);
 
@@ -318,4 +337,26 @@ function searchTableData() {
       }
     }
   }
+}
+
+function parseDate(dateString) {
+  /* axios uses JSON.stringify for serialisation and it causes 
+  the translation to UTC. This loses 2 hours for timezone difference.
+  Adding 2 hours to correct this */
+  // dateString = moment(dateString).add(2, 'hours').format();
+
+  if (dateString === undefined) {
+    let emptyString = '';
+    return emptyString;
+  }
+
+  let dateComponents = dateString.split('T');
+  let datePieces = dateComponents[0].split('-');
+  let year = datePieces[0];
+  let month = datePieces[1];
+  let day = datePieces[2];
+
+  let competitionDate = `${day}.${month}.${year}`;
+
+  return competitionDate;
 }

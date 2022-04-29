@@ -34,10 +34,30 @@ function appendData2CompetitionsTable(data) {
   for (let i = 0; i < data.length; i++) {
     competitionsTableContainer.innerHTML += `<tr>
       <td class="text-center">${parseDate(data[i].comp_date)}</td>
-      <td>${data[i].comp_name}</td>
-      <td><a class="text-underline-hover text-reset text-underline-hover" href="/voistlus/mangud/${
+      <td><a class="text-underline-hover text-reset text-underline-hover" href="/voistlus/info/${
         data[i].comp_id
-      }">Tulemused</a></td>
+      }">${data[i].comp_name}</a></td>
+      <td>
+        <div class="d-flex justify-content-around">
+          <a class="text-underline-hover text-reset text-underline-hover" href="/voistlus/mangud/${
+            data[i].comp_id
+          }">
+            <i class="fas fa-table-tennis"></i> Mängud
+          </a>
+
+          <a class="text-underline-hover text-reset text-underline-hover" href="/voistlus/tabel/${
+            data[i].comp_id
+          }">
+            <i class="fas fa-table"></i></i> Tabel
+          </a>
+          
+          <a class="text-underline-hover text-reset text-underline-hover" href="/voistlus/auhinnad/${
+            data[i].comp_id
+          }">
+            <i class="fas fa-award"></i> Auhinnad
+          </a>
+        </div>
+      </td>
     </tr>`;
   }
 }
