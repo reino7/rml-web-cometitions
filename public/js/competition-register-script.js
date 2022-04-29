@@ -91,12 +91,8 @@ function addPlayerWithoutReiting2Table() {
 }
 
 function countRegisteredPlayers() {
-  const registeredPlayerCount = document.getElementById(
-    'registeredPlayerCount'
-  );
-  for (let i = 0; i < registerTableFull.rows.length; i++) {
-    return (registeredPlayerCount.innerHTML = registerTableFull.rows.length);
-  }
+  document.getElementById('registeredPlayerCount').innerHTML =
+    registerTableData.length;
 }
 
 function deleteRow() {
@@ -134,15 +130,14 @@ function reloadRows() {
       </tr>
     `;
   }
+  /* display registered player count */
+  countRegisteredPlayers();
 }
 
 // add EventListener to every row to reitingsTableFull
 // i = 1 skip table header
 for (let i = 1; i < reitingsTableFull.rows.length; i++) {
   reitingsTableFull.rows[i].addEventListener('click', function () {
-    /* display registered player count */
-    countRegisteredPlayers();
-
     /* needs furder testing before use
     console.log(this.cells[2].innerText);
     let findPersonId = Object.values(eltlReitingObj).find(obj => {
