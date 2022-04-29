@@ -5886,3 +5886,180 @@ function findPlayer(id, data) {
   };
   return playerData;
 }
+
+/* TEST AND IMPLEMENT FOR FIRST 8 GAMES - UPDATE NEEDED BEFORE USE*/
+// initGameRow(0, '101', 0, 15, 8, '109', 13, '114', 1, 2);
+// function initGameRow(
+//   matchindex,
+//   gamenumber,
+//   regDataPlayer1,
+//   regDataPlayer2,
+//   nextmatchindex,
+//   nextgamenr,
+//   loosermatchindex,
+//   loosergamenr,
+//   nextgamepositionforWinner,
+//   nextgamepositionforLooser
+// ) {
+//   /*****         *****/
+//   /* Game 101 -> 1 vs 16 */
+//   /*****         *****/
+//   const player1Element = document.getElementById(gamenumber + 'player1');
+//   const player2Element = document.getElementById(gamenumber + 'player2');
+//   const gameTableElement = document.getElementById(gamenumber + 'gameTable');
+//   const matchWinnerElement = document.getElementById(
+//     gamenumber + 'matchWinner'
+//   );
+//   const matchScoreElement = document.getElementById(gamenumber + 'matchScore');
+//   const Player1Id = registrationData[regDataPlayer1].person_id;
+//   const Player2Id = registrationData[regDataPlayer2].person_id;
+
+//   set title as player id
+//   player1Element.title = Player1Id;
+//   player2Element.title = Player2Id;
+//   set cell value to player first- and lastname
+//   player1Element.innerText = findPlayer(Player1Id, registrationData).fullName;
+//   player2Element.innerText = findPlayer(Player2Id, registrationData).fullName;
+//   set dropdown options to player first- and lastname, add player id as value
+//   matchWinnerElement.options[1] = new Option(
+//     findPlayer(Player1Id, registrationData).fullName,
+//     Player1Id,
+//     false,
+//     false
+//   );
+//   matchWinnerElement.options[2] = new Option(
+//     findPlayer(Player2Id, registrationData).fullName,
+//     Player2Id,
+//     false,
+//     false
+//   );
+//   if winner available in API, select winner in dropdown
+//   if (
+//     matchData[matchindex].winner ===
+//     parseInt(matchWinnerElement.options[1].value)
+//   ) {
+//     matchWinnerElement.options[1].selected = true;
+//     matchScoreElement.options[matchData[matchindex].score_id].selected = true;
+//   }
+
+//   if (
+//     matchData[matchindex].winner ===
+//     parseInt(matchWinnerElement.options[2].value)
+//   ) {
+//     matchWinnerElement.options[2].selected = true;
+//     matchScoreElement.options[matchData[matchindex].score_id].selected = true;
+//   }
+
+//   match_id 101 save data Object
+//   matchData[matchindex].player1 = Player1Id;
+//   matchData[matchindex].player2 = Player2Id;
+
+//   /* add addEventListener to match 101 save button */
+//   document
+//     .getElementById('saveMatch' + gamenumber)
+//     .addEventListener('click', () => {
+//       let elemendiFullId = this.id; // saveMatchXXX
+//       let kolmekohalinenumberElemendiIdSt = elemendiFullId.substr(-3); // XXX osa stringi lÃµpust, paremalt poolt
+//       let matchId = document.getElementById(kolmekohalinenumberElemendiIdSt)
+//         .cells[0].innerText;
+//       let matchWinnerFullName =
+//         matchWinnerElement.options[matchWinnerElement.selectedIndex].label;
+//       let matchWinnerId = parseInt(
+//         matchWinnerElement.options[matchWinnerElement.selectedIndex].value
+//       );
+//       let matchScore = parseInt(
+//         matchScoreElement.options[matchScoreElement.selectedIndex].value
+//       );
+//       let gameLoserFullName = '';
+//       let gameLoserId = null;
+//       console.log(
+//         `GameID ${matchId} winner is ${matchWinnerFullName} ID ${matchWinnerId}`
+//       );
+
+//       /* Check Game 101 loser */
+//       if (matchWinnerId !== parseInt(matchWinnerElement.options[2].value)) {
+//         gameLoserFullName = matchWinnerElement.options[2].label;
+//         gameLoserId = parseInt(matchWinnerElement.options[2].value);
+//         console.log(
+//           `GameID ${matchId} loser is ${gameLoserFullName} ID ${gameLoserId}`
+//         );
+//       }
+//       if (matchWinnerId !== parseInt(matchWinnerElement.options[1].value)) {
+//         gameLoserFullName = matchWinnerElement.options[1].label;
+//         gameLoserId = parseInt(matchWinnerElement.options[1].value);
+//         console.log(
+//           `GameID ${matchId} loser is ${gameLoserFullName} ID ${gameLoserId}`
+//         );
+//       }
+
+//       /* Save */
+//       match_id 101 save match results
+//       matchData[matchindex].winner = matchWinnerId;
+//       matchData[matchindex].loser = gameLoserId;
+//       matchData[matchindex].score_id = matchScore;
+//       clear gameTable selection to 0
+//       gameTableElement.options[0].selected = true;
+//       send match_id 101 to API
+//       saveMatch(matchData[matchindex]);
+
+//       /* Move match 101 Winner to new match 109 as player 1*/
+//       save to Object
+//       if (nextgamepositionforWinner == 1) {
+//         matchData[nextmatchindex].player1 = matchWinnerId;
+//       } else {
+//         matchData[nextmatchindex].player2 = matchWinnerId;
+//       }
+//       set cell value to player first- and lastname
+//       nextGame_playerElement = document.getElementById(
+//         nextgamenr + 'player' + nextgamepositionforWinner
+//       );
+//       nextGame_matchWinnerElement = document.getElementById(
+//         nextgamenr + 'matchWinner'
+//       );
+//       nextGame_playerElement.innerText = findPlayer(
+//         matchWinnerId,
+//         registrationData
+//       ).fullName;
+//       set dropdown options to player first- and lastname, add player id as value
+//       nextGame_matchWinnerElement.options[nextgamepositionforWinner] =
+//         new Option(
+//           findPlayer(matchWinnerId, registrationData).fullName,
+//           matchWinnerId,
+//           false,
+//           false
+//         );
+//       send player data to API
+//       saveMatch(matchData[nextmatchindex]);
+
+//       /* Move match 101 Loser to new match 114 as player 2 */
+//       save to Object
+//       loosergame_playerElement = document.getElementById(
+//         loosergamenr + 'player' + nextgamepositionforLooser
+//       );
+//       loosergame_matchWinnerElement = document.getElementById(
+//         loosergamenr + 'matchWinner'
+//       );
+//       if (nextgamepositionforLooser == 1) {
+//         matchData[loosermatchindex].player1 = gameLoserId;
+//       } else {
+//         matchData[loosermatchindex].player2 = gameLoserId;
+//       }
+//       set cell value to player first- and lastname
+//       loosergame_playerElement.innerText = findPlayer(
+//         gameLoserId,
+//         registrationData
+//       ).fullName;
+//       set dropdown options to player first- and lastname, add player id as value
+//       loosergame_matchWinnerElement.options[nextgamepositionforLooser] =
+//         new Option(
+//           findPlayer(gameLoserId, registrationData).fullName,
+//           gameLoserId,
+//           false,
+//           false
+//         );
+//       send player data to API
+//       saveMatch(matchData[loosermatchindex]);
+
+//       console.table(matchData);
+//     });
+// }
