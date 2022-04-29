@@ -93,9 +93,31 @@ function insertTable(registrationData) {
         <td class="text-center">${registrationData[i].person_id}</td>
         <td class="text-center">${registrationData[i].rate_order}</td>
         <td class="text-center">${registrationData[i].rate_points}</td>
-        <td class="text-center">${registrationData[i].birthdate}</td>
+        <td class="text-center">${parseDate(registrationData[i].birthdate)}</td>
         <td class="text-center">${registrationData[i].sex}</td>
       </tr>
     `;
   }
+}
+
+function parseDate(dateString) {
+  /* axios uses JSON.stringify for serialisation and it causes 
+  the translation to UTC. This loses 2 hours for timezone difference.
+  Adding 2 hours to correct this */
+  // dateString = moment(dateString).add(2, 'hours').format();
+
+  if (dateString === undefined) {
+    let emptyString = '';
+    return emptyString;
+  }
+
+  let dateComponents = dateString.split('T');
+  let datePieces = dateComponents[0].split('-');
+  let year = datePieces[0];
+  let month = datePieces[1];
+  let day = datePieces[2];
+
+  let competitionDate = `${day}.${month}.${year}`;
+
+  return competitionDate;
 }
