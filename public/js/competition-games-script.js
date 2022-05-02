@@ -143,10 +143,12 @@ function insertTable(registrationData, matchData) {
       </td>
       <td class="text-center">
         <ul class="m-0 p-0">
-          <!-- <li class="list-inline-item">
-            <button class="btn btn-outline-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-              data-placement="top" title="Muuda"><i class="fa fa-edit"></i></button>
-          </li> -->
+          <li class="list-inline-item">
+            <a id="editMatch${
+              matchData[i].match_id
+            }" class="btn btn-outline-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
+              data-placement="top" title="Muuda"><i class="fa fa-edit"></i></a>
+          </li>
           <li class="list-inline-item">
             <a id="saveMatch${
               matchData[i].match_id
@@ -5729,7 +5731,6 @@ function insertTable(registrationData, matchData) {
     g137gameTableElement.options[0].selected = true;
     // send match_id 137 to API
     saveMatch(matchData[36]);
-
     console.table(matchData);
   });
 
@@ -5851,6 +5852,11 @@ function insertTable(registrationData, matchData) {
     matchData[37].score_id = g138matchScore;
     // clear gameTable selection to 0
     g138gameTableElement.options[0].selected = true;
+    // disable Table, Winner, Score dropdown menu
+    // g138gameTableElement.disabled = true;
+    // g138matchWinnerElement.disabled = true;
+    // g138matchScoreElement.disabled = true;
+    // document.getElementById('saveMatch138').classList.add('disabled');
     // send match_id 138 to API
     saveMatch(matchData[37]);
 
@@ -5871,6 +5877,9 @@ function saveMatch(data) {
     })
     .catch(error => console.log(error));
 }
+
+// disables Table, Winner, Score dropdowns and Save button
+// function editMatch() {}
 
 function findPlayer(id, data) {
   if (id === null) {
