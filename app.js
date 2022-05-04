@@ -25,7 +25,8 @@ const apiMatch = require('./api/match');
 const index = require('./routes/index');
 const schedule = require('./routes/schedule');
 const competition = require('./routes/competition');
-const usersDashboard = require('./routes/users-dashboard');
+const login = require('./routes/login');
+const umpire = require('./routes/umpire');
 const trainings = require('./routes/trainings');
 const updateReiting = require('./routes/update-reiting');
 
@@ -68,8 +69,9 @@ app.use('/api/v1/match', apiMatch);
 app.use('/', index);
 app.use('/ajakava', schedule);
 app.use('/voistlus', competition);
-app.use('/kasutajad/toolaud', usersDashboard);
+app.use('/kohtunik/', umpire);
 app.use('/treeningud', trainings);
+app.use('/logisisse', login);
 app.use('/reitingu-uuendamine', updateReiting);
 
 /** Server listening @ PORT */

@@ -6,7 +6,7 @@ router.use(function (req, res, next) {
 });
 
 router.route('/').get((req, res) => {
-  res.render('users-dashboard');
+  res.render('login');
 });
 
 module.exports = router;

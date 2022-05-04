@@ -1,29 +1,12 @@
 const express = require('express');
 let router = express.Router();
-const fs = require('fs');
 
 router.use(function (req, res, next) {
   next();
 });
 
 router.route('/nimekiri').get((req, res) => {
-  res.render('competition');
-});
-
-router.route('/lisa').get((req, res) => {
-  res.render('competition-add');
-});
-
-router.route('/registreeri/:id').get((req, res) => {
-  // res.send(req.params.id);
-  /**  Competitions Reiting Data Json file for API */
-  let reiting = './public/app_eltlid_reitinguga.json';
-  let reitingJson = JSON.parse(fs.readFileSync(reiting, 'utf-8'));
-  res.render('competition-register', {
-    eltlReiting: reitingJson.PERSONS.PERSON,
-  });
-
-  // res.render('competition-register');
+  res.render('competition-list');
 });
 
 router.route('/info/:id').get((req, res) => {
