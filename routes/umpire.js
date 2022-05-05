@@ -29,7 +29,7 @@ router.route('/voistlus/lisa').get((req, res) => {
   res.render('competition-add');
 });
 
-router.route('/registreeri/:id').get((req, res) => {
+router.route('/voistlus/registreeri/:id').get((req, res) => {
   // res.send(req.params.id);
   /**  Competitions Reiting Data Json file for API */
   let reiting = './public/app_eltlid_reitinguga.json';

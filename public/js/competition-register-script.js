@@ -265,7 +265,7 @@ function registerPlayers() {
           // redirect after 2 seconds
           sleep(2000).then(() => {
             window.location.href =
-              '/voistlus/mangud/' + localStorage.getItem('compId');
+              '/kohtunik/voistlus/mangud/' + localStorage.getItem('compId');
           });
         } else {
           if (messageElement.style.display === 'none') {
