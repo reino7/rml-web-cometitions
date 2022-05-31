@@ -59,3 +59,11 @@ main > .container {
     1.01
   ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
+
+/* Back To Top */
+.btnScrolToTop {
+  position: fixed;
+  opacity: 0.6;
+  bottom: 15px;
+  right: 15px;
+}

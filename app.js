@@ -65,7 +65,7 @@ app.use('/api/v1/competition', apiCompetition);
 app.use('/api/v1/registration', apiRegistration);
 app.use('/api/v1/match', apiMatch);
 
-/** Define routes */
+/** routes */
 app.use('/', index);
 app.use('/ajakava', schedule);
 app.use('/voistlus', competition);

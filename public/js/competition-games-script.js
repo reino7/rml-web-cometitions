@@ -71,8 +71,11 @@ function getData() {
     .then(response => {
       /* Registration API Data*/
       const registrationData = response[0].data;
+      console.table(registrationData);
+
       /* Match API Data*/
       const matchData = response[1].data;
+      console.table(matchData);
 
       /* Match API Data*/
       const compData = response[2].data;

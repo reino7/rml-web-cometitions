@@ -15,112 +15,27 @@
     <main role="main" class="flex-shrink-0">
       <div class="container py-4">
         <div>
-          <h5 class="text-uppercase fw-bold text-center">
+          <h5 class="text-uppercase fw-bold text-center mb-4">
             <span id="competitionName"></span>
+            - Mängud
           </h5>
-          <h5 class="text-uppercase fw-bold text-center mb-4">Mängud</h5>
         </div>
 
-        <!-- Näidis -->
-        <!-- <table class="table table-hover table-bordered" id="gamesList">
-        <thead class="thead-secondary">
-          <tr>
-            <th scope="col" class="text-center">Nr</th>
-            <th scope="col">Võistleja 1</th>
-            <th scope="col">Võistleja 2</th>
-            <th scope="col" class="text-center">Laud</th>
-            <th scope="col">Võitja</th>
-            <th scope="col" class="text-center">Tulemus</th>
-            <th scope="col" class="text-center">Toimingud</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="text-center">101</td>
-            <td>Kustav Korjus</td>
-            <td>Heiki Valk</td>
-            <td class="text-center">
-              <select name="compTables" id="compTables" disabled>
-                <option value="0" selected>&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                <option value="1">&nbsp;&nbsp;1&nbsp;&nbsp;</option>
-                <option value="2">&nbsp;&nbsp;2&nbsp;&nbsp;</option>
-                <option value="3">&nbsp;&nbsp;3&nbsp;&nbsp;</option>
-                <option value="4">&nbsp;&nbsp;4&nbsp;&nbsp;</option>
-                <option value="5">&nbsp;&nbsp;5&nbsp;&nbsp;</option>
-              </select>
-            </td>
-            <td>
-              <select name="compWinner" id="compWinner" class="w-100" placeholder="Disabled input" disabled>
-                <option value="0" selected>&nbsp;&nbsp;Heiki Valk&nbsp;&nbsp;</option>
-                <option value="1">&nbsp;&nbsp;Kustav Korjus&nbsp;&nbsp;</option>
-                <option value="2">&nbsp;&nbsp;Heiki Valk&nbsp;&nbsp;</option>
-              </select>
-            </td>
-            <td class="text-center">
-              <select name="compWinnerScore" id="compWinnerScore" disabled>
-                <option value="0">&nbsp;&nbsp;3:1&nbsp;&nbsp;</option>
-                <option value="1">&nbsp;&nbsp;3:0&nbsp;&nbsp;</option>
-                <option value="2">&nbsp;&nbsp;3:1&nbsp;&nbsp;</option>
-                <option value="3">&nbsp;&nbsp;3:2&nbsp;&nbsp;</option>
-              </select>
-            </td>
-            <td class="text-center">
-              <ul class="m-0 p-0">
-                <li class="list-inline-item">
-                  <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-                    data-placement="top" title="Muuda"><i class="fa fa-edit"></i></button>
-                </li>
-                <li class="list-inline-item">
-                  <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-                    data-placement="top" title="Salvesta"><i class="fas fa-save"></i></i></button>
-                </li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center">102</td>
-            <td>Aigar Aasmäe</td>
-            <td>Aleksander Part</td>
-            <td class="text-center">
-              <select name="compTables" id="compTables">
-                <option value="0" selected>&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                <option value="1">&nbsp;&nbsp;1&nbsp;&nbsp;</option>
-                <option value="2">&nbsp;&nbsp;2&nbsp;&nbsp;</option>
-                <option value="3">&nbsp;&nbsp;3&nbsp;&nbsp;</option>
-                <option value="4">&nbsp;&nbsp;4&nbsp;&nbsp;</option>
-                <option value="5">&nbsp;&nbsp;5&nbsp;&nbsp;</option>
-              </select>
-            </td>
-            <td>
-              <select name="compWinner" id="compWinner" class="w-100">
-                <option value="0" selected>&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                <option value="1">&nbsp;&nbsp;Aigar Aasmäe&nbsp;&nbsp;</option>
-                <option value="2">&nbsp;&nbsp;Aleksander Part&nbsp;&nbsp;</option>
-              </select>
-            </td>
-            <td class="text-center">
-              <select name="compWinnerScore" id="compWinnerScore">
-                <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                <option value="1">&nbsp;&nbsp;3:0&nbsp;&nbsp;</option>
-                <option value="2">&nbsp;&nbsp;3:1&nbsp;&nbsp;</option>
-                <option value="3">&nbsp;&nbsp;3:2&nbsp;&nbsp;</option>
-              </select>
-            </td>
-            <td class="text-center">
-              <ul class="m-0 p-0">
-                <li class="list-inline-item">
-                  <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-                    data-placement="top" title="Muuda"><i class="fa fa-edit"></i></button>
-                </li>
-                <li class="list-inline-item">
-                  <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip"
-                    data-placement="top" title="Salvesta"><i class="fas fa-save"></i></i></button>
-                </li>
-              </ul>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
+        <button
+          id="btnScrolToTop"
+          class="btn btn-secondary btnScrolToTop visually-hidden"
+          title="Lehekülje algusesse"
+        >
+          <i class="fas fa-chevron-up"></i>
+        </button>
+
+        <button
+          id="btnScrolToTop"
+          class="btn btn-secondary btnScrolToTop"
+          title="Lehekülje algusesse"
+        >
+          <i class="fas fa-chevron-up"></i>
+        </button>
 
         <table class="table table-responsive table-hover table-bordered">
           <thead class="table-secondary">

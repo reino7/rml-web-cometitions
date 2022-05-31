@@ -15,12 +15,18 @@
 
     <main role="main" class="flex-shrink-0">
       <div class="container py-4">
-        <h5 class="text-uppercase fw-bold text-center">
+        <h5 class="text-uppercase fw-bold text-center mb-4">
           <span id="competitionName"></span>
+          - Tulemused
         </h5>
-        <div>
-          <h5 class="text-uppercase fw-bold text-center mb-3">Tulemused</h5>
-        </div>
+
+        <button
+          id="btnScrolToTop"
+          class="btn btn-secondary btnScrolToTop visually-hidden"
+          title="Lehekülje algusesse"
+        >
+          <i class="fas fa-chevron-up"></i>
+        </button>
 
         <table class="table table-hover table-bordered me-3" id="table">
           <thead class="table-secondary">
