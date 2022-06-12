@@ -22,6 +22,7 @@ window.onscroll = function () {
 
 /* Scroll To Top */
 const btnScrolToTop = document.getElementById('btnScrolToTop');
+
 btnScrolToTop.addEventListener('click', function () {
   window.scrollTo({
     top: 0,

@@ -3,6 +3,7 @@ const config = require('./config/config');
 
 const express = require('express');
 const helmet = require('helmet');
+const compression = require('compression');
 const path = require('path');
 const fs = require('fs');
 const morgan = require('morgan');
@@ -10,6 +11,7 @@ const moment = require('moment-timezone');
 
 const app = express();
 app.use(helmet());
+app.use(compression());
 
 /** Static Files */
 app.use(express.static(path.join(__dirname, 'public')));
